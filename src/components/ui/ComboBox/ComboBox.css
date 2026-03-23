@@ -1,0 +1,62 @@
+.combobox-field {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.combobox-field .input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 calc(var(--input-height) + var(--spacing-1)) 0
+        var(--input-padding-x);
+}
+
+.combobox-field-button {
+    position: absolute;
+    right: var(--border-2);
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(var(--input-height) - var(--spacing-1));
+    height: calc(var(--input-height) - var(--spacing-1));
+    padding: 0;
+    z-index: var(--z-raised);
+    background: var(--color-surface);
+    text-align: center;
+
+    &:disabled {
+        opacity: var(--opacity-disabled);
+    }
+
+    &:hover:not(:disabled):not([data-disabled]) {
+        border-color: var(--color-border-strong);
+    }
+
+    &[data-focus-visible] {
+        border-color: var(--color-ring);
+        box-shadow:
+            0 1px 2px var(--color-scrim) inset,
+            0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+    }
+
+    & svg {
+        display: inline-block;
+        width: var(--icon-sm);
+        height: var(--icon-sm);
+    }
+}
+
+.combobox-popover {
+    width: var(--trigger-width);
+    padding: 0;
+}
+
+.combobox-popover .listbox {
+    box-shadow: var(--shadow-lg);
+}
+
+.react-aria-ComboBoxValue {
+    margin-top: var(--spacing-1);
+    font-size: var(--input-font-size);
+    color: var(--color-content);
+}

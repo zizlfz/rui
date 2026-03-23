@@ -1,0 +1,78 @@
+.dateinput {
+	/* Reset & Layout */
+	display: inline-flex;
+	align-items: center;
+	appearance: none;
+	margin: 0;
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--input-font-size);
+	font-weight: var(--input-font-weight);
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-content);
+
+	/* Sizing & Spacing */
+	height: var(--input-height);
+	padding: 0 var(--input-padding-x);
+	width: 100%;
+
+	/* Visuals */
+	border-radius: var(--input-radius);
+	border: var(--border-1) solid var(--input-border-color);
+	background: var(--input-background);
+
+	outline: none;
+
+	transition:
+		border-color var(--input-transition),
+		box-shadow var(--input-transition),
+		background var(--input-transition);
+
+	/* Placeholder */
+	&::placeholder {
+		color: var(--color-content-muted);
+		font-weight: var(--font-weight-normal);
+	}
+
+	/* Hover */
+	&:hover:not(:disabled):not([data-disabled]):not([data-invalid]) {
+		border-color: var(--color-border-strong);
+	}
+
+	/* Focus */
+	&[data-focus-visible] {
+		border-color: var(--color-ring);
+		box-shadow:
+			0 1px 2px var(--color-scrim) inset,
+			0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+	}
+
+	/* Disabled */
+	&:disabled,
+	&[data-disabled] {
+		opacity: var(--opacity-disabled);
+		cursor: not-allowed;
+	}
+
+	/* Invalid / Error */
+	&[data-invalid],
+	&:user-invalid {
+		border-color: var(--color-surface-destructive);
+	}
+}
+
+/* Date Segment styling */
+.dateinput [data-segment] {
+	padding: 0;
+	outline: none;
+}
+
+.dateinput [data-segment][data-focus-visible] {
+	color: var(--color-ring);
+}
+
+.dateinput [data-type="literal"] {
+	padding: 0 var(--border-2);
+	color: var(--color-content-muted);
+}

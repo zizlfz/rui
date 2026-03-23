@@ -1,0 +1,157 @@
+:root {
+	--checkbox-size: calc(var(--spacing-1) * 4.5);
+	--checkbox-radius: var(--radius-sm);
+	--checkbox-border-width: var(--border-2);
+	--checkbox-checkmark-color: var(--color-content-primary);
+	--checkbox-checked-bg: var(--color-surface-primary);
+	--checkbox-animation: var(--duration-moderate) var(--ease-out);
+}
+
+.react-aria-Checkbox,
+.checkbox {
+	--checkmark-color: var(--checkbox-checkmark-color);
+
+	display: flex;
+	position: relative;
+	align-items: center;
+	gap: var(--spacing-2);
+	font-size: var(--text-sm);
+	color: var(--color-content);
+	forced-color-adjust: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.react-aria-Checkbox[data-disabled],
+.checkbox[data-disabled] {
+	color: var(--color-content-muted);
+	--checkmark-color: var(--color-content-muted);
+}
+
+.checkbox-box {
+	width: var(--checkbox-size);
+	height: var(--checkbox-size);
+	box-sizing: border-box;
+	border-radius: var(--checkbox-radius);
+	transition: all var(--checkbox-animation);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	background: var(--color-surface);
+	border: var(--checkbox-border-width) solid var(--color-border);
+}
+
+/* Focus ring */
+.react-aria-Checkbox[data-focus-visible] .checkbox-box,
+.checkbox[data-focus-visible] .checkbox-box {
+	outline: var(--border-2) solid var(--color-ring);
+	outline-offset: var(--border-2);
+}
+
+/* Selected state */
+.react-aria-Checkbox[data-selected] .checkbox-box,
+.checkbox[data-selected] .checkbox-box,
+.react-aria-Checkbox[data-indeterminate] .checkbox-box,
+.checkbox[data-indeterminate] .checkbox-box {
+	background: var(--checkbox-checked-bg);
+	border-color: var(--checkbox-checked-bg);
+}
+
+/* Invalid state */
+.react-aria-Checkbox[data-invalid] .checkbox-box,
+.checkbox[data-invalid] .checkbox-box {
+	border-color: var(--color-surface-destructive);
+}
+
+.react-aria-Checkbox[data-invalid][data-selected] .checkbox-box,
+.checkbox[data-invalid][data-selected] .checkbox-box,
+.react-aria-Checkbox[data-invalid][data-indeterminate] .checkbox-box,
+.checkbox[data-invalid][data-indeterminate] .checkbox-box {
+	background: var(--color-surface-destructive);
+	border-color: var(--color-surface-destructive);
+}
+
+/* Disabled state */
+.react-aria-Checkbox[data-disabled] .checkbox-box,
+.checkbox[data-disabled] .checkbox-box {
+	opacity: var(--opacity-subtle);
+	cursor: not-allowed;
+}
+
+/* Pressed state */
+.react-aria-Checkbox[data-pressed] .checkbox-box,
+.checkbox[data-pressed] .checkbox-box {
+	transform: scale(0.95);
+}
+
+.checkbox-icon {
+	width: calc(100% - var(--spacing-2));
+	height: calc(100% - var(--spacing-2));
+	fill: none;
+	stroke: var(--checkmark-color);
+	stroke-width: var(--border-4);
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	pointer-events: none;
+}
+
+/* Indeterminate state - fill the icon instead of stroke */
+.react-aria-Checkbox[data-indeterminate] .checkbox-icon,
+.checkbox[data-indeterminate] .checkbox-icon {
+	stroke: none;
+	fill: var(--checkmark-color);
+}
+
+/* Animation for the checkmark */
+@keyframes checkmark {
+	0% {
+		stroke-dashoffset: 66;
+	}
+	100% {
+		stroke-dashoffset: 44;
+	}
+}
+
+.react-aria-Checkbox[data-selected] .checkbox-icon,
+.checkbox[data-selected] .checkbox-icon {
+	animation: checkmark var(--checkbox-animation);
+	stroke-dasharray: 22px;
+	stroke-dashoffset: 44;
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+	.checkbox-box {
+		border-color: ButtonBorder;
+	}
+
+	.react-aria-Checkbox[data-selected] .checkbox-box,
+	.checkbox[data-selected] .checkbox-box,
+	.react-aria-Checkbox[data-indeterminate] .checkbox-box,
+	.checkbox[data-indeterminate] .checkbox-box {
+		background: Highlight;
+		border-color: Highlight;
+	}
+
+	.react-aria-Checkbox[data-invalid] .checkbox-box,
+	.checkbox[data-invalid] .checkbox-box {
+		border-color: Mark;
+	}
+
+	.react-aria-Checkbox[data-invalid][data-selected] .checkbox-box,
+	.checkbox[data-invalid][data-selected] .checkbox-box,
+	.react-aria-Checkbox[data-invalid][data-indeterminate] .checkbox-box,
+	.checkbox[data-invalid][data-indeterminate] .checkbox-box {
+		background: Mark;
+		border-color: Mark;
+	}
+
+	.checkbox-icon {
+		stroke: HighlightText;
+	}
+
+	.react-aria-Checkbox[data-indeterminate] .checkbox-icon,
+	.checkbox[data-indeterminate] .checkbox-icon {
+		fill: HighlightText;
+	}
+}

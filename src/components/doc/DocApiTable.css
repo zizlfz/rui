@@ -1,0 +1,81 @@
+.doc-api-table-wrapper {
+    overflow-x: auto;
+    margin-top: var(--spacing-4);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--radius-md);
+}
+
+.doc-api-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    text-align: left;
+    margin: 0;
+}
+
+.doc-api-table thead {
+    background: var(--color-surface);
+    border-bottom: var(--border-1) solid var(--color-border);
+}
+
+.doc-api-table th {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-content-muted);
+    white-space: nowrap;
+}
+
+.doc-api-table td {
+    padding: var(--spacing-3);
+    border-top: var(--border-1) solid var(--color-border-subtle);
+    vertical-align: top;
+}
+
+.doc-api-table tbody tr:hover {
+    background: var(--color-surface);
+}
+
+.doc-api-table__name {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono, monospace);
+    color: var(--color-surface-primary);
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+}
+
+.doc-api-table__type {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono, monospace);
+    color: var(--color-content-muted);
+    word-break: break-word;
+}
+
+.doc-api-table__default {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono, monospace);
+    color: var(--color-content);
+    background: var(--color-surface-muted);
+    padding: 0 var(--spacing-1);
+    border-radius: var(--radius-xs);
+    white-space: nowrap;
+}
+
+.doc-api-table__empty {
+    color: var(--color-content-muted);
+}
+
+.doc-api-table__desc {
+    color: var(--color-content);
+    line-height: 1.6;
+}
+
+.doc-api-table__desc code {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono, monospace);
+    background: var(--color-surface-muted);
+    padding: 0 var(--spacing-1);
+    border-radius: var(--radius-xs);
+}

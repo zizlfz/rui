@@ -1,0 +1,225 @@
+# TimeField
+
+A time input field that allows users to enter and edit times using localized time segments (hour, minute, second).
+
+## Installation
+
+```bash
+rui add timefield
+```
+
+## Usage
+
+TimeField renders time segments automatically. Simply provide a label and optional props.
+
+<DocDemo>
+  <TimeField label="Start time" />
+</DocDemo>
+
+```tsx
+import { TimeField } from '@/components/ui/TimeField';
+
+<TimeField label="Start time" />
+```
+
+## Value
+
+A `TimeField` has no value by default. An initial, uncontrolled value can be provided using the `defaultValue` prop. Alternatively, a controlled value can be provided using the `value` prop.
+
+Time values are provided using objects from the [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/) package.
+
+<DocDemo>
+  <TimeField label="Meeting time" />
+</DocDemo>
+
+```tsx
+import { Time } from '@internationalized/date';
+import { TimeField } from '@/components/ui/TimeField';
+
+// Uncontrolled with defaultValue
+<TimeField label="Meeting time" defaultValue={new Time(14, 30)} />
+
+// Controlled with value
+function ControlledTimeField() {
+  const [time, setTime] = useState(new Time(9, 0));
+
+  return (
+    <TimeField label="Start time" value={time} onChange={setTime} />
+  );
+}
+```
+
+## Label and Description
+
+Use the `label` prop to provide an accessible label. The `description` prop adds helper text below the field.
+
+<DocDemo>
+  <TimeField label="Alarm time" description="When should the alarm ring?" />
+</DocDemo>
+
+```tsx
+<TimeField label="Alarm time" description="When should the alarm ring?" />
+```
+
+## Min and Max Time
+
+Use the `minValue` and `maxValue` props to constrain the selectable time range.
+
+```tsx
+import { Time } from '@internationalized/date';
+
+<TimeField
+  label="Appointment time"
+  minValue={new Time(9, 0)}
+  maxValue={new Time(17, 0)}
+/>
+```
+
+## Validation
+
+Use the `isRequired` prop to require a value. The `errorMessage` prop provides a custom message displayed when validation fails.
+
+```tsx
+<TimeField
+  label="Event time"
+  isRequired
+  errorMessage="A time is required."
+/>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the time field. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <TimeField label="Time" isDisabled />
+</DocDemo>
+
+```tsx
+<TimeField label="Time" isDisabled />
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the selected time without allowing changes.
+
+```tsx
+import { Time } from '@internationalized/date';
+
+<TimeField label="Created at" value={new Time(11, 45)} isReadOnly />
+```
+
+## Granularity
+
+The `granularity` prop allows specifying the smallest unit displayed. Use `"minute"` or `"second"` to show varying levels of precision.
+
+```tsx
+// Hour and minute only
+<TimeField label="Time" granularity="minute" />
+
+// Hour, minute, and second
+<TimeField label="Precise time" granularity="second" />
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Arrow Up` / `Arrow Down` | Increments / decrements the focused time segment. |
+| `Arrow Left` / `Arrow Right` | Moves focus to the previous / next time segment. |
+| `Page Up` / `Page Down` | Increments / decrements by a larger unit. |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the time field."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="Additional description text displayed below the field."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message to display when the field is invalid."
+  />
+  <DocApiTableRow
+    name="value"
+    type="TimeValue"
+    default="—"
+    description="The current time value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="TimeValue"
+    default="—"
+    description="The initial time value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(time: TimeValue) => void"
+    default="—"
+    description="Handler that is called when the time value changes."
+  />
+  <DocApiTableRow
+    name="minValue"
+    type="TimeValue"
+    default="—"
+    description="The minimum allowed time that a user may select."
+  />
+  <DocApiTableRow
+    name="maxValue"
+    type="TimeValue"
+    default="—"
+    description="The maximum allowed time that a user may select."
+  />
+  <DocApiTableRow
+    name="granularity"
+    type="'hour' | 'minute' | 'second'"
+    default="'minute'"
+    description="The smallest unit displayed in the time field."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether the user must enter a value before submitting a form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the time field is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the time field value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the time field is in an invalid state."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the time field wrapper."
+  />
+</DocApiTable>

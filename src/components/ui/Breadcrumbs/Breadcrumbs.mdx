@@ -1,0 +1,142 @@
+# Breadcrumbs
+
+Breadcrumbs display a hierarchy of links to the current page or resource in an application. The last `Breadcrumb` without an `href` is automatically marked as the current page.
+
+## Installation
+
+```bash
+rui add breadcrumbs
+```
+
+## Usage
+
+<DocDemo>
+  <Breadcrumbs>
+    <Breadcrumb href="/">Home</Breadcrumb>
+    <Breadcrumb href="/products">Products</Breadcrumb>
+    <Breadcrumb>Details</Breadcrumb>
+  </Breadcrumbs>
+</DocDemo>
+
+```tsx
+import { Breadcrumbs, Breadcrumb } from '@/components/ui/Breadcrumbs';
+
+<Breadcrumbs>
+  <Breadcrumb href="/">Home</Breadcrumb>
+  <Breadcrumb href="/products">Products</Breadcrumb>
+  <Breadcrumb>Details</Breadcrumb>
+</Breadcrumbs>
+```
+
+A chevron separator is inserted between each item automatically.
+
+## Dynamic Content
+
+`Breadcrumbs` supports dynamic collections via the `items` prop. Use `onAction` to handle navigation when a breadcrumb is pressed.
+
+```tsx
+import { Breadcrumbs, Breadcrumb } from '@/components/ui/Breadcrumbs';
+import { type Key } from 'react-aria-components';
+
+const items = [
+  { id: 1, label: 'Home' },
+  { id: 2, label: 'Products' },
+  { id: 3, label: 'Details' },
+];
+
+<Breadcrumbs items={items} onAction={(key: Key) => navigate(key)}>
+  {(item) => <Breadcrumb>{item.label}</Breadcrumb>}
+</Breadcrumbs>
+```
+
+## Accessibility
+
+When breadcrumbs are used as a main navigation element, place them inside a `<nav>` with an `aria-label` to create a [navigation landmark](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/navigation.html).
+
+```tsx
+<nav aria-label="Breadcrumb">
+  <Breadcrumbs>
+    <Breadcrumb href="/">Home</Breadcrumb>
+    <Breadcrumb href="/products">Products</Breadcrumb>
+    <Breadcrumb>Details</Breadcrumb>
+  </Breadcrumbs>
+</nav>
+```
+
+## API
+
+### Breadcrumbs
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((item: T) => ReactNode)"
+    default="—"
+    description="The contents of the collection. Accepts static children or a render function for dynamic collections."
+  />
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T>"
+    default="—"
+    description="Item objects in the collection. When provided, children should be a render function."
+  />
+  <DocApiTableRow
+    name="onAction"
+    type="(key: Key) => void"
+    default="—"
+    description="Handler that is called when a breadcrumb is clicked."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the breadcrumbs are disabled."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.breadcrumbs` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string"
+    default="—"
+    description="Defines a string value that labels the current element."
+  />
+</DocApiTable>
+
+### Breadcrumb
+
+<DocApiTable>
+  <DocApiTableRow
+    name="href"
+    type="string"
+    default="—"
+    description="The URL the breadcrumb links to. Omit for the current page item."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((values: BreadcrumbRenderProps) => ReactNode)"
+    default="—"
+    description="The content of the breadcrumb. A function may be provided to alter the content based on component state."
+  />
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="A unique id for the breadcrumb, passed to `onAction` when pressed."
+  />
+  <DocApiTableRow
+    name="onPress"
+    type="(e: PressEvent) => void"
+    default="—"
+    description="Handler that is called when the breadcrumb is pressed."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the breadcrumb element."
+  />
+</DocApiTable>

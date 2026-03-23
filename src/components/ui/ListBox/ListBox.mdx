@@ -1,0 +1,511 @@
+# ListBox
+
+A listbox displays a list of options and allows a user to select one or more of them.
+
+## Usage
+
+<DocDemo>
+  <ListBox aria-label="Favorite animal" selectionMode="multiple" style={{width: "200px"}}>
+    <ListBoxItem>Aardvark</ListBoxItem>
+    <ListBoxItem>Cat</ListBoxItem>
+    <ListBoxItem>Dog</ListBoxItem>
+    <ListBoxItem>Kangaroo</ListBoxItem>
+    <ListBoxItem>Panda</ListBoxItem>
+    <ListBoxItem>Snake</ListBoxItem>
+  </ListBox>
+</DocDemo>
+
+
+```tsx
+import {ListBox, ListBoxItem} from '@/components/ui/ListBox';
+
+<ListBox aria-label="Favorite animal" selectionMode="multiple">
+  <ListBoxItem>Aardvark</ListBoxItem>
+  <ListBoxItem>Cat</ListBoxItem>
+  <ListBoxItem>Dog</ListBoxItem>
+  <ListBoxItem>Kangaroo</ListBoxItem>
+  <ListBoxItem>Panda</ListBoxItem>
+  <ListBoxItem>Snake</ListBoxItem>
+</ListBox>
+```
+
+## Content
+
+`ListBox` follows the [Collection Components API](/docs/collections), accepting both static and dynamic collections. This example shows a dynamic collection, passing a list of objects to the `items` prop, and a function to render the children.
+
+```tsx
+function Example() {
+  let options = [
+    { id: 1, name: 'Aardvark' },
+    { id: 2, name: 'Cat' },
+    { id: 3, name: 'Dog' },
+    { id: 4, name: 'Kangaroo' },
+    { id: 5, name: 'Koala' },
+    { id: 6, name: 'Penguin' },
+    { id: 7, name: 'Snake' },
+    { id: 8, name: 'Turtle' },
+    { id: 9, name: 'Wombat' }
+  ];
+
+  return (
+    <ListBox aria-label="Animals" items={options} selectionMode="single">
+      {(item) => <ListBoxItem>{item.name}</ListBoxItem>}
+    </ListBox>
+  );
+}
+```
+
+### Text slots
+
+Use the `"label"` and `"description"` slots to separate primary and secondary content within a `<ListBoxItem>`. This improves screen reader announcements and can also be used for styling purposes.
+
+<DocDemo>
+    <ListBox aria-label="Permissions" selectionMode="single" style={{width: "200px"}}>
+      <ListBoxItem textValue="Read">
+        <Text slot="label">Read</Text>
+        <Text slot="description">Read only</Text>
+      </ListBoxItem>
+      <ListBoxItem textValue="Write">
+        <Text slot="label">Write</Text>
+        <Text slot="description">Read and write only</Text>
+      </ListBoxItem>
+      <ListBoxItem textValue="Admin">
+        <Text slot="label">Admin</Text>
+        <Text slot="description">Full access</Text>
+      </ListBoxItem>
+    </ListBox>
+</DocDemo>
+
+```tsx
+<ListBox aria-label="Permissions" selectionMode="single">
+  <ListBoxItem textValue="Read">
+    <Text slot="label">Read</Text>
+    <Text slot="description">Read only</Text>
+  </ListBoxItem>
+  <ListBoxItem textValue="Write">
+    <Text slot="label">Write</Text>
+    <Text slot="description">Read and write only</Text>
+  </ListBoxItem>
+  <ListBoxItem textValue="Admin">
+    <Text slot="label">Admin</Text>
+    <Text slot="description">Full access</Text>
+  </ListBoxItem>
+</ListBox>
+```
+
+<DocAlert title="Accessibility warning" variant="warning">
+Interactive elements (e.g. buttons) within listbox items are not allowed. This will break keyboard and screen reader navigation. Only add textual or decorative graphics (e.g. icons or images) as children. Use GridList if interactive children are needed.
+</DocAlert>
+
+### Links
+
+Use the `href` prop on a `<ListBoxItem>` to create a link.
+
+By default, link items in a ListBox are not selectable, and only perform navigation when the user interacts with them. However, with `selectionBehavior="replace"`, items will be selected when single clicking or pressing the **Space** key, and navigate to the link when double clicking or pressing the **Enter** key.
+
+<DocDemo>
+<ListBox aria-label="Links" selectionMode="multiple">
+  <ListBoxItem href="https://adobe.com/" target="_blank">Adobe</ListBoxItem>
+  <ListBoxItem href="https://apple.com/" target="_blank">Apple</ListBoxItem>
+  <ListBoxItem href="https://google.com/" target="_blank">Google</ListBoxItem>
+  <ListBoxItem href="https://microsoft.com/" target="_blank">Microsoft</ListBoxItem>
+</ListBox>
+</DocDemo>
+
+```tsx
+<ListBox aria-label="Links" selectionMode="multiple">
+  <ListBoxItem href="https://adobe.com/" target="_blank">Adobe</ListBoxItem>
+  <ListBoxItem href="https://apple.com/" target="_blank">Apple</ListBoxItem>
+  <ListBoxItem href="https://google.com/" target="_blank">Google</ListBoxItem>
+  <ListBoxItem href="https://microsoft.com/" target="_blank">Microsoft</ListBoxItem>
+</ListBox>
+```
+
+By default, links are rendered as an `<a>` element. Use the `render` prop to integrate your framework's link component. An `href` should still be passed to `ListBoxItem` so React Aria knows it is a link.
+
+```tsx
+<ListBoxItem
+  {...props}
+  render={domProps =>
+    'href' in domProps
+      ? <RouterLink {...domProps} />
+      : <div {...domProps} />
+  } />
+```
+
+## Drag and drop
+
+ListBox supports drag and drop interactions when the `dragAndDropHooks` prop is provided using the `useDragAndDrop` hook. Users can drop data on the list as a whole, on individual items, insert new items between existing ones, or reorder items. React Aria supports drag and drop via mouse, touch, keyboard, and screen reader interactions.
+
+<DocDemo>
+    <ListBoxDragDropExample/>
+</DocDemo>
+
+```tsx
+import { useDragAndDrop, useListData } from 'react-aria-components';
+import { ListBox, ListBoxItem } from '@/components/ui/ListBox';
+
+function Example() {
+  let list = useListData({
+    initialItems: [
+      { id: 1, name: 'Adobe Photoshop' },
+      { id: 2, name: 'Adobe XD' },
+      { id: 3, name: 'Adobe Dreamweaver' },
+      { id: 4, name: 'Adobe InDesign' },
+      { id: 5, name: 'Adobe Connect' }
+    ]
+  });
+
+  let { dragAndDropHooks } = useDragAndDrop({
+    getItems: (keys, items: typeof list.items) => items.map(item => ({ 'text/plain': item.name })),
+    onReorder(e) {
+      if (e.target.dropPosition === 'before') {
+        list.moveBefore(e.target.key, e.keys);
+      } else if (e.target.dropPosition === 'after') {
+        list.moveAfter(e.target.key, e.keys);
+      }
+    }
+  });
+
+  return (
+    <ListBox
+      aria-label="Reorderable list"
+      selectionMode="multiple"
+      items={list.items}
+      dragAndDropHooks={dragAndDropHooks}
+    >
+      {item => <ListBoxItem>{item.name}</ListBoxItem>}
+    </ListBox>
+  );
+}
+```
+
+## API
+
+### ListBox
+
+<DocApiTable>
+  <DocApiTableRow
+    name="aria-describedby"
+    type="string | undefined"
+    default="—"
+    description="Identifies the element (or elements) that describes the object."
+  />
+  <DocApiTableRow
+    name="aria-details"
+    type="string | undefined"
+    default="—"
+    description="Identifies the element (or elements) that provide a detailed, extended description for the object."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string | undefined"
+    default="—"
+    description="Defines a string value that labels the current element."
+  />
+  <DocApiTableRow
+    name="aria-labelledby"
+    type="string | undefined"
+    default="—"
+    description="Identifies the element (or elements) that labels the current element."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean | FocusStrategy | undefined"
+    default="—"
+    description="Whether to auto focus the listbox or an option."
+  />
+  <DocApiTableRow
+    name="children"
+    type="React.ReactNode | ((item: T) => ReactNode)"
+    default="—"
+    description="The contents of the collection."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string | undefined"
+    default="—"
+    description="The CSS className for the element."
+  />
+  <DocApiTableRow
+    name="defaultSelectedKeys"
+    type="Iterable<Key> | 'all' | undefined"
+    default="—"
+    description="The initial selected keys in the collection (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="dependencies"
+    type="readonly any[] | undefined"
+    default="—"
+    description="Values that should invalidate the item cache when using dynamic collections."
+  />
+  <DocApiTableRow
+    name="disabledKeys"
+    type="Iterable<Key> | undefined"
+    default="—"
+    description="The item keys that are disabled. These items cannot be selected, focused, or otherwise interacted with."
+  />
+  <DocApiTableRow
+    name="disallowEmptySelection"
+    type="boolean | undefined"
+    default="—"
+    description="Whether the collection allows empty selection."
+  />
+  <DocApiTableRow
+    name="dragAndDropHooks"
+    type="DragAndDropHooks<NoInfer<T>> | undefined"
+    default="—"
+    description="The drag and drop hooks returned by useDragAndDrop used to enable drag and drop behavior for the ListBox."
+  />
+  <DocApiTableRow
+    name="escapeKeyBehavior"
+    type="'none' | 'clearSelection' | undefined"
+    default="'clearSelection'"
+    description="Whether pressing the escape key should clear selection in the listbox or not."
+  />
+  <DocApiTableRow
+    name="id"
+    type="string | undefined"
+    default="—"
+    description="The element's unique identifier."
+  />
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T> | undefined"
+    default="—"
+    description="Item objects in the collection."
+  />
+  <DocApiTableRow
+    name="layout"
+    type="'stack' | 'grid' | undefined"
+    default="'stack'"
+    description="Whether the items are arranged in a stack or grid."
+  />
+  <DocApiTableRow
+    name="onAction"
+    type="(key: Key) => void | undefined"
+    default="—"
+    description="Handler that is called when a user performs an action on an item."
+  />
+  <DocApiTableRow
+    name="onBlur"
+    type="(e: React.FocusEvent<Element>) => void | undefined"
+    default="—"
+    description="Handler that is called when the element loses focus."
+  />
+  <DocApiTableRow
+    name="onFocus"
+    type="(e: React.FocusEvent<Element>) => void | undefined"
+    default="—"
+    description="Handler that is called when the element receives focus."
+  />
+  <DocApiTableRow
+    name="onFocusChange"
+    type="(isFocused: boolean) => void | undefined"
+    default="—"
+    description="Handler that is called when the element's focus status changes."
+  />
+  <DocApiTableRow
+    name="onSelectionChange"
+    type="(keys: Selection) => void | undefined"
+    default="—"
+    description="Handler that is called when the selection changes."
+  />
+  <DocApiTableRow
+    name="orientation"
+    type="Orientation | undefined"
+    default="'vertical'"
+    description="The primary orientation of the items. Usually this is the direction that the collection scrolls."
+  />
+  <DocApiTableRow
+    name="renderEmptyState"
+    type="(props: ListBoxRenderProps) => ReactNode | undefined"
+    default="—"
+    description="Provides content to display when there are no items in the list."
+  />
+  <DocApiTableRow
+    name="selectedKeys"
+    type="Iterable<Key> | 'all' | undefined"
+    default="—"
+    description="The currently selected keys in the collection (controlled)."
+  />
+  <DocApiTableRow
+    name="selectionBehavior"
+    type="SelectionBehavior | undefined"
+    default="'toggle'"
+    description="How multiple selection should behave in the collection."
+  />
+  <DocApiTableRow
+    name="selectionMode"
+    type="SelectionMode | undefined"
+    default="—"
+    description="The type of selection that is allowed in the collection."
+  />
+  <DocApiTableRow
+    name="shouldFocusOnHover"
+    type="boolean | undefined"
+    default="—"
+    description="Whether options should be focused when the user hovers over them."
+  />
+  <DocApiTableRow
+    name="shouldFocusWrap"
+    type="boolean | undefined"
+    default="—"
+    description="Whether focus should wrap around when the end/start is reached."
+  />
+  <DocApiTableRow
+    name="shouldSelectOnPressUp"
+    type="boolean | undefined"
+    default="—"
+    description="Whether selection should occur on press up instead of press down."
+  />
+  <DocApiTableRow
+    name="style"
+    type="React.CSSProperties | undefined"
+    default="—"
+    description="The inline style for the element."
+  />
+</DocApiTable>
+
+### ListBoxItem
+
+<DocApiTable>
+  <DocApiTableRow
+    name="aria-label"
+    type="string | undefined"
+    default="—"
+    description="An accessibility label for this item."
+  />
+  <DocApiTableRow
+    name="children"
+    type="React.ReactNode | ((item: T) => ReactNode)"
+    default="—"
+    description="The contents of the item. Can be a string or a render function."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string | undefined"
+    default="—"
+    description="The CSS className for the element."
+  />
+  <DocApiTableRow
+    name="href"
+    type="string | undefined"
+    default="—"
+    description="A URL to link to."
+  />
+  <DocApiTableRow
+    name="id"
+    type="Key | undefined"
+    default="—"
+    description="The unique id of the item."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean | undefined"
+    default="—"
+    description="Whether the item is disabled."
+  />
+  <DocApiTableRow
+    name="onAction"
+    type="() => void | undefined"
+    default="—"
+    description="Handler that is called when a user performs an action on the item."
+  />
+  <DocApiTableRow
+    name="onBlur"
+    type="(e: React.FocusEvent<HTMLDivElement, Element>) => void | undefined"
+    default="—"
+    description="Handler that is called when the element loses focus."
+  />
+  <DocApiTableRow
+    name="onFocus"
+    type="(e: React.FocusEvent<HTMLDivElement, Element>) => void | undefined"
+    default="—"
+    description="Handler that is called when the element receives focus."
+  />
+  <DocApiTableRow
+    name="onFocusChange"
+    type="(isFocused: boolean) => void | undefined"
+    default="—"
+    description="Handler that is called when the element's focus status changes."
+  />
+  <DocApiTableRow
+    name="onHoverChange"
+    type="(isHovering: boolean) => void | undefined"
+    default="—"
+    description="Handler that is called when the hover state changes."
+  />
+  <DocApiTableRow
+    name="onHoverEnd"
+    type="(e: HoverEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a hover interaction ends."
+  />
+  <DocApiTableRow
+    name="onHoverStart"
+    type="(e: HoverEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a hover interaction starts."
+  />
+  <DocApiTableRow
+    name="onKeyDown"
+    type="(e: KeyboardEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a key is pressed."
+  />
+  <DocApiTableRow
+    name="onKeyUp"
+    type="(e: KeyboardEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a key is released."
+  />
+  <DocApiTableRow
+    name="onPress"
+    type="(e: PressEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when the press is released over the target."
+  />
+  <DocApiTableRow
+    name="onPressChange"
+    type="(isPressed: boolean) => void | undefined"
+    default="—"
+    description="Handler that is called when the press state changes."
+  />
+  <DocApiTableRow
+    name="onPressEnd"
+    type="(e: PressEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a press interaction ends."
+  />
+  <DocApiTableRow
+    name="onPressStart"
+    type="(e: PressEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a press interaction starts."
+  />
+  <DocApiTableRow
+    name="onPressUp"
+    type="(e: PressEvent) => void | undefined"
+    default="—"
+    description="Handler that is called when a press is released over the target."
+  />
+  <DocApiTableRow
+    name="style"
+    type="React.CSSProperties | undefined"
+    default="—"
+    description="The inline style for the element."
+  />
+  <DocApiTableRow
+    name="textValue"
+    type="string | undefined"
+    default="—"
+    description="A string representation of the item's contents, used for features like typeahead."
+  />
+  <DocApiTableRow
+    name="value"
+    type="T | undefined"
+    default="—"
+    description="The object value that this item represents. When using dynamic collections, this is set automatically."
+  />
+</DocApiTable>

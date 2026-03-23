@@ -1,0 +1,324 @@
+# ComboBox
+
+A combobox combines a text input with a dropdown listbox, allowing users to filter a list of options and select a value.
+
+## Installation
+
+```bash
+rui add combobox
+```
+
+## Usage
+
+<DocDemo>
+  <ComboBox label="Favorite animal">
+    <ComboBoxItem>Cat</ComboBoxItem>
+    <ComboBoxItem>Dog</ComboBoxItem>
+    <ComboBoxItem>Horse</ComboBoxItem>
+  </ComboBox>
+</DocDemo>
+
+```tsx
+import { ComboBox, ComboBoxItem } from '@/components/ui/ComboBox';
+
+<ComboBox label="Favorite animal">
+  <ComboBoxItem>Cat</ComboBoxItem>
+  <ComboBoxItem>Dog</ComboBoxItem>
+  <ComboBoxItem>Horse</ComboBoxItem>
+</ComboBox>
+```
+
+## Items
+
+Items can be passed as static children for simple lists. The `items` prop with a render function supports dynamic collections.
+
+```tsx
+const animals = [
+  { id: 1, name: 'Cat' },
+  { id: 2, name: 'Dog' },
+  { id: 3, name: 'Horse' },
+];
+
+<ComboBox label="Animal" items={animals}>
+  {(item) => <ComboBoxItem id={item.id}>{item.name}</ComboBoxItem>}
+</ComboBox>
+```
+
+## Label and Description
+
+Use the `label` prop to provide an accessible label. The `description` prop adds helper text below the field.
+
+<DocDemo>
+  <ComboBox label="Country" description="Select your country of residence.">
+    <ComboBoxItem>United States</ComboBoxItem>
+    <ComboBoxItem>Canada</ComboBoxItem>
+    <ComboBoxItem>United Kingdom</ComboBoxItem>
+  </ComboBox>
+</DocDemo>
+
+```tsx
+<ComboBox label="Country" description="Select your country of residence.">
+  <ComboBoxItem>United States</ComboBoxItem>
+  <ComboBoxItem>Canada</ComboBoxItem>
+  <ComboBoxItem>United Kingdom</ComboBoxItem>
+</ComboBox>
+```
+
+## Placeholder
+
+Use the `placeholder` prop to display hint text in the input when no value is selected.
+
+<DocDemo>
+  <ComboBox label="Color" placeholder="Search colors...">
+    <ComboBoxItem>Red</ComboBoxItem>
+    <ComboBoxItem>Blue</ComboBoxItem>
+    <ComboBoxItem>Green</ComboBoxItem>
+  </ComboBox>
+</DocDemo>
+
+```tsx
+<ComboBox label="Color" placeholder="Search colors...">
+  <ComboBoxItem>Red</ComboBoxItem>
+  <ComboBoxItem>Blue</ComboBoxItem>
+  <ComboBoxItem>Green</ComboBoxItem>
+</ComboBox>
+```
+
+## Value
+
+Use the `selectedKey` and `onSelectionChange` props to control the selected item. An initial, uncontrolled value can be provided using `defaultSelectedKey`.
+
+```tsx
+function ControlledComboBox() {
+  const [selected, setSelected] = useState<Key | null>(null);
+
+  return (
+    <ComboBox
+      label="Animal"
+      selectedKey={selected}
+      onSelectionChange={setSelected}
+    >
+      <ComboBoxItem id="cat">Cat</ComboBoxItem>
+      <ComboBoxItem id="dog">Dog</ComboBoxItem>
+      <ComboBoxItem id="horse">Horse</ComboBoxItem>
+    </ComboBox>
+  );
+}
+```
+
+## Validation
+
+Use the `isRequired` prop to require a selection. The `errorMessage` prop provides a custom message displayed when validation fails.
+
+```tsx
+<ComboBox
+  label="Framework"
+  isRequired
+  errorMessage="Please select a framework."
+>
+  <ComboBoxItem>React</ComboBoxItem>
+  <ComboBoxItem>Vue</ComboBoxItem>
+  <ComboBoxItem>Svelte</ComboBoxItem>
+</ComboBox>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the entire combobox, including the input and button.
+
+```tsx
+<ComboBox label="Size" isDisabled>
+  <ComboBoxItem>Small</ComboBoxItem>
+  <ComboBoxItem>Medium</ComboBoxItem>
+  <ComboBoxItem>Large</ComboBoxItem>
+</ComboBox>
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the selected value without allowing changes.
+
+```tsx
+<ComboBox label="Category" selectedKey="electronics" isReadOnly>
+  <ComboBoxItem id="electronics">Electronics</ComboBoxItem>
+  <ComboBoxItem id="clothing">Clothing</ComboBoxItem>
+</ComboBox>
+```
+
+## Custom Filter
+
+By default, the combobox filters items using a "contains" substring match. Use the `defaultFilter` prop or the `inputValue` / `onInputChange` props for custom filtering logic.
+
+```tsx
+<ComboBox
+  label="Search"
+  defaultFilter={(textValue, inputValue) =>
+    textValue.toLowerCase().startsWith(inputValue.toLowerCase())
+  }
+>
+  <ComboBoxItem>Apple</ComboBoxItem>
+  <ComboBoxItem>Apricot</ComboBoxItem>
+  <ComboBoxItem>Banana</ComboBoxItem>
+</ComboBox>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Arrow Down` | Opens the listbox and moves focus to the first item or the last selected item. |
+| `Arrow Up` | Opens the listbox and moves focus to the last item or the last selected item. |
+| `Enter` | Selects the focused item and closes the listbox. |
+| `Escape` | Closes the listbox. |
+| `Home` | Moves focus to the first item. |
+| `End` | Moves focus to the last item. |
+
+## API
+
+### ComboBox
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the combobox field."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string | null"
+    default="—"
+    description="Additional description text displayed below the field."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message to display when the field is invalid. Can be a string or a function that receives the validation result."
+  />
+  <DocApiTableRow
+    name="placeholder"
+    type="string"
+    default="—"
+    description="Temporary text displayed in the input when no value is set."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((item: T) => ReactNode)"
+    default="—"
+    description="The list of items in the combobox. Accepts static `ComboBoxItem` children or a render function for dynamic collections."
+  />
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T>"
+    default="—"
+    description="Item objects in the collection. When provided, children should be a render function."
+  />
+  <DocApiTableRow
+    name="selectedKey"
+    type="Key"
+    default="—"
+    description="The currently selected key (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultSelectedKey"
+    type="Key"
+    default="—"
+    description="The initial selected key (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onSelectionChange"
+    type="(key: Key | null) => void"
+    default="—"
+    description="Handler that is called when the selection changes."
+  />
+  <DocApiTableRow
+    name="inputValue"
+    type="string"
+    default="—"
+    description="The value of the input field (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultInputValue"
+    type="string"
+    default="—"
+    description="The initial input value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onInputChange"
+    type="(value: string) => void"
+    default="—"
+    description="Handler that is called when the input value changes."
+  />
+  <DocApiTableRow
+    name="defaultFilter"
+    type="(textValue: string, inputValue: string) => boolean"
+    default="—"
+    description="Custom filter function to determine which items are visible."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether the user must select a value before submitting a form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the combobox is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the combobox value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the combobox is in an invalid state."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the outer field wrapper."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string"
+    default="—"
+    description="Defines a string value that labels the combobox for accessibility when no visible label is provided."
+  />
+</DocApiTable>
+
+### ComboBoxItem
+
+<DocApiTable>
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="A unique identifier for the item."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the item."
+  />
+  <DocApiTableRow
+    name="textValue"
+    type="string"
+    default="—"
+    description="A string representation of the item's contents, used for keyboard navigation and filtering."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the item is disabled."
+  />
+</DocApiTable>

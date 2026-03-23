@@ -1,0 +1,258 @@
+# CheckboxGroup
+
+A CheckboxGroup allows users to select one or more items from a list of choices. It manages the selection state and accessibility for a group of related checkboxes.
+
+## Installation
+
+```bash
+rui add checkbox-group
+```
+
+## Usage
+
+<DocDemo>
+  <CheckboxGroup label="Favorite sports">
+    <Checkbox value="soccer">Soccer</Checkbox>
+    <Checkbox value="baseball">Baseball</Checkbox>
+    <Checkbox value="basketball">Basketball</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+import { CheckboxGroup } from '@/components/ui/CheckboxGroup';
+import { Checkbox } from '@/components/ui/Checkbox';
+
+<CheckboxGroup label="Favorite sports">
+  <Checkbox value="soccer">Soccer</Checkbox>
+  <Checkbox value="baseball">Baseball</Checkbox>
+  <Checkbox value="basketball">Basketball</Checkbox>
+</CheckboxGroup>
+```
+
+## Value
+
+Use the `value` and `onChange` props to control the selected items. An initial, uncontrolled value can be provided using `defaultValue`.
+
+```tsx
+function ControlledCheckboxGroup() {
+  const [selected, setSelected] = useState(['soccer', 'baseball']);
+
+  return (
+    <CheckboxGroup
+      label="Favorite sports"
+      value={selected}
+      onChange={setSelected}
+    >
+      <Checkbox value="soccer">Soccer</Checkbox>
+      <Checkbox value="baseball">Baseball</Checkbox>
+      <Checkbox value="basketball">Basketball</Checkbox>
+    </CheckboxGroup>
+  );
+}
+```
+
+## Orientation
+
+Use the `orientation` prop to arrange checkboxes horizontally or vertically. The default is `vertical`.
+
+<DocDemo>
+  <CheckboxGroup label="Favorite sports" orientation="horizontal">
+    <Checkbox value="soccer">Soccer</Checkbox>
+    <Checkbox value="baseball">Baseball</Checkbox>
+    <Checkbox value="basketball">Basketball</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+<CheckboxGroup label="Favorite sports" orientation="horizontal">
+  <Checkbox value="soccer">Soccer</Checkbox>
+  <Checkbox value="baseball">Baseball</Checkbox>
+  <Checkbox value="basketball">Basketball</Checkbox>
+</CheckboxGroup>
+```
+
+## Description
+
+Use the `description` prop to provide additional context or instructions.
+
+<DocDemo>
+  <CheckboxGroup label="Pizza toppings" description="Select all the toppings you want.">
+    <Checkbox value="pepperoni">Pepperoni</Checkbox>
+    <Checkbox value="mushrooms">Mushrooms</Checkbox>
+    <Checkbox value="olives">Olives</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+<CheckboxGroup
+  label="Pizza toppings"
+  description="Select all the toppings you want."
+>
+  <Checkbox value="pepperoni">Pepperoni</Checkbox>
+  <Checkbox value="mushrooms">Mushrooms</Checkbox>
+  <Checkbox value="olives">Olives</Checkbox>
+</CheckboxGroup>
+```
+
+## Forms
+
+Use the `name` prop to submit the selected checkboxes to the server. Set the `isRequired` prop to validate that at least one checkbox is selected.
+
+<DocDemo>
+  <CheckboxGroup label="Sandwich condiments" name="condiments" isRequired>
+    <Checkbox value="lettuce">Lettuce</Checkbox>
+    <Checkbox value="tomato">Tomato</Checkbox>
+    <Checkbox value="onion">Onion</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+<CheckboxGroup label="Sandwich condiments" name="condiments" isRequired>
+  <Checkbox value="lettuce">Lettuce</Checkbox>
+  <Checkbox value="tomato">Tomato</Checkbox>
+  <Checkbox value="onion">Onion</Checkbox>
+</CheckboxGroup>
+```
+
+## Disabled
+
+Use the `isDisabled` prop on the CheckboxGroup to disable all checkboxes within the group. To disable individual checkboxes, use the `isDisabled` prop on each `Checkbox`.
+
+<DocDemo>
+  <CheckboxGroup label="Disabled group" isDisabled>
+    <Checkbox value="option1">Option 1</Checkbox>
+    <Checkbox value="option2">Option 2</Checkbox>
+    <Checkbox value="option3">Option 3</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+<CheckboxGroup label="Disabled group" isDisabled>
+  <Checkbox value="option1">Option 1</Checkbox>
+  <Checkbox value="option2">Option 2</Checkbox>
+  <Checkbox value="option3">Option 3</Checkbox>
+</CheckboxGroup>
+```
+
+## Invalid
+
+Use the `isInvalid` or `errorMessage` prop to indicate a validation error.
+
+<DocDemo>
+  <CheckboxGroup
+    label="Terms and conditions"
+    isInvalid
+    errorMessage="You must accept at least one option."
+  >
+    <Checkbox value="terms">Terms and conditions</Checkbox>
+    <Checkbox value="privacy">Privacy policy</Checkbox>
+  </CheckboxGroup>
+</DocDemo>
+
+```tsx
+<CheckboxGroup
+  label="Terms and conditions"
+  isInvalid
+  errorMessage="You must accept at least one option."
+>
+  <Checkbox value="terms">Terms and conditions</Checkbox>
+  <Checkbox value="privacy">Privacy policy</Checkbox>
+</CheckboxGroup>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Space` | Toggles the focused checkbox. |
+| `Arrow Up` / `Arrow Down` | Moves focus between checkboxes in vertical orientation. |
+| `Arrow Left` / `Arrow Right` | Moves focus between checkboxes in horizontal orientation. |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the checkbox group."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="A description for the field. Provides a hint such as specific requirements."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message for the field, displayed when validation fails."
+  />
+  <DocApiTableRow
+    name="orientation"
+    type="'horizontal' | 'vertical'"
+    default="'vertical'"
+    description="The axis the checkboxes should align with."
+  />
+  <DocApiTableRow
+    name="value"
+    type="string[]"
+    default="—"
+    description="The current value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="string[]"
+    default="—"
+    description="The default value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(value: string[]) => void"
+    default="—"
+    description="Handler that is called when the value changes."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name of the input element, used when submitting an HTML form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the input is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the input can be selected but not changed by the user."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether user input is required on the input before form submission."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the input value is invalid."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The Checkboxes contained within the CheckboxGroup."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.checkbox-group` class via the `cn` utility."
+  />
+</DocApiTable>

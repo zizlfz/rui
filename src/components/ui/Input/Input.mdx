@@ -1,0 +1,318 @@
+# Input
+
+An input allows users to enter and edit text in a single-line field. Built on top of React Aria Components TextField.
+
+## Installation
+
+```bash
+rui add input
+```
+
+## Usage
+
+<DocDemo>
+  <Input label="Email" placeholder="you@example.com" />
+</DocDemo>
+
+```tsx
+import { Input } from '@/components/ui/Input';
+
+<Input label="Email" placeholder="you@example.com" />
+```
+
+## Value
+
+Use the `value` and `onChange` props to control the input value.
+
+<DocDemo props={{ value: "" }} propsForm={{ value: String }}>
+  {(props) => <Input label="Name" {...props} />}
+</DocDemo>
+
+```tsx
+function ControlledInput() {
+  const [value, setValue] = useState('');
+
+  return (
+    <Input label="Name" value={value} onChange={setValue} />
+  );
+}
+```
+
+An initial, uncontrolled value can be provided using the `defaultValue` prop.
+
+```tsx
+<Input label="Name" defaultValue="John" />
+```
+
+## Description
+
+Use the `description` prop to provide helpful context below the input.
+
+<DocDemo>
+  <Input 
+    label="Username" 
+    description="Choose a unique username for your account"
+    placeholder="Enter username"
+  />
+</DocDemo>
+
+```tsx
+<Input 
+  label="Username" 
+  description="Choose a unique username for your account"
+  placeholder="Enter username"
+/>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the input. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <Input label="Disabled" isDisabled placeholder="Cannot edit" />
+</DocDemo>
+
+```tsx
+<Input label="Disabled" isDisabled placeholder="Cannot edit" />
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the value without allowing changes.
+
+```tsx
+<Input label="Read-only" value="Read-only content" isReadOnly />
+```
+
+## Invalid
+
+Use the `errorMessage` prop to display an error message below the input. This automatically marks the input as invalid.
+
+<DocDemo props={{ isInvalid: false }} propsForm={{ isInvalid: Boolean }}>
+  {(props) => <Input label="Email" errorMessage="Please enter a valid email address" isInvalid={props.isInvalid} />}
+</DocDemo>
+
+```tsx
+<Input label="Email" errorMessage="Please enter a valid email address" />
+```
+
+For manual control without an error message, use the `isInvalid` prop:
+
+```tsx
+<Input label="Email" isInvalid />
+```
+
+## Required
+
+Use the `isRequired` prop to mark the input as required. This will prevent form submission until thefield is filled.
+
+```tsx
+<Input label="Name" isRequired />
+```
+
+## Input Types
+
+Use the `type` prop to specify the input type (e.g., text, email, password, search, etc.).
+
+<DocDemo>
+  <Input label="Password" type="password" placeholder="Enter password" />
+</DocDemo>
+
+```tsx
+<Input label="Password" type="password" placeholder="Enter password" />
+```
+
+## Validation
+
+The input supports various validation props from React Aria Components:
+
+```tsx
+// Minimum and maximum length
+<Input label="Username" minLength={3} maxLength={20} />
+
+// Pattern matching
+<Input label="Phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+
+// Required field
+<Input label="Email" type="email" isRequired />
+```
+
+## Forms
+
+Use the `name` prop to submit the input value to the server as part of a form.
+
+```tsx
+import { Form } from '@/components/ui/Form';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
+
+<Form>
+  <Input label="Email" name="email" type="email" isRequired />
+  <Button type="submit">Submit</Button>
+</Form>
+```
+
+## Textarea
+
+Use `TextArea` from the same package for multi-line text input.
+
+<DocDemo>
+  <TextArea label="Message" placeholder="Enter your message" />
+</DocDemo>
+
+```tsx
+import { TextArea } from '@/components/ui/Input';
+
+<TextArea label="Message" placeholder="Enter your message" />
+```
+
+### Controlled Value
+
+Use the `value` and `onChange` props to control the textarea value.
+
+```tsx
+function ControlledTextArea() {
+  const [value, setValue] = useState('');
+
+  return (
+    <TextArea label="Message" value={value} onChange={setValue} />
+  );
+}
+```
+
+### Rows
+
+Control the visible number of text lines using the `rows` prop.
+
+```tsx
+<TextArea label="Description" rows={5} />
+```
+
+### Resizable
+
+By default, the textarea is resizable. You can customize this behavior withCSS.
+
+```tsx
+<TextArea label="Resizable" className="resize-none" />
+<TextArea label="Vertical only" className="resize-y" />
+<TextArea label="Horizontal only" className="resize-x" />
+```
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label text displayed above the input."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="Description text displayed below the label."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="Error message displayed below the input."
+  />
+  <DocApiTableRow
+    name="value"
+    type="string"
+    default="—"
+    description="The controlled value of the input."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="string"
+    default="—"
+    description="The default value for an uncontrolled input."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(value: string) => void"
+    default="—"
+    description="Handler called when the input value changes."
+  />
+  <DocApiTableRow
+    name="placeholder"
+    type="string"
+    default="—"
+    description="Placeholder text shown when the input is empty."
+  />
+  <DocApiTableRow
+    name="type"
+    type="string"
+    default="'text'"
+    description="The type of input (text, email, password, search, tel, url, etc.)."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name used when submitting the form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the input is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the input is read-only."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether the input is required."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the input is in an invalid state."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the input should receive focus on render."
+  />
+  <DocApiTableRow
+    name="minLength"
+    type="number"
+    default="—"
+    description="The minimum number of characters required."
+  />
+  <DocApiTableRow
+    name="maxLength"
+    type="number"
+    default="—"
+    description="The maximum number of characters allowed."
+  />
+  <DocApiTableRow
+    name="pattern"
+    type="string"
+    default="—"
+    description="Regex pattern that the input value must match."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the TextField wrapper."
+  />
+  <DocApiTableRow
+    name="inputClassName"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the input element."
+  />
+</DocApiTable>

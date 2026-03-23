@@ -1,0 +1,279 @@
+/* ── Calendar ── */
+.calendar,
+.range-calendar {
+	width: calc(var(--spacing-9) * 7);
+	max-width: 100%;
+	container-type: inline-size;
+	color: var(--color-content);
+	font-size: var(--text-base);
+	font-family: var(--font-sans);
+}
+
+.range-calendar {
+	display: flex;
+	flex-direction: column;
+}
+
+/* ── Header ── */
+.calendar-header {
+	display: flex;
+	align-items: center;
+	margin: 0 var(--spacing-1) var(--spacing-4) var(--spacing-1);
+}
+
+.calendar-heading {
+	flex: 1;
+	margin: 0;
+	text-align: center;
+	font-size: var(--text-lg);
+}
+
+/* ── Navigation buttons ── */
+.calendar-nav-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	appearance: none;
+	width: calc(var(--height-field) - var(--spacing-2));
+	height: calc(var(--height-field) - var(--spacing-2));
+	border-radius: var(--radius-xs);
+	border: var(--border-1) solid var(--color-border);
+	background-color: var(--color-surface);
+	color: var(--color-content-muted);
+	cursor: pointer;
+}
+
+.calendar-nav-button[data-pressed] {
+	transform: none;
+}
+
+.calendar-nav-button:hover:not([data-disabled]) {
+	border-color: var(--color-border-strong);
+	background-color: var(--color-surface-muted);
+	color: var(--color-content);
+}
+
+.calendar-nav-button[data-focus-visible] {
+	border-color: var(--color-ring);
+	box-shadow:
+		0 1px 2px var(--color-scrim) inset,
+		0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+}
+
+.calendar-nav-icon {
+	width: var(--icon-sm);
+	height: var(--icon-sm);
+}
+
+/* ── Grid (Table) ── */
+.calendar-grid {
+	display: table;
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+.calendar-grid thead {
+	display: table-header-group;
+}
+
+.calendar-grid tbody {
+	display: table-row-group;
+}
+
+.calendar-grid tr {
+	display: table-row;
+}
+
+.calendar-grid tbody td {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 36px;
+	height: 36px;
+}
+
+/* ── Header cells (day names) ── */
+.calendar-header-cell {
+	display: table-cell;
+	font-size: var(--text-sm);
+	font-family: var(--font-sans);
+	font-weight: var(--font-weight-medium);
+	text-transform: uppercase;
+	letter-spacing: var(--tracking-wider);
+	color: var(--color-content-muted);
+	text-align: center;
+	padding: calc(var(--spacing-1) / 2);
+}
+
+/* ── Day cells ── */
+.calendar-cell,
+.range-calendar-cell {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.calendar-cell-button,
+.range-calendar-cell-button {
+	--gap: var(--spacing-1);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: calc(36px - 4px);
+	height: calc(36px - 4px);
+	aspect-ratio: 1;
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	text-align: center;
+	border-radius: var(--radius-full);
+	cursor: default;
+	forced-color-adjust: none;
+	transition: scale var(--duration-moderate);
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* Hover state for available dates */
+.calendar-cell:hover,
+.range-calendar-cell:hover {
+	.calendar-cell-button {
+		background-color: var(--color-surface-200);
+	}
+}
+
+.calendar-cell {
+	&[data-disabled],
+	&[data-unavailable] {
+		pointer-events: none;
+	}
+}
+
+/* Focus state - keyboard only via data-focus-visible */
+.calendar-cell[data-focus-visible] .calendar-cell-button,
+.range-calendar-cell[data-focus-visible] .calendar-cell-button {
+	box-shadow:
+		0 0 0 var(--border-2) var(--color-surface),
+		0 0 0 var(--spacing-1) var(--color-ring);
+}
+
+.range-calendar-cell[data-focus-visible] .calendar-cell-button {
+	z-index: 2;
+}
+
+.range-calendar-cell[data-focus-visible]
+	.calendar-cell-button:where(:focus-visible) {
+	z-index: 2;
+}
+
+/* Selected state (Calendar) */
+.calendar-cell[data-selected] .calendar-cell-button {
+	background-color: var(--color-surface-primary);
+	color: var(--color-content-primary);
+	font-weight: var(--font-weight-semibold);
+}
+
+/* Selected range (RangeCalendar - middle dates) */
+.range-calendar-cell[data-selected] {
+	background-color: var(--color-surface-primary-muted);
+	border-radius: 0;
+
+	&[data-selection-start] {
+		margin-left: 2px;
+		justify-content: start;
+		border-radius: 16px 0 0 16px;
+	}
+
+	&[data-selection-end] {
+		margin-right: 2px;
+		justify-content: end;
+		border-radius: 0 16px 16px 0;
+	}
+}
+
+/* Selection start and end caps (RangeCalendar) */
+.range-calendar-cell[data-selection-start] .calendar-cell-button,
+.range-calendar-cell[data-selection-end] .calendar-cell-button {
+	background-color: var(--color-surface-primary);
+	color: var(--color-content-primary);
+	font-weight: var(--font-weight-semibold);
+	z-index: 1;
+	position: relative;
+}
+
+.range-calendar-cell[data-selection-start] .calendar-cell-button {
+	border-start-start-radius: var(--radius-full);
+	border-end-start-radius: var(--radius-full);
+}
+
+.range-calendar-cell[data-selection-end] .calendar-cell-button {
+	border-start-end-radius: var(--radius-full);
+	border-end-end-radius: var(--radius-full);
+}
+
+/* Hover inside range selection */
+.range-calendar-cell[data-selected]:hover:not([data-disabled])
+.calendar-cell-button {
+	background-color: var(--color-surface-primary);
+	color: var(--color-white);
+}
+
+/* Disabled dates */
+.calendar-cell[data-disabled],
+.range-calendar-cell[data-disabled] {
+	color: var(--color-content-muted);
+	opacity: var(--opacity-subtle);
+	pointer-events: none;
+}
+
+/* Unavailable dates */
+.calendar-cell[data-unavailable],
+.range-calendar-cell[data-unavailable] {
+	text-decoration: line-through;
+	color: var(--color-surface-destructive);
+}
+
+/* Today */
+.calendar-cell[data-today],
+.range-calendar-cell[data-today]:not([data-selected]) {
+	font-weight: var(--font-weight-semibold);
+}
+
+/* Outside month */
+.calendar-cell[data-outside-month],
+.range-calendar-cell[data-outside-month] {
+	display: none;
+}
+
+/* Pressed state */
+.calendar-cell[data-pressed],
+.range-calendar-cell[data-pressed] {
+	scale: 0.9;
+}
+
+/* Invalid state */
+.calendar-cell[data-invalid],
+.range-calendar-cell[data-invalid][data-selected] {
+	--button-color: var(--color-surface-destructive);
+}
+
+/* ── Forced colors mode ── */
+@media (forced-colors: active) {
+	.calendar-cell[data-selected],
+	.range-calendar-cell[data-selected]:not([data-selection-start]):not(
+			[data-selection-end]
+		) {
+		background-color: Highlight;
+	}
+
+	.range-calendar-cell[data-selection-start],
+	.range-calendar-cell[data-selection-end] {
+		background-color: Highlight;
+		color: HighlightText;
+	}
+
+	.calendar-cell[data-unavailable],
+	.range-calendar-cell[data-unavailable] {
+		text-decoration: line-through;
+		color: GrayText;
+	}
+}

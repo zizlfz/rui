@@ -1,0 +1,184 @@
+# Checkbox
+
+A checkbox allows a user to select a single item from a list of options, or to mark an item as true or false. It supports an indeterminate state for representing partial selections.
+
+## Installation
+
+```bash
+rui add checkbox
+```
+
+## Usage
+
+<DocDemo>
+  <Checkbox>Subscribe to newsletter</Checkbox>
+</DocDemo>
+
+```tsx
+import { Checkbox } from '@/components/ui/Checkbox';
+
+<Checkbox>Subscribe to newsletter</Checkbox>
+```
+
+## Value
+
+Use the `isSelected` and `onChange` props to control the checked state.
+
+<DocDemo props={{ isSelected: false }} propsForm={{ isSelected: Boolean }}>
+  {(props) => <Checkbox {...props}>Accept terms</Checkbox>}
+</DocDemo>
+
+```tsx
+function ControlledCheckbox() {
+  const [isSelected, setIsSelected] = useState(false);
+
+  return (
+    <Checkbox isSelected={isSelected} onChange={setIsSelected}>
+      Accept terms
+    </Checkbox>
+  );
+}
+```
+
+An initial, uncontrolled value can be provided using the `defaultSelected` prop.
+
+```tsx
+<Checkbox defaultSelected>Accept terms</Checkbox>
+```
+
+## Indeterminate
+
+Use the `isIndeterminate` prop to display a partially selected state, commonly used in tree views or when a parent checkbox represents a mixed selection of child checkboxes.
+
+<DocDemo>
+  <Checkbox isIndeterminate>Select all</Checkbox>
+</DocDemo>
+
+```tsx
+<Checkbox isIndeterminate>Select all</Checkbox>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the checkbox. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <Checkbox isDisabled>Disabled option</Checkbox>
+</DocDemo>
+
+```tsx
+<Checkbox isDisabled>Disabled option</Checkbox>
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the checked state without allowing changes.
+
+```tsx
+<Checkbox isSelected isReadOnly>Read-only option</Checkbox>
+```
+
+## Invalid
+
+Use the `isInvalid` prop to indicate a validation error.
+
+<DocDemo>
+  <Checkbox isInvalid>Agree to terms</Checkbox>
+</DocDemo>
+
+```tsx
+<Checkbox isInvalid>Agree to terms</Checkbox>
+```
+
+## Children
+
+The `children` prop can be a string label or a render function that receives the component state, allowing you to conditionally render based on `isSelected` or `isIndeterminate`.
+
+```tsx
+<Checkbox>
+  {({ isSelected }) => isSelected ? 'Unsubscribe' : 'Subscribe'}
+</Checkbox>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Space` | Toggles the checkbox. |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="isSelected"
+    type="boolean"
+    default="—"
+    description="Whether the checkbox is selected (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultSelected"
+    type="boolean"
+    default="false"
+    description="Whether the checkbox is selected by default (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(isSelected: boolean) => void"
+    default="—"
+    description="Handler that is called when the checkbox's selection state changes."
+  />
+  <DocApiTableRow
+    name="isIndeterminate"
+    type="boolean"
+    default="false"
+    description="Whether the checkbox is in an indeterminate state. Overrides the visual appearance of the check mark."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the checkbox is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the checkbox can be interacted with but its value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the checkbox is in an invalid state."
+  />
+  <DocApiTableRow
+    name="value"
+    type="string"
+    default="'on'"
+    description="The value of the checkbox, used when submitting an HTML form. Relevant when used in a CheckboxGroup."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name of the checkbox element, used when submitting an HTML form."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((values: CheckboxRenderProps) => ReactNode)"
+    default="—"
+    description="The label for the checkbox. A function may be provided to alter the label based on component state."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.checkbox` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+</DocApiTable>

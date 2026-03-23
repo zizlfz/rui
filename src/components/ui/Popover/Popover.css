@@ -1,0 +1,35 @@
+.popover {
+    position: relative;
+    z-index: var(--z-popover);
+    box-sizing: border-box;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    outline: none;
+    overflow: auto;
+}
+
+/* Select-specific popover styling */
+.popover[data-trigger="Select"] {
+    min-width: 180px;
+    width: var(--trigger-width);
+    padding: 0;
+}
+
+.popover[data-entering],
+.popover[data-entered] {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.popover[data-exiting] {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+    .popover {
+        border-color: CanvasText;
+    }
+}

@@ -1,0 +1,148 @@
+# Switch
+
+A toggle switch that allows users to turn an option on or off. It provides a visual indication of the current state.
+
+## Installation
+
+```bash
+rui add switch
+```
+
+## Usage
+
+<DocDemo>
+  <Switch>Enable notifications</Switch>
+</DocDemo>
+
+```tsx
+import { Switch } from '@/components/ui/Switch';
+
+<Switch>Enable notifications</Switch>
+```
+
+## Value
+
+Use the `isSelected` and `onChange` props to control the state.
+
+<DocDemo props={{ isSelected: false }} propsForm={{ isSelected: Boolean }}>
+  {(props) => <Switch {...props}>Dark mode</Switch>}
+</DocDemo>
+
+```tsx
+function ControlledSwitch() {
+  const [isSelected, setIsSelected] = useState(false);
+
+  return (
+    <Switch isSelected={isSelected} onChange={setIsSelected}>
+      Dark mode
+    </Switch>
+  );
+}
+```
+
+An initial, uncontrolled value can be provided using the `defaultSelected` prop.
+
+```tsx
+<Switch defaultSelected>Dark mode</Switch>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the switch. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <Switch isDisabled>Disabled option</Switch>
+</DocDemo>
+
+```tsx
+<Switch isDisabled>Disabled option</Switch>
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the state without allowing changes.
+
+```tsx
+<Switch isSelected isReadOnly>Read-only option</Switch>
+```
+
+## Children
+
+The `children` prop can be a string label or a render function that receives the component state, allowing you to conditionally render based on `isSelected`.
+
+```tsx
+<Switch>
+  {({ isSelected }) => isSelected ? 'On' : 'Off'}
+</Switch>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Space` | Toggles the switch. |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="isSelected"
+    type="boolean"
+    default="—"
+    description="Whether the switch is selected (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultSelected"
+    type="boolean"
+    default="false"
+    description="Whether the switch is selected by default (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(isSelected: boolean) => void"
+    default="—"
+    description="Handler that is called when the switch's selection state changes."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the switch is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the switch can be interacted with but its value is immutable."
+  />
+  <DocApiTableRow
+    name="value"
+    type="string"
+    default="'on'"
+    description="The value of the switch, used when submitting an HTML form."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name of the switch element, used when submitting an HTML form."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((values: SwitchRenderProps) => ReactNode)"
+    default="—"
+    description="The label for the switch. A function may be provided to alter the label based on component state."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.switch` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+</DocApiTable>

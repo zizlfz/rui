@@ -1,0 +1,111 @@
+/* Modal Overlay - The backdrop behind the modal */
+.modal-overlay {
+	/* Positioning - covers entire viewport */
+	position: fixed;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+
+	/* Visuals */
+	background: var(--color-scrim);
+	backdrop-filter: blur(var(--border-2));
+
+	/* Stacking */
+	z-index: var(--z-modal);
+
+	/* Flexbox for centering */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-4);
+
+	/* Animation */
+	&[data-entering] {
+		animation: modal-fade var(--duration-moderate) var(--ease-out);
+	}
+
+	&[data-exiting] {
+		animation: modal-fade var(--duration-normal) var(--ease-in) reverse;
+	}
+}
+
+/* Modal - The dialog box */
+.modal {
+	/* Layout */
+	position: relative;
+	outline: none;
+
+	/* Sizing */
+	max-height: calc(100vh - var(--spacing-8));
+	width: 100%;
+	max-width: min(500px, calc(100vw - var(--spacing-8)));
+
+	/* Visuals */
+	background: var(--color-surface);
+	border-radius: var(--radius-xl);
+	color: var(--color-content);
+	border: var(--border-1) solid var(--color-border-strong);
+	box-shadow: var(--shadow-2xl);
+
+	/* Spacing */
+	padding: var(--spacing-6);
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+
+	/* Animation */
+	&[data-entering] {
+		animation: modal-zoom var(--duration-slow) var(--ease-spring);
+	}
+}
+
+/* Focus state for accessibility */
+.modal[data-focus-visible] {
+	outline: var(--border-2) solid var(--color-surface-primary);
+	outline-offset: var(--border-2);
+}
+
+/* Dialog content spacing - space between children */
+.modal > :where(:not(:last-child)) {
+	margin-bottom: var(--spacing-4);
+}
+
+/* Heading slot in dialog */
+.modal[slot="title"],
+.modal [slot="title"] {
+	font-size: var(--text-xl);
+	font-weight: var(--font-weight-medium);
+	margin-top: 0;
+	margin-bottom: var(--spacing-2);
+	color: var(--color-content);
+}
+
+/* Description in dialog */
+.modal[slot="description"],
+.modal [slot="description"] {
+	font-size: var(--text-sm);
+	color: var(--color-content-muted);
+	margin-bottom: var(--spacing-4);
+}
+
+/* Animations */
+@keyframes modal-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes modal-zoom {
+	from {
+		opacity: 0;
+		transform: scale(0.95) translateY(var(--spacing-2\.5));
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}

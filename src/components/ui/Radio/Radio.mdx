@@ -1,0 +1,308 @@
+# Radio
+
+A RadioGroup with Radio buttons allows users to select a single item from a list of choices. Only one radio button in a group can be selected at a time.
+
+## Installation
+
+```bash
+rui add radio
+```
+
+## Usage
+
+<DocDemo>
+  <RadioGroup label="Favorite color">
+    <Radio value="red">Red</Radio>
+    <Radio value="green">Green</Radio>
+    <Radio value="blue">Blue</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+import { RadioGroup, Radio } from '@/components/ui/Radio';
+
+<RadioGroup label="Favorite color">
+  <Radio value="red">Red</Radio>
+  <Radio value="green">Green</Radio>
+  <Radio value="blue">Blue</Radio>
+</RadioGroup>
+```
+
+## Value
+
+Use the `value` and `onChange` props to control the selected item. An initial, uncontrolled value can be provided using `defaultValue`.
+
+```tsx
+function ControlledRadioGroup() {
+  const [selected, setSelected] = useState('green');
+
+  return (
+    <RadioGroup
+      label="Favorite color"
+      value={selected}
+      onChange={setSelected}
+    >
+      <Radio value="red">Red</Radio>
+      <Radio value="green">Green</Radio>
+      <Radio value="blue">Blue</Radio>
+    </RadioGroup>
+  );
+}
+```
+
+## Orientation
+
+Use the `orientation` prop to arrange radios horizontally or vertically. The default is `vertical`.
+
+<DocDemo>
+  <RadioGroup label="Favorite color" orientation="horizontal">
+    <Radio value="red">Red</Radio>
+    <Radio value="green">Green</Radio>
+    <Radio value="blue">Blue</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+<RadioGroup label="Favorite color" orientation="horizontal">
+  <Radio value="red">Red</Radio>
+  <Radio value="green">Green</Radio>
+  <Radio value="blue">Blue</Radio>
+</RadioGroup>
+```
+
+## Description
+
+Use the `description` prop to provide additional context or instructions.
+
+<DocDemo>
+  <RadioGroup label="Size" description="Choose your preferred size.">
+    <Radio value="small">Small</Radio>
+    <Radio value="medium">Medium</Radio>
+    <Radio value="large">Large</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+<RadioGroup
+  label="Size"
+  description="Choose your preferred size."
+>
+  <Radio value="small">Small</Radio>
+  <Radio value="medium">Medium</Radio>
+  <Radio value="large">Large</Radio>
+</RadioGroup>
+```
+
+## Forms
+
+Use the `name` prop to submit the selected value to the server. Set the `isRequired` prop to validate that an option is selected.
+
+<DocDemo>
+  <RadioGroup label="Shipping method" name="shipping" isRequired>
+    <Radio value="standard">Standard (5-7 days)</Radio>
+    <Radio value="express">Express (2-3 days)</Radio>
+    <Radio value="overnight">Overnight (1 day)</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+<RadioGroup label="Shipping method" name="shipping" isRequired>
+  <Radio value="standard">Standard (5-7 days)</Radio>
+  <Radio value="express">Express (2-3 days)</Radio>
+  <Radio value="overnight">Overnight (1 day)</Radio>
+</RadioGroup>
+```
+
+## Disabled
+
+Use the `isDisabled` prop on the RadioGroup to disable all radios within the group. To disable individual radios, use the `isDisabled` prop on each `Radio`.
+
+<DocDemo>
+  <RadioGroup label="Disabled group" isDisabled>
+    <Radio value="option1">Option 1</Radio>
+    <Radio value="option2">Option 2</Radio>
+    <Radio value="option3">Option 3</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+<RadioGroup label="Disabled group" isDisabled>
+  <Radio value="option1">Option 1</Radio>
+  <Radio value="option2">Option 2</Radio>
+  <Radio value="option3">Option 3</Radio>
+</RadioGroup>
+```
+
+## Invalid
+
+Use the `isInvalid` or `errorMessage` prop to indicate a validation error.
+
+<DocDemo>
+  <RadioGroup
+    label="Payment method"
+    isInvalid
+    errorMessage="Please select a payment method."
+  >
+    <Radio value="credit">Credit Card</Radio>
+    <Radio value="debit">Debit Card</Radio>
+    <Radio value="paypal">PayPal</Radio>
+  </RadioGroup>
+</DocDemo>
+
+```tsx
+<RadioGroup
+  label="Payment method"
+  isInvalid
+  errorMessage="Please select a payment method."
+>
+  <Radio value="credit">Credit Card</Radio>
+  <Radio value="debit">Debit Card</Radio>
+  <Radio value="paypal">PayPal</Radio>
+</RadioGroup>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Space` | Selects the focused radio. |
+| `Arrow Up` / `Arrow Down` | Moves focus between radios in vertical orientation. |
+| `Arrow Left` / `Arrow Right` | Moves focus between radios in horizontal orientation. |
+
+## API
+
+### RadioGroup
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the radio group."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="A description for the field. Provides a hint such as specific requirements."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message for the field, displayed when validation fails."
+  />
+  <DocApiTableRow
+    name="orientation"
+    type="'horizontal' | 'vertical'"
+    default="'vertical'"
+    description="The axis the radios should align with."
+  />
+  <DocApiTableRow
+    name="value"
+    type="string"
+    default="—"
+    description="The current value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="string"
+    default="—"
+    description="The default value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(value: string) => void"
+    default="—"
+    description="Handler that is called when the value changes."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name of the input element, used when submitting an HTML form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the input is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the input can be selected but not changed by the user."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether user input is required on the input before form submission."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the input value is invalid."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The Radios contained within the RadioGroup."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.radio-group` class via the `cn` utility."
+  />
+</DocApiTable>
+
+### Radio
+
+<DocApiTable>
+  <DocApiTableRow
+    name="value"
+    type="string"
+    default="—"
+    description="The value of the radio, used to identify which item is selected."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the radio is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the radio can be interacted with but its value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the radio is in an invalid state."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((values: RadioRenderProps) => ReactNode)"
+    default="—"
+    description="The label for the radio. A function may be provided to alter the label based on component state."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.radio` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+</DocApiTable>

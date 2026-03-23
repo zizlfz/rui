@@ -1,0 +1,125 @@
+:root {
+	--alert-radius: var(--radius-lg);
+	--alert-padding: var(--spacing-4);
+	--alert-gap: var(--spacing-3);
+	--alert-title-size: var(--text-sm);
+	--alert-title-weight: var(--font-weight-semibold);
+	--alert-description-size: var(--text-sm);
+}
+
+.alert {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--alert-gap);
+	padding: var(--alert-padding);
+	border-radius: var(--alert-radius);
+	border: var(--border-1) solid transparent;
+	background: var(--color-surface);
+}
+
+.alert-icon {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: var(--border-2);
+}
+
+.alert-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.alert-title {
+	font-weight: var(--alert-title-weight);
+	font-size: var(--alert-title-size);
+	margin-bottom: var(--spacing-1);
+}
+
+.alert-description {
+	font-size: var(--alert-description-size);
+	line-height: var(--leading-normal);
+}
+
+.alert-close {
+	flex: 0 0 auto;
+	padding: 0;
+	height: var(--icon-xl);
+	width: var(--icon-xl);
+	margin-top: calc(var(--spacing-1) * -1);
+	margin-inline-start: var(--spacing-2);
+}
+
+/* ── Info Variant ── */
+.alert[data-variant="info"] {
+	background: var(--color-surface-info-subtle);
+	border-color: var(--color-surface-info-muted);
+}
+
+.alert[data-variant="info"] .alert-icon {
+	color: var(--color-surface-info);
+}
+
+.alert[data-variant="info"] .alert-title {
+	color: var(--color-content);
+}
+
+.alert[data-variant="info"] .alert-description {
+	color: var(--color-content-muted);
+}
+
+/* ── Success Variant ── */
+.alert[data-variant="success"] {
+	background: var(--color-surface-success-subtle);
+	border-color: var(--color-surface-success-muted);
+}
+
+.alert[data-variant="success"] .alert-icon {
+	color: var(--color-surface-success);
+}
+
+.alert[data-variant="success"] .alert-title {
+	color: var(--color-content);
+}
+
+.alert[data-variant="success"] .alert-description {
+	color: var(--color-content-muted);
+}
+
+/* ── Warning Variant ── */
+.alert[data-variant="warning"] {
+	background: var(--color-surface-warning-subtle);
+	border-color: var(--color-surface-warning-muted);
+}
+
+.alert[data-variant="warning"] .alert-icon {
+	color: var(--color-surface-warning);
+}
+
+.alert[data-variant="warning"] .alert-title {
+	color: var(--color-content);
+}
+
+.alert[data-variant="warning"] .alert-description {
+	color: var(--color-content-muted);
+}
+
+/* ── Error Variant ── */
+.alert[data-variant="error"] {
+	background: var(--color-surface-destructive-subtle);
+	border-color: var(--color-surface-destructive-muted);
+}
+
+.alert[data-variant="error"] .alert-icon {
+	color: var(--color-surface-destructive);
+}
+
+.alert[data-variant="error"] .alert-title {
+	color: var(--color-content);
+}
+
+.alert[data-variant="error"] .alert-description {
+	color: var(--color-content-muted);
+}

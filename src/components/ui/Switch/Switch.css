@@ -1,0 +1,126 @@
+/* ════════════════════════════════════════════════════
+   Switch Component Styles
+   ════════════════════════════════════════════════════ */
+
+.switch {
+    /* Container styles */
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--color-content);
+    forced-color-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Disabled state - reduce text contrast */
+.switch[data-disabled] {
+    color: var(--color-content-muted);
+}
+
+/* Track - the pill-shaped background */
+.switch-track {
+    --track-height: calc(var(--spacing-1) * 5);
+    --track-width: calc(var(--spacing-1) * 9);
+    --handle-size: calc(var(--spacing-1) * 4);
+
+    height: var(--track-height);
+    width: var(--track-width);
+    box-sizing: border-box;
+    border-radius: var(--radius-full);
+    transition: all var(--duration-moderate) var(--ease-in-out);
+    display: flex;
+    align-items: center;
+    padding: var(--border-2);
+    flex-shrink: 0;
+    background: var(--color-surface);
+    border: var(--border-1) solid var(--color-border);
+}
+
+/* Focus ring */
+.switch[data-focus-visible] .switch-track {
+    outline: var(--border-2) solid var(--color-ring);
+    outline-offset: var(--border-2);
+}
+
+/* Selected state - active/on */
+.switch[data-selected] .switch-track {
+    background: var(--color-surface-primary);
+    border-color: var(--color-surface-primary);
+}
+
+/* Disabled track */
+.switch[data-disabled] .switch-track {
+    opacity: var(--opacity-subtle);
+    cursor: not-allowed;
+}
+
+/* Handle - the toggle knob */
+.switch-handle {
+    --handle-size: calc(var(--spacing-1) * 4);
+    --handle-offset: calc(100% - var(--border-2));
+
+    width: var(--handle-size);
+    height: var(--handle-size);
+    border-radius: var(--radius-full);
+    background: var(--color-content);
+    transform: translateX(0);
+    transition: all var(--duration-moderate) var(--ease-in-out);
+    box-shadow: var(--shadow-xs);
+}
+
+/* Selected handle position */
+.switch[data-selected] .switch-handle {
+    background: var(--color-surface);
+    transform: translateX(var(--handle-offset));
+}
+
+/* Disabled handle */
+.switch[data-disabled] .switch-handle {
+    background: var(--color-content-muted);
+}
+
+/* Pressed state - subtle scale animation */
+.switch[data-pressed] .switch-handle {
+    transform: scale(0.95) translateX(var(--border-2));
+}
+
+.switch[data-selected][data-pressed] .switch-handle {
+    transform: scale(0.95) translateX(var(--handle-offset));
+}
+
+/* ════════════════════════════════════════════════════
+   Forced Colors Mode (Windows High Contrast)
+   ════════════════════════════════════════════════════ */
+@media (forced-colors: active) {
+    .switch-track {
+        border-color: ButtonBorder;
+    }
+
+    .switch[data-selected] .switch-track {
+        background: Highlight;
+        border-color: Highlight;
+    }
+
+    .switch[data-disabled] .switch-track {
+        border-color: GrayText;
+    }
+
+    .switch[data-disabled][data-selected] .switch-track {
+        background: GrayText;
+        border-color: GrayText;
+    }
+
+    .switch-handle {
+        background: ButtonText;
+    }
+
+    .switch[data-selected] .switch-handle {
+        background: HighlightText;
+    }
+
+    .switch[data-disabled] .switch-handle {
+        background: GrayText;
+    }
+}

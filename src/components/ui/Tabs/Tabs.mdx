@@ -1,0 +1,246 @@
+# Tabs
+
+Tabs organize content into separate views, allowing users to switch between them while staying in the same context.
+
+## Installation
+
+```bash
+rui add tabs
+```
+
+## Usage
+
+```tsx
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@/components/ui/Tabs';
+
+<Tabs>
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="details">Details</Tab>
+    <Tab id="settings">Settings</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="details">Details content</TabPanel>
+    <TabPanel id="settings">Settings content</TabPanel>
+  </TabPanels>
+</Tabs>
+```
+
+## Sub-components
+
+`Tabs` is composed of five sub-components: `Tabs`, `TabList`, `Tab`, `TabPanels`, and `TabPanel`. Each tab in the `TabList` corresponds to a `TabPanel` with the same `id`.
+
+<DocDemo>
+  <Tabs>
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="details">Details</Tab>
+      <Tab id="settings">Settings</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel id="overview">This is the overview panel with general information.</TabPanel>
+      <TabPanel id="details">This is the details panel with specific content.</TabPanel>
+      <TabPanel id="settings">This is the settings panel with configuration options.</TabPanel>
+    </TabPanels>
+  </Tabs>
+</DocDemo>
+
+## Default Selected Tab
+
+Use `defaultSelectedKey` to set which tab is selected by default. When not provided, the first tab is selected.
+
+```tsx
+<Tabs defaultSelectedKey="details">
+  <TabList>
+    <Tab id="overview">Overview</Tab>
+    <Tab id="details">Details</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel id="overview">Overview content</TabPanel>
+    <TabPanel id="details">Details content</TabPanel>
+  </TabPanels>
+</Tabs>
+```
+
+## Controlled Selection
+
+Use `selectedKey` and `onSelectionChange` to control the selected tab programmatically.
+
+<DocDemo>
+  {(props) => (
+    <Tabs {...props}>
+      <TabList>
+        <Tab id="overview">Overview</Tab>
+        <Tab id="details">Details</Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel id="overview">Overview content</TabPanel>
+        <TabPanel id="details">Details content</TabPanel>
+      </TabPanels>
+    </Tabs>
+  )}
+</DocDemo>
+
+## Disabled Tabs
+
+Use `isDisabled` on a `Tab` to prevent selection. Disabled tabs are visible but not interactive.
+
+<DocDemo>
+  <Tabs>
+    <TabList>
+      <Tab id="overview">Overview</Tab>
+      <Tab id="details">Details</Tab>
+      <Tab id="settings" isDisabled>Settings</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel id="overview">Overview content</TabPanel>
+      <TabPanel id="details">Details content</TabPanel>
+      <TabPanel id="settings">Settings content</TabPanel>
+    </TabPanels>
+  </Tabs>
+</DocDemo>
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Tab` | Moves focus to the selected tab. |
+| `ArrowLeft` / `ArrowRight` | Moves focus between tabs in horizontal orientation. |
+| `ArrowUp` / `ArrowDown` | Moves focus between tabs in vertical orientation. |
+| `Home` | Moves focus to the first tab. |
+| `End` | Moves focus to the last tab. |
+| `Enter` / `Space` | Activates the focused tab. |
+
+## Accessibility
+
+Tabs follow the WAI-ARIA Tabs Pattern. The `TabList` has `role="tablist"`, each `Tab` has `role="tab"`, and each `TabPanel` has `role="tabpanel"`. ARIA attributes like `aria-selected`, `aria-controls`, and `aria-labelledby` are managed automatically by React Aria Components.
+
+## API
+
+### Tabs
+
+<DocApiTable>
+  <DocApiTableRow
+    name="defaultSelectedKey"
+    type="Key"
+    default="—"
+    description="The key of the tab to select by default. The first tab is selected if not provided."
+  />
+  <DocApiTableRow
+    name="selectedKey"
+    type="Key"
+    default="—"
+    description="The key of the currently selected tab (controlled)."
+  />
+  <DocApiTableRow
+    name="onSelectionChange"
+    type="(key: Key) => void"
+    default="—"
+    description="Handler called when the selected tab changes."
+  />
+  <DocApiTableRow
+    name="orientation"
+    type="'horizontal' | 'vertical'"
+    default="'horizontal'"
+    description="The orientation of the tabs. Horizontal tabs stack vertically, vertical tabs stack horizontally."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.tabs` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content, typically TabList and TabPanels."
+  />
+</DocApiTable>
+
+### TabList
+
+<DocApiTable>
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.tab-list` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The Tab elements to render."
+  />
+</DocApiTable>
+
+### Tab
+
+<DocApiTable>
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="Unique identifier for the tab. This should match the id of the corresponding TabPanel."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the tab is disabled and cannot be selected."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.tab-item` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The tab label content."
+  />
+</DocApiTable>
+
+### TabPanels
+
+<DocApiTable>
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.tab-panels` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The TabPanel elements to render."
+  />
+</DocApiTable>
+
+### TabPanel
+
+<DocApiTable>
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="Unique identifier for the panel. This should match the id of the corresponding Tab."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.tab-panel` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The panel content."
+  />
+</DocApiTable>

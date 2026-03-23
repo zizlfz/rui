@@ -1,0 +1,144 @@
+.react-aria-RadioGroup,
+.radio-group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2);
+	color: var(--color-content);
+}
+
+.radio-items {
+	display: flex;
+	gap: var(--spacing-3);
+}
+
+.react-aria-RadioGroup[data-orientation="vertical"] .radio-items,
+.radio-group[data-orientation="vertical"] .radio-items {
+	flex-direction: column;
+}
+
+.react-aria-RadioGroup[data-orientation="horizontal"] .radio-items,
+.radio-group[data-orientation="horizontal"] .radio-items {
+	flex-direction: row;
+}
+
+.react-aria-Radio,
+.radio {
+	display: flex;
+	position: relative;
+	align-items: center;
+	gap: var(--spacing-2);
+	font-size: var(--text-sm);
+	color: var(--color-content);
+	forced-color-adjust: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.react-aria-Radio[data-disabled],
+.radio[data-disabled] {
+	color: var(--color-content-muted);
+}
+
+.radio-indicator {
+	position: relative;
+	width: calc(var(--spacing-1) * 4.5);
+	height: calc(var(--spacing-1) * 4.5);
+	box-sizing: border-box;
+	border-radius: var(--radius-full);
+	background: var(--color-surface);
+	border: var(--border-1) solid var(--color-border);
+	transition: all var(--duration-moderate);
+	flex-shrink: 0;
+}
+
+/* Focus ring */
+.react-aria-Radio[data-focus-visible] .radio-indicator,
+.radio[data-focus-visible] .radio-indicator {
+	outline: var(--border-2) solid var(--color-ring);
+	outline-offset: var(--border-2);
+}
+
+/* Selected state - thicker border with inner dot */
+.react-aria-Radio[data-selected] .radio-indicator,
+.radio[data-selected] .radio-indicator {
+	border-color: var(--color-surface-primary);
+	border-width: calc(var(--spacing-1) * 1.5);
+}
+
+/* Inner dot for selected state */
+.react-aria-Radio[data-selected] .radio-indicator::after,
+.radio[data-selected] .radio-indicator::after {
+	content: "";
+	position: absolute;
+	inset: 3px;
+	border-radius: inherit;
+	background: var(--color-surface-primary);
+	transform: scale(0.35);
+	transition: transform var(--duration-moderate);
+}
+
+/* Invalid state */
+.react-aria-Radio[data-invalid] .radio-indicator,
+.radio[data-invalid] .radio-indicator {
+	border-color: var(--color-surface-destructive);
+}
+
+.react-aria-Radio[data-invalid][data-selected] .radio-indicator,
+.radio[data-invalid][data-selected] .radio-indicator {
+	border-color: var(--color-surface-destructive);
+}
+
+.react-aria-Radio[data-invalid][data-selected] .radio-indicator::after,
+.radio[data-invalid][data-selected] .radio-indicator::after {
+	background: var(--color-surface-destructive);
+}
+
+/* Disabled state */
+.react-aria-Radio[data-disabled] .radio-indicator,
+.radio[data-disabled] .radio-indicator {
+	opacity: var(--opacity-subtle);
+	cursor: not-allowed;
+	border-color: var(--color-surface-muted);
+}
+
+/* Pressed state */
+.react-aria-Radio[data-pressed] .radio-indicator,
+.radio[data-pressed] .radio-indicator {
+	transform: scale(0.95);
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+	.radio-indicator {
+		border-color: ButtonBorder;
+	}
+
+	.react-aria-Radio[data-selected] .radio-indicator,
+	.radio[data-selected] .radio-indicator {
+		border-color: Highlight;
+	}
+
+	.react-aria-Radio[data-invalid] .radio-indicator,
+	.radio[data-invalid] .radio-indicator {
+		border-color: Mark;
+	}
+
+	.react-aria-Radio[data-invalid][data-selected] .radio-indicator::after,
+	.radio[data-invalid][data-selected] .radio-indicator::after {
+		background: Mark;
+	}
+
+	.react-aria-Radio[data-selected] .radio-indicator::after,
+	.radio[data-selected] .radio-indicator::after {
+		background: HighlightText;
+	}
+
+	.react-aria-Radio[data-disabled],
+	.radio[data-disabled] {
+		color: GrayText;
+	}
+
+	.react-aria-Radio[data-disabled] .radio-indicator,
+	.radio[data-disabled] .radio-indicator {
+		border-color: GrayText;
+	}
+}

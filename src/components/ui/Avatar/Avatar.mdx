@@ -1,0 +1,104 @@
+# Avatar
+
+An avatar represents a user with an image, initials, or a fallback placeholder. When the `src` image fails to load, the avatar falls back to displaying the `fallback` text.
+
+## Installation
+
+```bash
+rui add avatar
+```
+
+## Usage
+
+<DocDemo>
+  <Avatar src="https://i.pravatar.cc/64" alt="Jane Doe" />
+</DocDemo>
+
+```tsx
+import { Avatar } from '@/components/ui/Avatar';
+
+<Avatar src="/photo.jpg" alt="Jane Doe" />
+```
+
+## Sizes
+
+The `Avatar` component supports three sizes: `sm`, `md`, and `lg`. The default size is `md`.
+
+<DocDemo>
+  <Avatar src="https://i.pravatar.cc/64" alt="User" size="sm" />
+  <Avatar src="https://i.pravatar.cc/64" alt="User" size="md" />
+  <Avatar src="https://i.pravatar.cc/64" alt="User" size="lg" />
+</DocDemo>
+
+```tsx
+<Avatar src="/photo.jpg" alt="User" size="sm" />
+<Avatar src="/photo.jpg" alt="User" size="md" />
+<Avatar src="/photo.jpg" alt="User" size="lg" />
+```
+
+## Fallback
+
+When no `src` is provided, or the image fails to load, the avatar renders the `fallback` string as initials or a short label.
+
+<DocDemo>
+  <Avatar fallback="JD" />
+  <Avatar fallback="AB" size="lg" />
+</DocDemo>
+
+```tsx
+<Avatar fallback="JD" />
+<Avatar fallback="AB" size="lg" />
+```
+
+## Online Indicator
+
+Use the `isOnline` prop to display a green status indicator on the avatar. Useful for showing user presence.
+
+<DocDemo props={{ isOnline: true }} propsForm={{ isOnline: Boolean }}>
+  {(props) => <Avatar {...props} src="https://i.pravatar.cc/64" alt="User" size="lg" />}
+</DocDemo>
+
+```tsx
+<Avatar src="/photo.jpg" alt="User" isOnline />
+```
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="src"
+    type="string"
+    default="—"
+    description="The image source URL. When provided, the image is displayed inside the avatar. Falls back to the fallback text if the image fails to load."
+  />
+  <DocApiTableRow
+    name="alt"
+    type="string"
+    default="—"
+    description="Alternative text describing the avatar image for accessibility."
+  />
+  <DocApiTableRow
+    name="fallback"
+    type="string"
+    default="—"
+    description="Text displayed when no image source is provided or the image fails to load. Typically initials or a short label."
+  />
+  <DocApiTableRow
+    name="size"
+    type="'sm' | 'md' | 'lg'"
+    default="'md'"
+    description="The size of the avatar."
+  />
+  <DocApiTableRow
+    name="isOnline"
+    type="boolean"
+    default="false"
+    description="Whether to display an online status indicator on the avatar."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.avatar` class via the `cn` utility."
+  />
+</DocApiTable>

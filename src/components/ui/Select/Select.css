@@ -1,0 +1,153 @@
+:root {
+	--select-radius: var(--radius-xs);
+	--select-height: var(--height-field);
+	--select-padding-x: var(--spacing-3);
+	--select-font-size: var(--text-sm);
+}
+
+.select {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+	position: relative;
+	color: var(--color-content);
+}
+
+.select-button {
+	/* Reset & Layout */
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	appearance: none;
+	margin: 0;
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--select-font-size);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-content);
+
+	/* Sizing & Spacing — shared field rhythm with .input */
+	height: var(--select-height);
+	padding: 0 var(--select-padding-x);
+	width: 100%;
+	min-width: 0;
+
+	/* Visuals — matching .input */
+	border-radius: var(--select-radius);
+	border: var(--border-1) solid var(--color-border-strong);
+	background-color: var(--color-surface);
+	background-image: none;
+	text-align: start;
+	outline: none;
+
+	transition:
+		border-color var(--input-transition),
+		box-shadow var(--input-transition),
+		background var(--input-transition);
+
+	/* Input-like cursor behavior */
+	cursor: default;
+	user-select: text;
+	-webkit-tap-highlight-color: highlight;
+}
+
+/* Pressed state - don't scale */
+.select-button[data-pressed] {
+	transform: none;
+}
+
+/* Placeholder state */
+.select-value[data-placeholder] {
+	color: var(--color-content-muted);
+	font-weight: var(--font-weight-normal);
+}
+
+/* Chevron icon */
+.select-chevron {
+	width: var(--icon-sm);
+	height: var(--icon-sm);
+	flex-shrink: 0;
+	color: var(--color-content-muted);
+}
+
+/* Hide description in select value */
+.select-value [slot="description"] {
+	display: none;
+}
+
+/* Hover */
+.select-button:hover:not([data-disabled]) {
+	border-color: var(--color-border-strong);
+	background-color: var(--color-surface);
+	background-image: none;
+}
+
+/* Focus visible */
+.select-button[data-focus-visible] {
+	border-color: var(--color-ring);
+	background-color: var(--color-surface);
+	background-image: none;
+	box-shadow:
+		0 1px 2px var(--color-scrim) inset,
+		0 0 0 var(--input-focus-ring-width) var(--input-focus-ring-color);
+}
+
+/* Invalid / Error state */
+.select[data-invalid] .select-button {
+	border-color: var(--color-surface-destructive);
+	background-color: var(--color-surface);
+	background-image: none;
+	box-shadow:
+		0 1px 2px var(--color-scrim) inset,
+		0 0 0 var(--input-focus-ring-width)
+		color-mix(in oklch, var(--color-surface-destructive) 15%, transparent);
+}
+
+/* Disabled state */
+.select-button[data-disabled],
+.select[data-disabled] .select-button {
+	opacity: var(--opacity-disabled);
+	cursor: not-allowed;
+	background-color: var(--color-surface);
+	background-image: none;
+}
+
+.select[data-disabled] .select-chevron {
+	color: var(--color-content-muted);
+}
+
+/* Select-specific popover styling */
+.select-popover[data-trigger="Select"] {
+	min-width: 180px;
+	width: var(--trigger-width);
+	padding: 0;
+}
+
+.select-popover .listbox {
+	box-shadow: var(--shadow-lg);
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+	.select-value[data-placeholder] {
+		color: GrayText;
+	}
+
+	.select-chevron {
+		color: GrayText;
+	}
+
+	.select[data-invalid] .select-button {
+		border-color: Mark;
+	}
+
+	.select[data-disabled] .select-button {
+		opacity: 1;
+	}
+
+	.select[data-disabled] .select-chevron {
+		color: GrayText;
+	}
+}

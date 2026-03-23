@@ -1,0 +1,136 @@
+# Alert
+
+An alert displays an important message to the user, with optional variants for different semantic meanings.
+
+## Installation
+
+```bash
+rui add alert
+```
+
+## Usage
+
+<DocDemo>
+  <Alert title="Information">This is an informational message.</Alert>
+</DocDemo>
+
+```tsx
+import { Alert } from '@/components/ui/Alert';
+
+<Alert title="Information">This is an informational message.</Alert>
+```
+
+## Variants
+
+The `Alert` component supports four visual variants: `info`, `success`, `warning`, and `error`. Each variant includes an appropriate icon and distinct color scheme. The default variant is `info`.
+
+<DocDemo>
+  <Alert variant="info" title="Info">This is an informational alert.</Alert>
+  <Alert variant="success" title="Success">Operation completed successfully.</Alert>
+  <Alert variant="warning" title="Warning">Please review before continuing.</Alert>
+  <Alert variant="error" title="Error">Something went wrong.</Alert>
+</DocDemo>
+
+```tsx
+<Alert variant="info" title="Info">This is an informational alert.</Alert>
+<Alert variant="success" title="Success">Operation completed successfully.</Alert>
+<Alert variant="warning" title="Warning">Please review before continuing.</Alert>
+<Alert variant="error" title="Error">Something went wrong.</Alert>
+```
+
+## Title and Description
+
+An alert can have a title, a description (children), or both. When only `children` is provided, the alert renders without a title.
+
+<DocDemo>
+  <Alert variant="info">A simple alert without a title.</Alert>
+  <Alert variant="info" title="With title">An alert with both title and description.</Alert>
+</DocDemo>
+
+```tsx
+<Alert variant="info">A simple alert without a title.</Alert>
+<Alert variant="info" title="With title">An alert with both title and description.</Alert>
+```
+
+## Dismissible
+
+Use the `dismissible` prop to add a close button. The `onDismiss` callback fires when the user clicks the close button. The alert is removed from the DOM automatically on dismiss.
+
+<DocDemo props={{ dismissible: true, variant: "info", title: "Dismissible" }} propsForm={{ dismissible: Boolean }}>
+  {(props) => <Alert {...props}>This alert can be dismissed.</Alert>}
+</DocDemo>
+
+```tsx
+<Alert
+  dismissible
+  variant="info"
+  title="Dismissible"
+  onDismiss={() => console.log('Alert dismissed')}
+>
+  This alert can be dismissed.
+</Alert>
+```
+
+### Controlled Dismissal
+
+To control visibility yourself, use `dismissible` with `onDismiss` and conditionally render the alert.
+
+```tsx
+function DismissibleAlert() {
+  const [visible, setVisible] = useState(true);
+
+  if (!visible) return null;
+
+  return (
+    <Alert
+      dismissible
+      variant="info"
+      title="Dismissible"
+      onDismiss={() => setVisible(false)}
+    >
+      This alert can be dismissed.
+    </Alert>
+  );
+}
+```
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="variant"
+    type="'info' | 'success' | 'warning' | 'error'"
+    default="'info'"
+    description="The visual style of the alert, including icon and color scheme."
+  />
+  <DocApiTableRow
+    name="title"
+    type="ReactNode"
+    default="—"
+    description="The title of the alert. Displayed in bold above the description."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The description/content of the alert."
+  />
+  <DocApiTableRow
+    name="dismissible"
+    type="boolean"
+    default="false"
+    description="Whether the alert can be dismissed by the user. Adds a close button."
+  />
+  <DocApiTableRow
+    name="onDismiss"
+    type="() => void"
+    default="—"
+    description="Handler that is called when the alert is dismissed."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.alert` class via the `cn` utility."
+  />
+</DocApiTable>

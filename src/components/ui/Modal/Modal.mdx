@@ -1,0 +1,204 @@
+# Modal
+
+A modal is an overlay element that blocks interaction with content outside it. It renders a backdrop with a centered dialog box.
+
+## Installation
+
+```bash
+rui add modal
+```
+
+## Usage
+
+<DocDemo>
+  <DialogTrigger>
+    <Button>Open Modal</Button>
+    <Modal>
+      <Dialog>
+        <Heading slot="title">Modal Title</Heading>
+        <p>Modal content goes here.</p>
+        <Button slot="close" variant="secondary">Close</Button>
+      </Dialog>
+    </Modal>
+  </DialogTrigger>
+</DocDemo>
+
+```tsx
+import { Modal, Dialog } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+
+<DialogTrigger>
+  <Button>Open Modal</Button>
+  <Modal>
+    <Dialog>
+      <Heading slot="title">Modal Title</Heading>
+      <p>Modal content goes here.</p>
+      <Button slot="close">Close</Button>
+    </Dialog>
+  </Modal>
+</DialogTrigger>
+```
+
+Modal uses `DialogTrigger` from react-aria-components to manage open/close state. Wrap the trigger and modal in a `DialogTrigger`, and use `slot="close"` on any button inside to close the modal.
+
+## Dismissable
+
+Use the `isDismissable` prop to allow closing the modal by clicking outside or pressing Escape.
+
+<DocDemo props={{ isDismissable: true }} propsForm={{ isDismissable: Boolean }}>
+  {(props) => (
+    <DialogTrigger>
+      <Button>Open Dismissible</Button>
+      <Modal {...props}>
+        <Dialog>
+          <Heading slot="title">Dismissible Modal</Heading>
+          <p>Click outside or press Escape to close.</p>
+        </Dialog>
+      </Modal>
+    </DialogTrigger>
+  )}
+</DocDemo>
+
+```tsx
+<DialogTrigger>
+  <Button>Open Modal</Button>
+  <Modal isDismissable>
+    <Dialog>
+      <Heading slot="title">Dismissible Modal</Heading>
+      <p>Click outside or press Escape to close.</p>
+    </Dialog>
+  </Modal>
+</DialogTrigger>
+```
+
+## Controlled
+
+Use the `isOpen` and `onOpenChange` props to control the modal programmatically.
+
+```tsx
+import { useState } from 'react';
+import { Modal, Dialog } from '@/components/ui/Modal';
+import { Button } from '@/components/ui/Button';
+
+function Example() {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onPress={() => setOpen(true)}>Open Modal</Button>
+      <Modal isOpen={isOpen} onOpenChange={setOpen}>
+        <Dialog>
+          <Heading slot="title">Controlled Modal</Heading>
+          <p>This modal is controlled by React state.</p>
+          <Button slot="close" onPress={() => setOpen(false)}>Close</Button>
+        </Dialog>
+      </Modal>
+    </>
+  );
+}
+```
+
+## Title and Description
+
+Use the `slot="title"` and `slot="description"` attributes to add a title and description to the dialog.
+
+<DocDemo>
+  <DialogTrigger>
+    <Button>Open Modal</Button>
+    <Modal>
+      <Dialog>
+        <Heading slot="title">Modal with Title</Heading>
+        <p slot="description">This is a description that provides context.</p>
+        <p>Additional content goes here.</p>
+      </Dialog>
+    </Modal>
+  </DialogTrigger>
+</DocDemo>
+
+```tsx
+<Modal>
+  <Dialog>
+    <Heading slot="title">Modal with Title</Heading>
+    <p slot="description">This is a description.</p>
+    <p>Additional content.</p>
+  </Dialog>
+</Modal>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Escape` | Closes the modal (unless `isKeyboardDismissDisabled` is set). |
+| `Tab` | Moves focus to the next focusable element inside the modal. |
+| `Shift + Tab` | Moves focus to the previous focusable element inside the modal. |
+
+## Accessibility
+
+The modal renders with `role="dialog"` and `aria-modal="true"`. When open, focus is trapped inside the modal and returns to the trigger element when closed.
+
+## API
+
+### Modal
+
+<DocApiTable>
+  <DocApiTableRow
+    name="isOpen"
+    type="boolean"
+    default="—"
+    description="Whether the modal is visible."
+  />
+  <DocApiTableRow
+    name="onOpenChange"
+    type="(isOpen: boolean) => void"
+    default="—"
+    description="Handler called when the modal opens or closes."
+  />
+  <DocApiTableRow
+    name="isDismissable"
+    type="boolean"
+    default="false"
+    description="Whether to close the modal when the user interacts outside it."
+  />
+  <DocApiTableRow
+    name="isKeyboardDismissDisabled"
+    type="boolean"
+    default="false"
+    description="Whether pressing Escape should close the modal."
+  />
+  <DocApiTableRow
+    name="shouldCloseOnInteractOutside"
+    type="(element: Element) => boolean"
+    default="—"
+    description="Function that determines if clicking outside should close the modal."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | (props: ModalRenderProps) => ReactNode"
+    default="—"
+    description="The modal content. Accepts a render function for modal state access."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.modal` class."
+  />
+</DocApiTable>
+
+### Dialog
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the dialog."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.dialog` class."
+  />
+</DocApiTable>

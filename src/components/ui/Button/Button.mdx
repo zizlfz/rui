@@ -1,0 +1,231 @@
+# Button
+
+A button allows a user to perform an action, with mouse, touch, and keyboard interactions.
+
+## Installation
+
+```bash
+rui add button
+```
+
+## Usage
+
+<DocDemo>
+  <Button>Default</Button>
+</DocDemo>
+
+```tsx
+import { Button } from '@/components/ui/Button';
+
+<Button>Click me</Button>
+```
+
+## Variants
+
+The `Button` component supports five visual variants: `primary`, `secondary`, `quiet`, `danger`, and `success`. When no `variant` is specified, a default subtle style is applied.
+
+<DocDemo>
+  <Button>Default</Button>
+  <Button variant="primary">Primary</Button>
+  <Button variant="secondary">Secondary</Button>
+  <Button variant="quiet">Quiet</Button>
+  <Button variant="danger">Danger</Button>
+  <Button variant="success">Success</Button>
+</DocDemo>
+
+```tsx
+<Button>Default</Button>
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="quiet">Quiet</Button>
+<Button variant="danger">Danger</Button>
+<Button variant="success">Success</Button>
+```
+
+## Events
+
+Use the `onPress` prop to handle interactions via mouse, keyboard, and touch. This is similar to `onClick`, but normalized for consistency across browsers, devices, and interaction methods.
+
+<DocDemo eventProps={(log) => ({ onPress: log("onPress") })}>
+  {(props) => <Button variant="primary" {...props}>Press me</Button>}
+</DocDemo>
+
+```tsx
+<Button onPress={() => alert('Pressed!')}>Press me</Button>
+```
+
+The `onPressStart`, `onPressEnd`, and `onPressChange` events are also available. Each handler receives a `PressEvent` with information about the target and interaction method.
+
+## Pending
+
+Use the `isPending` prop to display a pending state. Pending buttons remain focusable, but are otherwise disabled. A spinner is rendered automatically while pending. Pending state changes are announced to assistive technologies.
+
+<DocDemo props={{ isPending: true, variant: "primary" }} propsForm={{ isPending: Boolean }}>
+  {(props) => <Button {...props}>Save</Button>}
+</DocDemo>
+
+## Disabled
+
+Use the `isDisabled` prop to disable the button. Disabled buttons cannot be pressed and are excluded from the tab order.
+
+<DocDemo props={{ isDisabled: true, variant: "primary" }} propsForm={{ isDisabled: Boolean }}>
+  {(props) => <Button {...props}>Disabled</Button>}
+</DocDemo>
+
+## Icon-only Button
+
+When a `Button` contains only an `svg` child, it automatically renders as a square icon button.
+
+<DocDemo>
+  <Button>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </Button>
+</DocDemo>
+
+```tsx
+<Button>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</Button>
+```
+
+## Link Buttons
+
+The `Button` component always represents a button semantically. To create a link that visually looks like a button, use the `Link` component from `react-aria-components` with the same `.button` class.
+
+```tsx
+import { Link } from 'react-aria-components';
+
+<Link className="button" href="https://example.com" target="_blank">
+  Visit Link
+</Link>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Enter` | Activates the button. |
+| `Space` | Activates the button. |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="variant"
+    type="'primary' | 'secondary' | 'quiet' | 'danger' | 'success'"
+    default="—"
+    description="The visual style of the button. A default subtle style is applied when no variant is specified."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the button is disabled."
+  />
+  <DocApiTableRow
+    name="isPending"
+    type="boolean"
+    default="false"
+    description="Whether the button is in a pending state. This disables press and hover events while retaining focusability, and announces the pending state to screen readers. A spinner is rendered automatically."
+  />
+  <DocApiTableRow
+    name="onPress"
+    type="(e: PressEvent) => void"
+    default="—"
+    description="Handler that is called when the press is released over the target."
+  />
+  <DocApiTableRow
+    name="onPressStart"
+    type="(e: PressEvent) => void"
+    default="—"
+    description="Handler that is called when a press interaction starts."
+  />
+  <DocApiTableRow
+    name="onPressEnd"
+    type="(e: PressEvent) => void"
+    default="—"
+    description="Handler that is called when a press interaction ends, either over the target or when the pointer leaves the target."
+  />
+  <DocApiTableRow
+    name="onPressChange"
+    type="(isPressed: boolean) => void"
+    default="—"
+    description="Handler that is called when the press state changes."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.button` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the button. A render function may be provided to alter the children based on component state."
+  />
+  <DocApiTableRow
+    name="type"
+    type="'button' | 'submit' | 'reset'"
+    default="'button'"
+    description="The behavior of the button when used in an HTML form."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+  <DocApiTableRow
+    name="excludeFromTabOrder"
+    type="boolean"
+    default="false"
+    description="Whether to exclude the element from the sequential tab order."
+  />
+</DocApiTable>
+
+## Related Types
+
+### PressEvent
+
+<DocApiTable>
+  <DocApiTableRow
+    name="type"
+    type="'pressstart' | 'pressend' | 'pressup' | 'press'"
+    description="The type of press event being fired."
+  />
+  <DocApiTableRow
+    name="pointerType"
+    type="PointerType"
+    description="The pointer type that triggered the press event (e.g. 'mouse', 'keyboard', 'touch')."
+  />
+  <DocApiTableRow
+    name="target"
+    type="Element"
+    description="The target element of the press event."
+  />
+  <DocApiTableRow
+    name="shiftKey"
+    type="boolean"
+    description="Whether the shift keyboard modifier was held during the press event."
+  />
+  <DocApiTableRow
+    name="ctrlKey"
+    type="boolean"
+    description="Whether the ctrl keyboard modifier was held during the press event."
+  />
+  <DocApiTableRow
+    name="metaKey"
+    type="boolean"
+    description="Whether the meta keyboard modifier was held during the press event."
+  />
+  <DocApiTableRow
+    name="altKey"
+    type="boolean"
+    description="Whether the alt keyboard modifier was held during the press event."
+  />
+</DocApiTable>

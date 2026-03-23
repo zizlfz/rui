@@ -1,0 +1,154 @@
+# Drawer
+
+A drawer is a panel that slides in from the edge of the screen. It overlays content and supports positioning on the right, left, or bottom.
+
+## Installation
+
+```bash
+rui add drawer
+```
+
+## Usage
+
+<DocDemo props={{position: "right" }}>
+  {(props) => (
+    <DialogTrigger>
+			<Button>Open Drawer</Button>
+			<Drawer>
+				<Heading slot="title">Drawer Title</Heading>
+				<p>
+					This is a drawer component that slides in from the edge of the
+					screen. It can contain any content you want.
+				</p>
+				<div className="flex gap-2">
+					<Button slot="close" variant="secondary">
+						Cancel
+					</Button>
+					<Button slot="close">Confirm</Button>
+				</div>
+			</Drawer>
+		</DialogTrigger>
+  )}
+</DocDemo>
+
+```tsx
+import { Drawer } from '@/components/ui/Drawer';
+import { Button } from '@/components/ui/Button';
+
+<DialogTrigger>
+  <Button>Open Drawer</Button>
+  <Drawer>
+    <Heading slot="title">Drawer Title</Heading>
+    <p>Drawer content goes here.</p>
+  </Drawer>
+</DialogTrigger>
+```
+
+Drawer uses `DialogTrigger` from react-aria-components to manage open/close state. Wrap the trigger and drawer in a `DialogTrigger`, and use `slot="close"` on any button inside to close the drawer.
+
+## Position
+
+Use the `position` prop to control which edge of the screen the drawer slides in from. The default is `right`.
+
+<DocDemo props={{position: "left" }} propsForm={{ position: ["right", "left", "bottom"] }}>
+  {(props) => (
+    <DialogTrigger>
+      <Button>Open {props.position} drawer</Button>
+      <Drawer {...props}>
+        <Heading slot="title">{props.position} Drawer</Heading>
+        <p>This drawer slides in from the {props.position}.</p>
+        <Button slot="close">Close</Button>
+      </Drawer>
+    </DialogTrigger>
+  )}
+</DocDemo>
+
+```tsx
+<Drawer position="left">...</Drawer>
+<Drawer position="bottom">...</Drawer>
+<Drawer position="right">...</Drawer>
+```
+
+## Controlled
+
+Use the `isOpen` and `onOpenChange` props to control the drawer programmatically.
+
+```tsx
+function ControlledDrawer() {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button onPress={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer isOpen={isOpen} onOpenChange={setOpen}>
+        <Heading slot="title">Controlled Drawer</Heading>
+        <p>This drawer is controlled by React state.</p>
+      </Drawer>
+    </>
+  );
+}
+```
+
+## Disable Overlay
+
+Use the `noOverlay` prop to render the drawer without the dimmed backdrop.
+
+```tsx
+<Drawer noOverlay>
+  <Heading slot="title">No Overlay</Heading>
+  <p>This drawer has no backdrop overlay.</p>
+</Drawer>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Escape` | Closes the drawer. |
+| `Tab` | Moves focus to the next focusable element inside the drawer. |
+| `Shift + Tab` | Moves focus to the previous focusable element inside the drawer. |
+
+## Accessibility
+
+The drawer renders with `role="dialog"` and `aria-modal="true"`. When open, focus is trapped inside the drawer and returns to the trigger element when closed.
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="isOpen"
+    type="boolean"
+    default="—"
+    description="Controls whether the drawer is visible."
+  />
+  <DocApiTableRow
+    name="onOpenChange"
+    type="(isOpen: boolean) => void"
+    default="—"
+    description="Handler called when the drawer opens or closes."
+  />
+  <DocApiTableRow
+    name="position"
+    type="'right' | 'left' | 'bottom'"
+    default="'right'"
+    description="The edge of the screen the drawer slides in from."
+  />
+  <DocApiTableRow
+    name="noOverlay"
+    type="boolean"
+    default="—"
+    description="When true, renders without the dimmed backdrop overlay."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((props: DialogRenderProps) => ReactNode)"
+    default="—"
+    description="The content of the drawer. Supports render props for dialog access."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.drawer` class."
+  />
+</DocApiTable>

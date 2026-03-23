@@ -1,0 +1,187 @@
+/* Drawer Overlay - The backdrop behind the drawer */
+.drawer-overlay {
+	/* Positioning - covers entire viewport */
+	position: fixed;
+	inset: 0;
+	width: 100vw;
+	height: 100vh;
+
+	/* Visuals */
+	background: var(--color-scrim);
+	backdrop-filter: blur(var(--border-2));
+
+	/* Stacking */
+	z-index: var(--z-overlay);
+
+	/* Animation */
+	will-change: opacity;
+
+	&[data-entering] {
+		animation: drawer-fade var(--duration-moderate) var(--ease-out);
+	}
+
+	&[data-exiting] {
+		animation: drawer-fade var(--duration-normal) var(--ease-in) reverse;
+		pointer-events: none;
+	}
+}
+
+/* Drawer - The panel */
+.drawer {
+	/* Positioning */
+	position: fixed;
+
+	/* Visuals */
+	background: var(--color-surface);
+	color: var(--color-content);
+	border: var(--border-1) solid var(--color-border-strong);
+	box-shadow: var(--shadow-md);
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+
+	/* Spacing */
+	padding: var(--spacing-6);
+
+	/* Overflow */
+	overflow-y: auto;
+
+	/* Stacking */
+	z-index: var(--z-overlay);
+
+	/* Animation */
+	will-change: transform, opacity;
+}
+
+/* Focus state for accessibility */
+.drawer[data-focus-visible] {
+	outline: var(--border-2) solid var(--color-surface-primary);
+	outline-offset: var(--border-2);
+}
+
+/* Dialog content spacing - space between children */
+.drawer > :where(:not(:last-child)) {
+	margin-bottom: var(--spacing-4);
+}
+
+/* Heading slot in drawer */
+.drawer[slot="title"],
+.drawer [slot="title"] {
+	font-size: var(--text-md);
+	font-weight: var(--font-weight-medium);
+	margin-top: 0;
+	margin-bottom: var(--spacing-2);
+	color: var(--color-content);
+}
+
+/* Description in drawer */
+.drawer[slot="description"],
+.drawer [slot="description"] {
+	font-size: var(--text-sm);
+	color: var(--color-content-muted);
+	margin-bottom: var(--spacing-4);
+}
+
+/* ── Position variants ── */
+
+.drawer--right {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: min(420px, 90vw);
+	height: 100vh;
+	border-radius: var(--radius-md) 0 0 var(--radius-md);
+	border-right: none;
+
+	&[data-entering] {
+		animation: drawer-slide-from-right var(--duration-slow) var(--ease-spring);
+	}
+
+	&[data-exiting] {
+		animation: drawer-slide-from-right var(--duration-moderate) var(--ease-in)
+			reverse;
+	}
+}
+
+.drawer--left {
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: min(420px, 90vw);
+	height: 100vh;
+	border-radius: 0 var(--radius-md) var(--radius-md) 0;
+	border-left: none;
+
+	&[data-entering] {
+		animation: drawer-slide-from-left var(--duration-slow) var(--ease-spring);
+	}
+
+	&[data-exiting] {
+		animation: drawer-slide-from-left var(--duration-moderate) var(--ease-in)
+			reverse;
+	}
+}
+
+.drawer--bottom {
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100vw;
+	max-height: min(85vh, 100vh);
+	border-radius: var(--radius-md) var(--radius-md) 0 0;
+	border-bottom: none;
+
+	&[data-entering] {
+		animation: drawer-slide-from-bottom var(--duration-slow) var(--ease-spring);
+	}
+
+	&[data-exiting] {
+		animation: drawer-slide-from-bottom var(--duration-moderate) var(--ease-in)
+			reverse;
+	}
+}
+
+/* ── Animations ── */
+
+@keyframes drawer-fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes drawer-slide-from-right {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes drawer-slide-from-left {
+	from {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes drawer-slide-from-bottom {
+	from {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

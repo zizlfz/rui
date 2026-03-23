@@ -1,0 +1,43 @@
+.doc-alert {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    margin: 1rem 0;
+}
+
+.doc-alert[data-variant="info"] {
+    background-color: var(--color-blue-50);
+    border-color: var(--color-blue-500);
+}
+
+.doc-alert[data-variant="success"] {
+    background-color: var(--color-green-50);
+    border-color: var(--color-green-500);
+}
+
+.doc-alert[data-variant="warning"] {
+    background-color: var(--color-yellow-50);
+    border-color: var(--color-yellow-500);
+}
+
+.doc-alert[data-variant="error"] {
+    background-color: var(--color-red-50);
+    border-color: var(--color-red-500);
+}
+
+.doc-alert__title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.doc-alert__content {
+    font-size: 0.875rem;
+    line-height: 1.5;
+
+    p {
+        margin: 0;
+    }
+}
+
+.doc-alert__content p:last-child {
+    margin-bottom: 0;
+}

@@ -1,0 +1,440 @@
+# Calendar / RangeCalendar
+
+`Calendar` displays date grids for single date selection. `RangeCalendar` allows contiguous date range selection.
+
+## Installation
+
+```bash
+rui add calendar
+```
+
+## Usage
+
+### Calendar
+
+<DocDemo>
+  <Calendar aria-label="Event date" />
+</DocDemo>
+
+```tsx
+import { Calendar } from '@/components/ui/Calendar';
+
+<Calendar aria-label="Event date" />
+```
+
+### RangeCalendar
+
+<DocDemo>
+  <RangeCalendar aria-label="Trip dates" />
+</DocDemo>
+
+```tsx
+import { RangeCalendar } from '@/components/ui/Calendar';
+
+<RangeCalendar aria-label="Trip dates" />
+```
+
+## Value
+
+Both components have no selection by default. Provide `defaultValue` for uncontrolled, `value` for controlled.
+
+Date values use [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/) package.
+
+### Calendar
+
+```tsx
+import { Calendar } from '@/components/ui/Calendar';
+import { parseDate } from '@internationalized/date';
+
+function ControlledCalendar() {
+  const [value, setValue] = useState(parseDate('2024-09-05'));
+
+  return (
+    <Calendar aria-label="Event date" value={value} onChange={setValue} />
+  );
+}
+```
+
+### RangeCalendar
+
+<DocDemo>
+  <RangeCalendar aria-label="Trip dates" />
+</DocDemo>
+
+```tsx
+import { parseDate } from '@internationalized/date';
+import { RangeCalendar } from '@/components/ui/Calendar';
+
+function ControlledRangeCalendar() {
+  const [range, setRange] = useState({
+    start: parseDate('2024-02-03'),
+    end: parseDate('2024-02-12'),
+  });
+
+  return (
+    <RangeCalendar
+      aria-label="Trip dates"
+      value={range}
+      onChange={setRange}
+    />
+  );
+}
+```
+
+## Label
+
+Use `aria-label` when no visible label present.
+
+```tsx
+<Calendar aria-label="Appointment date" />
+<RangeCalendar aria-label="Select date range" />
+```
+
+## Min and Max Dates
+
+Use `minValue` and `maxValue` to constrain selection.
+
+```tsx
+import { today, getLocalTimeZone } from '@internationalized/date';
+
+<Calendar
+  aria-label="Appointment date"
+  minValue={today(getLocalTimeZone())}
+/>
+
+<RangeCalendar
+  aria-label="Trip dates"
+  minValue={today(getLocalTimeZone())}
+/>
+```
+
+## Disabled
+
+Use `isDisabled` to disable navigation and selection.
+
+<DocDemo>
+  <Calendar aria-label="Event date" isDisabled />
+</DocDemo>
+
+```tsx
+<Calendar aria-label="Event date" isDisabled />
+<RangeCalendar aria-label="Trip dates" isDisabled />
+```
+
+## Read Only
+
+Use `isReadOnly` to view selection without allowing changes.
+
+```tsx
+<Calendar aria-label="Event date" value={parseDate('2024-09-05')} isReadOnly />
+
+<RangeCalendar
+  aria-label="Trip dates"
+  value={{ start: parseDate('2024-02-03'), end: parseDate('2024-02-12') }}
+  isReadOnly
+/>
+```
+
+## Unavailable Dates
+
+Use `isDateUnavailable` callback to mark specific dates unavailable. Dates remain focusable but unselectable.
+
+```tsx
+import { isWeekend, today, getLocalTimeZone } from '@internationalized/date';
+
+<Calendar
+  aria-label="Appointment date"
+  isDateUnavailable={(date) => isWeekend(date, 'en-US')}
+/>
+
+<RangeCalendar
+  aria-label="Trip dates"
+  isDateUnavailable={(date) => isWeekend(date, 'en-US')}
+/>
+```
+
+## Non-Contiguous Ranges (RangeCalendar only)
+
+Use `allowsNonContiguousRanges` to permit ranges containing unavailable dates.
+
+```tsx
+<RangeCalendar
+  aria-label="Trip dates"
+  allowsNonContiguousRanges
+  isDateUnavailable={(date) => isWeekend(date, 'en-US')}
+/>
+```
+
+## Validation (RangeCalendar only)
+
+Use `isInvalid` prop with `errorMessage` slot.
+
+```tsx
+<RangeCalendar
+  aria-label="Trip dates"
+  isInvalid
+  errorMessage="Maximum stay is 14 days."
+/>
+```
+
+## Visible Months (RangeCalendar only)
+
+Display multiple months using `visibleDuration` prop.
+
+```tsx
+<RangeCalendar
+  aria-label="Trip dates"
+  visibleDuration={{ months: 2 }}
+/>
+```
+
+## International Calendars (Calendar only)
+
+`Calendar` supports 13 calendar systems (Gregorian, Buddhist, Hebrew, Indian, Islamic, etc.). Dates display in locale-appropriate system.
+
+```tsx
+import { CalendarDate, createCalendar } from '@internationalized/date';
+
+<Calendar
+  aria-label="Appointment date"
+  calendar={createCalendar('hebrew')}
+/>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Arrow Left` | Move focus to the previous day. |
+| `Arrow Right` | Move focus to the next day. |
+| `Arrow Up` | Move focus to the same day of the previous week. |
+| `Arrow Down` | Move focus to the same day of the next week. |
+| `Home` | Move focus to the first day of the month. |
+| `End` | Move focus to the last day of the month. |
+| `Page Up` | Move focus to the same date in the previous month. |
+| `Page Down` | Move focus to the same date in the next month. |
+| `Shift + Page Up` | Move focus to the same date in the previous year. |
+| `Shift + Page Down` | Move focus to the same date in the next year. |
+| `Enter` / `Space` | Select focused date. For `RangeCalendar`, select as start or end of range. |
+
+## API
+
+### Calendar
+
+<DocApiTable>
+  <DocApiTableRow
+    name="value"
+    type="DateValue"
+    default="—"
+    description="The current date value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="DateValue"
+    default="—"
+    description="The initial date value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(date: DateValue) => void"
+    default="—"
+    description="Handler that is called when the selected date changes."
+  />
+  <DocApiTableRow
+    name="minValue"
+    type="DateValue"
+    default="—"
+    description="The minimum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="maxValue"
+    type="DateValue"
+    default="—"
+    description="The maximum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="isDateUnavailable"
+    type="(date: DateValue) => boolean"
+    default="—"
+    description="Callback to determine if a date should be unavailable. Unavailable dates cannot be selected."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the calendar is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the calendar value is immutable."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether to focus the calendar on mount."
+  />
+  <DocApiTableRow
+    name="focusedValue"
+    type="DateValue"
+    default="—"
+    description="The currently focused date (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultFocusedValue"
+    type="DateValue"
+    default="—"
+    description="The initially focused date (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onFocusChange"
+    type="(date: CalendarDate) => void"
+    default="—"
+    description="Handler that is called when the focused date changes."
+  />
+  <DocApiTableRow
+    name="firstDayOfWeek"
+    type="'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'"
+    default="—"
+    description="The day that starts the week. Defaults to the locale setting."
+  />
+  <DocApiTableRow
+    name="calendar"
+    type="Calendar"
+    default="—"
+    description="Calendar system to use for date formatting (e.g., Gregorian, Hebrew, Buddhist)."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.calendar` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string"
+    default="—"
+    description="Defines a string value that labels the calendar for accessibility."
+  />
+</DocApiTable>
+
+### RangeCalendar
+
+<DocApiTable>
+  <DocApiTableRow
+    name="value"
+    type="RangeValue<DateValue>"
+    default="—"
+    description="The current date range value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="RangeValue<DateValue>"
+    default="—"
+    description="The initial date range value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(range: RangeValue<DateValue>) => void"
+    default="—"
+    description="Handler that is called when the selected range changes."
+  />
+  <DocApiTableRow
+    name="minValue"
+    type="DateValue"
+    default="—"
+    description="The minimum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="maxValue"
+    type="DateValue"
+    default="—"
+    description="The maximum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="isDateUnavailable"
+    type="(date: DateValue) => boolean"
+    default="—"
+    description="Callback to determine if a date should be unavailable."
+  />
+  <DocApiTableRow
+    name="allowsNonContiguousRanges"
+    type="boolean"
+    default="false"
+    description="Whether non-contiguous ranges containing unavailable dates may be selected."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the calendar is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the calendar value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the current selection is invalid."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string"
+    default="—"
+    description="Error message displayed when isInvalid is true."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether to focus the calendar on mount."
+  />
+  <DocApiTableRow
+    name="focusedValue"
+    type="DateValue"
+    default="—"
+    description="The currently focused date (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultFocusedValue"
+    type="DateValue"
+    default="—"
+    description="The initially focused date (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onFocusChange"
+    type="(date: CalendarDate) => void"
+    default="—"
+    description="Handler that is called when the focused date changes."
+  />
+  <DocApiTableRow
+    name="firstDayOfWeek"
+    type="'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'"
+    default="—"
+    description="The day that starts the week. Defaults to the locale setting."
+  />
+  <DocApiTableRow
+    name="visibleDuration"
+    type="DateDuration"
+    default="{ months: 1 }"
+    description="The number of months to display at once."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.range-calendar` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string"
+    default="—"
+    description="Defines a string value that labels the calendar for accessibility."
+  />
+</DocApiTable>

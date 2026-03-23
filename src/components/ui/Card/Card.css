@@ -1,0 +1,51 @@
+/* Card Shell */
+.card {
+	background: var(--color-surface);
+	border: var(--border-1) solid var(--color-border);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Separator - applies border-top between all consecutive children */
+.card > * + * {
+	border-top: var(--border-1) solid var(--color-border);
+}
+
+/* Exception - no border after images so they bleed to next section */
+.card > .card-image + * {
+	border-top: none;
+}
+
+/* CardImage wrapper */
+.card-image {
+	aspect-ratio: var(--aspect, 16 / 9);
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+/* Image inside CardImage wrapper */
+.card-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: var(--position, center);
+	display: block;
+}
+
+/* CardHeader */
+.card-header {
+	padding: var(--spacing-3) var(--spacing-4);
+}
+
+/* CardBody */
+.card-body {
+	padding: var(--spacing-4);
+}
+
+/* CardFooter */
+.card-footer {
+	background: var(--color-surface-muted);
+	padding: var(--spacing-3) var(--spacing-4);
+}

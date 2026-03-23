@@ -1,0 +1,384 @@
+# Dropdown
+
+A dropdown menu displays a list of actions or options when triggered by a button. It supports single and multiple selection, keyboard navigation, and nested submenus.
+
+## Installation
+
+```bash
+rui add dropdown
+```
+
+## Usage
+
+```tsx
+import {
+  DropdownTrigger,
+  Dropdown,
+  DropdownItem,
+} from '@/components/ui/Dropdown';
+import { Button } from '@/components/ui/Button';
+
+<DropdownTrigger>
+  <Button>Open Menu</Button>
+  <Dropdown>
+    <DropdownItem>Cut</DropdownItem>
+    <DropdownItem>Copy</DropdownItem>
+    <DropdownItem>Paste</DropdownItem>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+## Selection
+
+Use the `selectionMode` prop to enable single or multiple selection. The dropdown manages selection state automatically.
+
+### Single Selection
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">Select Color</Button>
+    <Dropdown selectionMode="single">
+      <DropdownItem id="red">Red</DropdownItem>
+      <DropdownItem id="green">Green</DropdownItem>
+      <DropdownItem id="blue">Blue</DropdownItem>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>Select Color</Button>
+  <Dropdown selectionMode="single">
+    <DropdownItem id="red">Red</DropdownItem>
+    <DropdownItem id="green">Green</DropdownItem>
+    <DropdownItem id="blue">Blue</DropdownItem>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+### Multiple Selection
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">Select Options</Button>
+    <Dropdown selectionMode="multiple">
+      <DropdownItem id="bold">Bold</DropdownItem>
+      <DropdownItem id="italic">Italic</DropdownItem>
+      <DropdownItem id="underline">Underline</DropdownItem>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>Select Options</Button>
+  <Dropdown selectionMode="multiple">
+    <DropdownItem id="bold">Bold</DropdownItem>
+    <DropdownItem id="italic">Italic</DropdownItem>
+    <DropdownItem id="underline">Underline</DropdownItem>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+## Disabled Items
+
+Use the `isDisabled` prop on individual items to disable them.
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">Actions</Button>
+    <Dropdown>
+      <DropdownItem>Save</DropdownItem>
+      <DropdownItem>Save As...</DropdownItem>
+      <DropdownItem isDisabled>Delete</DropdownItem>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>Actions</Button>
+  <Dropdown>
+    <DropdownItem>Save</DropdownItem>
+    <DropdownItem>Save As...</DropdownItem>
+    <DropdownItem isDisabled>Delete</DropdownItem>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+## Sections
+
+Group related items using `DropdownSection` with a `DropdownTitle` element.
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">View Options</Button>
+    <Dropdown>
+      <DropdownSection>
+        <DropdownTitle>Appearance</DropdownTitle>
+        <DropdownItem>Zoom In</DropdownItem>
+        <DropdownItem>Zoom Out</DropdownItem>
+        <DropdownItem>Reset Zoom</DropdownItem>
+      </DropdownSection>
+      <DropdownSection>
+        <DropdownTitle>Mode</DropdownTitle>
+        <DropdownItem>Light Mode</DropdownItem>
+        <DropdownItem>Dark Mode</DropdownItem>
+      </DropdownSection>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>View Options</Button>
+  <Dropdown>
+    <DropdownSection>
+      <DropdownTitle>Appearance</DropdownTitle>
+      <DropdownItem>Zoom In</DropdownItem>
+      <DropdownItem>Zoom Out</DropdownItem>
+      <DropdownItem>Reset Zoom</DropdownItem>
+    </DropdownSection>
+    <DropdownSection>
+      <DropdownTitle>Mode</DropdownTitle>
+      <DropdownItem>Light Mode</DropdownItem>
+      <DropdownItem>Dark Mode</DropdownItem>
+    </DropdownSection>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+Alternatively, use the `title` prop on `DropdownSection` for simple text headers.
+
+```tsx
+<DropdownSection title="Appearance">
+  <DropdownItem>Zoom In</DropdownItem>
+  <DropdownItem>Zoom Out</DropdownItem>
+</DropdownSection>
+```
+
+## Submenus
+
+Create nested menus using `SubdropdownTrigger`.
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">Edit</Button>
+    <Dropdown>
+      <DropdownItem>Undo</DropdownItem>
+      <DropdownItem>Redo</DropdownItem>
+      <SubdropdownTrigger>
+        <DropdownItem>Find</DropdownItem>
+        <Dropdown>
+          <DropdownItem>Find...</DropdownItem>
+          <DropdownItem>Find Next</DropdownItem>
+          <DropdownItem>Find Previous</DropdownItem>
+        </Dropdown>
+      </SubdropdownTrigger>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>Edit</Button>
+  <Dropdown>
+    <DropdownItem>Undo</DropdownItem>
+    <DropdownItem>Redo</DropdownItem>
+    <SubdropdownTrigger>
+      <DropdownItem>Find</DropdownItem>
+      <Dropdown>
+        <DropdownItem>Find...</DropdownItem>
+        <DropdownItem>Find Next</DropdownItem>
+        <DropdownItem>Find Previous</DropdownItem>
+      </Dropdown>
+    </SubdropdownTrigger>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+## Links
+
+Items can be rendered as links by passing an `href` prop.
+
+<DocDemo>
+  <DropdownTrigger>
+    <Button variant="secondary">Navigation</Button>
+    <Dropdown>
+      <DropdownItem href="/">Home</DropdownItem>
+      <DropdownItem href="/about">About</DropdownItem>
+      <DropdownItem href="/contact">Contact</DropdownItem>
+    </Dropdown>
+  </DropdownTrigger>
+</DocDemo>
+
+```tsx
+<DropdownTrigger>
+  <Button>Navigation</Button>
+  <Dropdown>
+    <DropdownItem href="/">Home</DropdownItem>
+    <DropdownItem href="/about">About</DropdownItem>
+    <DropdownItem href="/contact">Contact</DropdownItem>
+  </Dropdown>
+</DropdownTrigger>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Enter` or `Space` | Opens the menu or activates the focused item. |
+| `Arrow Down` | Moves focus to the next item. |
+| `Arrow Up` | Moves focus to the previous item. |
+| `Arrow Right` | Opens a submenu. |
+| `Arrow Left` | Closes a submenu and returns focus to parent. |
+| `Escape` | Closes the menu. |
+| `Home` | Moves focus to the first item. |
+| `End` | Moves focus to the last item. |
+
+## API
+
+### DropdownTrigger
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="[ReactElement, ReactElement]"
+    default="—"
+    description="A tuple containing the trigger element and the dropdown menu."
+  />
+</DocApiTable>
+
+### Dropdown
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The items or sections to display in the menu."
+  />
+  <DocApiTableRow
+    name="selectionMode"
+    type="'none' | 'single' | 'multiple'"
+    default="'none'"
+    description="The selection mode of the dropdown."
+  />
+  <DocApiTableRow
+    name="selectedKeys"
+    type="'all' | Iterable<Key>"
+    default="—"
+    description="The currently selected keys (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultSelectedKeys"
+    type="'all' | Iterable<Key>"
+    default="—"
+    description="The initial selected keys (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onSelectionChange"
+    type="(keys: Selection) => void"
+    default="—"
+    description="Handler called when the selection changes."
+  />
+  <DocApiTableRow
+    name="onAction"
+    type="(key: Key) => void"
+    default="—"
+    description="Handler called when an item is activated."
+  />
+  <DocApiTableRow
+    name="disabledKeys"
+    type="Iterable<Key>"
+    default="—"
+    description="Keys of items that are disabled."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) for the menu."
+  />
+</DocApiTable>
+
+### DropdownItem
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the item."
+  />
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="A unique identifier for the item."
+  />
+  <DocApiTableRow
+    name="textValue"
+    type="string"
+    default="—"
+    description="A string representation for keyboard navigation."
+  />
+  <DocApiTableRow
+    name="href"
+    type="string"
+    default="—"
+    description="Renders the item as a link."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the item is disabled."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) for the item."
+  />
+</DocApiTable>
+
+### DropdownSection
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The items within this section."
+  />
+  <DocApiTableRow
+    name="title"
+    type="string"
+    default="—"
+    description="The header title for the section."
+  />
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T>"
+    default="—"
+    description="Item objects for dynamic rendering."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) for the section."
+  />
+</DocApiTable>
+
+### SubdropdownTrigger
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="[ReactElement, ReactElement]"
+    default="—"
+    description="A tuple containing the trigger item and the submenu."
+  />
+</DocApiTable>

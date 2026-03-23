@@ -1,0 +1,51 @@
+.pagination {
+	display: flex;
+	align-items: center;
+}
+
+.pagination-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	flex-wrap: wrap;
+	gap: var(--spacing-4);
+}
+
+.pagination-size-selector {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-2);
+}
+
+.pagination-label {
+	font-size: var(--text-sm);
+	color: var(--color-content-muted);
+}
+
+.pagination-nav {
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-1);
+}
+
+.pagination-pages {
+	display: flex;
+	align-items: center;
+	gap: var(--border-1);
+}
+
+.pagination-ellipsis {
+	cursor: default;
+}
+
+/* Override button padding in pagination pages to make them square */
+.pagination .pagination-pages .button {
+	padding: 0;
+	min-width: var(--height-field);
+	justify-content: center;
+}
+
+.pagination-page-current {
+	pointer-events: none;
+}

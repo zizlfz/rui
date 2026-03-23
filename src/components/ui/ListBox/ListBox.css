@@ -1,0 +1,122 @@
+:root {
+    --listbox-radius: var(--radius-md);
+    --listbox-padding: var(--spacing-1);
+    --listbox-item-radius: var(--radius-sm);
+    --listbox-item-padding-x: var(--spacing-3);
+    --listbox-item-padding-y: var(--spacing-1);
+    --listbox-item-gap: var(--spacing-2);
+    --listbox-font-size: var(--text-sm);
+    --listbox-transition: var(--duration-fast) var(--ease-out);
+}
+
+.listbox {
+    box-sizing: border-box;
+    max-height: inherit;
+    overflow: auto;
+    padding: var(--listbox-padding);
+    background: var(--color-surface);
+    border: var(--border-1) solid var(--color-border);
+    border-radius: var(--listbox-radius);
+    outline: none;
+}
+
+.react-aria-DropIndicator[data-drop-target] {
+    z-index: 3;
+    outline: 1px solid var(--color-surface-primary);
+}
+
+.listbox-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--listbox-item-padding-y) var(--listbox-item-padding-x);
+    border-radius: var(--listbox-item-radius);
+    font-size: var(--listbox-font-size);
+    color: var(--color-content);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    transition: background var(--listbox-transition);
+    line-height: 1.2;
+    min-height: var(--height-field);
+
+    [slot="label"] {
+        font-weight: 500;
+    }
+
+    [slot="description"] {
+        font-size: 0.875em;
+        margin-bottom: 2px;
+    }
+}
+
+/* Hover state */
+.listbox-item[data-hovered] {
+    background: var(--color-surface-200);
+}
+
+/* Selected state */
+.listbox-item[data-selected] {
+    position: relative;
+    background: var(--color-surface-primary);
+    color: var(--color-content-primary);
+}
+
+.listbox-item[data-selected] + .listbox-item[data-selected]::before {
+    content: "";
+    display: block;
+    height: var(--listbox-radius);
+    width: 100%;
+    background: var(--color-surface-primary);
+    position: absolute;
+    left: 0;
+    top: calc(var(--listbox-radius) / -2);
+    pointer-events: none;
+}
+
+.listbox-item[data-selected] + .listbox-item[data-selected]::after {
+    content: "";
+    display: block;
+    height: 1px;
+    width: calc(100% - var(--spacing-8));
+    position: absolute;
+    left: calc(var(--spacing-8) / 2);
+    top: 0;
+    background: var(--color-surface);
+    opacity: 0.25;
+}
+
+/* Focus visible */
+.listbox-item[data-focus-visible] {
+    outline: var(--border-1) solid var(--color-ring);
+    outline-offset: var(--border-1);
+}
+
+/* Pressed state */
+.listbox-item[data-pressed] {
+    transform: scale(0.98);
+}
+
+/* Disabled state */
+.listbox-item[data-disabled] {
+    opacity: var(--opacity-subtle);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+    .listbox {
+        border-color: ButtonBorder;
+    }
+
+    .listbox-item[data-selected] {
+        background: Highlight;
+        color: HighlightText;
+    }
+
+    .listbox-item[data-focus-visible] {
+        outline-color: Highlight;
+    }
+}

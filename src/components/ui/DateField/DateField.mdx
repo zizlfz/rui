@@ -1,0 +1,273 @@
+# DateField
+
+A date input field that allows users to enter and edit dates using localized date segments (month, day, year).
+
+## Installation
+
+```bash
+rui add datefield
+```
+
+## Usage
+
+DateField requires child components to render the input segments. Use `DateInput` with a render function that returns `DateSegment` for each segment.
+
+<DocDemo>
+  <DateField label="Birth date">
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </DateField>
+</DocDemo>
+
+```tsx
+import { DateField, DateInput, DateSegment } from '@/components/ui/DateField';
+
+<DateField label="Birth date">
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Value
+
+A `DateField` has no value by default. An initial, uncontrolled value can be provided using the `defaultValue` prop. Alternatively, a controlled value can be provided using the `value` prop.
+
+Date values are provided using objects from the [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/) package.
+
+<DocDemo>
+  <DateField label="Birth date">
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </DateField>
+</DocDemo>
+
+```tsx
+import { parseDate } from '@internationalized/date';
+import { DateField, DateInput, DateSegment } from '@/components/ui/DateField';
+
+// Uncontrolled with defaultValue
+<DateField label="Event date" defaultValue={parseDate('2024-12-25')}>
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+
+// Controlled with value
+function ControlledDateField() {
+  const [value, setValue] = useState(parseDate('2024-01-15'));
+
+  return (
+    <DateField label="Event date" value={value} onChange={setValue}>
+      <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+    </DateField>
+  );
+}
+```
+
+## Label and Description
+
+Use the `label` prop to provide an accessible label. The `description` prop adds helper text below the field.
+
+<DocDemo>
+  <DateField label="Meeting date" description="Select a date for your meeting.">
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </DateField>
+</DocDemo>
+
+```tsx
+<DateField label="Meeting date" description="Select a date for your meeting.">
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Min and Max Dates
+
+Use the `minValue` and `maxValue` props to constrain the selectable date range.
+
+```tsx
+import { today, getLocalTimeZone } from '@internationalized/date';
+
+<DateField label="Appointment date" minValue={today(getLocalTimeZone())}>
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Validation
+
+Use the `isRequired` prop to require a value. The `errorMessage` prop provides a custom message displayed when validation fails.
+
+```tsx
+<DateField label="Event date" isRequired errorMessage="A date is required.">
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the date field. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <DateField label="Date" isDisabled>
+    <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+  </DateField>
+</DocDemo>
+
+```tsx
+<DateField label="Date" isDisabled>
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the selected date without allowing changes.
+
+```tsx
+<DateField label="Created" value={parseDate('2024-09-05')} isReadOnly>
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Granularity
+
+The `granularity` prop allows specifying the smallest unit displayed. Use `"hour"`, `"minute"`, or `"second"` to include time segments alongside the date.
+
+```tsx
+<DateField label="Start time" granularity="minute">
+  <DateInput>{(segment) => <DateSegment segment={segment} />}</DateInput>
+</DateField>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Arrow Up` / `Arrow Down` | Increments / decrements the focused date segment. |
+| `Arrow Left` / `Arrow Right` | Moves focus to the previous / next date segment. |
+| `Page Up` / `Page Down` | Increments / decrements by a larger unit (month or year). |
+
+## API
+
+### DateField
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the date field."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="Additional description text displayed below the field."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message to display when the field is invalid."
+  />
+  <DocApiTableRow
+    name="value"
+    type="DateValue"
+    default="—"
+    description="The current date value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="DateValue"
+    default="—"
+    description="The initial date value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(date: DateValue) => void"
+    default="—"
+    description="Handler that is called when the date value changes."
+  />
+  <DocApiTableRow
+    name="minValue"
+    type="DateValue"
+    default="—"
+    description="The minimum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="maxValue"
+    type="DateValue"
+    default="—"
+    description="The maximum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="granularity"
+    type="'day' | 'hour' | 'minute' | 'second'"
+    default="'day'"
+    description="The smallest unit displayed in the date field."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether the user must enter a value before submitting a form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the date field is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the date field value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the date field is in an invalid state."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the outer field wrapper."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The DateInput component to render inside the field."
+  />
+</DocApiTable>
+
+### DateInput
+
+<DocApiTable>
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.dateinput` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="children"
+    type="(segment: DateSegment) => ReactNode"
+    default="—"
+    description="Render function that receives each date segment and returns a DateSegment element."
+  />
+</DocApiTable>
+
+### DateSegment
+
+<DocApiTable>
+  <DocApiTableRow
+    name="segment"
+    type="DateSegment"
+    default="—"
+    description="The date segment object passed from DateInput's render function."
+  />
+</DocApiTable>

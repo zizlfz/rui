@@ -1,0 +1,12 @@
+.doc-code {
+	margin-top: var(--spacing-3);
+}
+
+.doc-code pre {
+	padding: var(--spacing-4) !important;
+	border-radius: var(--radius-md);
+	font-size: var(--text-sm) !important;
+	line-height: 1.7 !important;
+	overflow-x: auto;
+	border: var(--border-1) solid var(--color-scrim-light);
+}

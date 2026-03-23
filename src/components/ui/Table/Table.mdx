@@ -1,0 +1,363 @@
+# Table
+
+A table displays data in rows and columns with support for sorting, selection, column resizing, and drag-and-drop reordering. Built on react-aria-components.
+
+## Installation
+
+```bash
+rui add table
+```
+
+## Usage
+
+```tsx
+import {
+  Table,
+  Column,
+  TableHeader,
+  TableBody,
+  Row,
+  Cell
+} from '@/components/ui/Table';
+
+<Table>
+  <TableHeader>
+    <Column isRowHeader>Name</Column>
+    <Column>Email</Column>
+    <Column>Role</Column>
+  </TableHeader>
+  <TableBody>
+    <Row>
+      <Cell>John Doe</Cell>
+      <Cell>john@example.com</Cell>
+      <Cell>Admin</Cell>
+    </Row>
+  </TableBody>
+</Table>
+```
+
+## Sub-components
+
+`Table` is composed of six sub-components: `Table`, `Column`, `TableHeader`, `TableBody`, `Row`, and `Cell`. Build tables by composing these parts.
+
+## Sortable Columns
+
+Enable sorting by passing `sortDescriptor` and `onSortChange` props to the table. Mark sortable columns with `allowsSorting`.
+
+<DocDemo>
+    <Table sortDescriptor={{column: 'name', direction: 'descending'}}>
+      <TableHeader>
+        <Column isRowHeader allowsSorting id="name">Name</Column>
+        <Column allowsSorting>Email</Column>
+        <Column allowsSorting>Role</Column>
+      </TableHeader>
+      <TableBody>
+        <Row>
+          <Cell>Jane Smith</Cell>
+          <Cell>jane@example.com</Cell>
+          <Cell>User</Cell>
+        </Row>
+        <Row>
+          <Cell>John Doe</Cell>
+          <Cell>john@example.com</Cell>
+          <Cell>Admin</Cell>
+        </Row>
+      </TableBody>
+    </Table>
+</DocDemo>
+
+```tsx
+<Table sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
+  <TableHeader>
+    <Column isRowHeader allowsSorting id="name">Name</Column>
+    <Column allowsSorting>Email</Column>
+    <Column allowsSorting>Role</Column>
+  </TableHeader>
+  <TableBody>...</TableBody>
+</Table>
+```
+
+## Row Selection
+
+Enable row selection with `selectionMode` and `selectionBehavior`. Use `"multiple"` for checkbox selection, `"single"` for row click selection.
+
+<DocDemo>
+  {(props) => (
+    <Table {...props} selectionMode="multiple">
+      <TableHeader>
+        <Column isRowHeader>Name</Column>
+        <Column>Status</Column>
+      </TableHeader>
+      <TableBody>
+        <Row>
+          <Cell>Alice Johnson</Cell>
+          <Cell>Active</Cell>
+        </Row>
+        <Row>
+          <Cell>Bob Williams</Cell>
+          <Cell>Inactive</Cell>
+        </Row>
+      </TableBody>
+    </Table>
+  )}
+</DocDemo>
+
+```tsx
+<Table selectionMode="multiple" selectedKeys={selectedKeys} onSelectionChange={setSelectedKeys}>
+  <TableHeader>...</TableHeader>
+  <TableBody>...</TableBody>
+</Table>
+```
+
+## Column Resizing
+
+Enable column resizing by setting `allowsResizing` on columns and wrapping the table in a `.table-container` div.
+
+<DocCode>
+```tsx
+<div className="table-container">
+  <Table>
+    <TableHeader>
+      <Column isRowHeader allowsResizing>Name</Column>
+      <Column allowsResizing>Email</Column>
+    </TableHeader>
+    <TableBody>...</TableBody>
+  </Table>
+</div>
+```
+</DocCode>
+
+## Row Drag & Drop
+
+Enable drag-and-drop by passing `dragAndDropHooks` to the table. A drag handle appears automatically.
+
+<DocDemo>
+  <TableDragDropExample />
+</DocDemo>
+
+```tsx
+import { useDragAndDrop, useListData } from "react-aria-components";
+
+function DragDropTable() {
+  const list = useListData({ initialItems: [...] });
+  const { dragAndDropHooks } = useDragAndDrop({
+    getItems: (keys) => [...keys].map(key => ({ "text/plain": getItemName(key) })),
+    onReorder(e) {
+      if (e.target.dropPosition === "before") {
+        list.moveBefore(e.target.key, e.keys);
+      } else {
+        list.moveAfter(e.target.key, e.keys);
+      }
+    },
+  });
+
+  return (
+    <Table dragAndDropHooks={dragAndDropHooks}>
+      <TableHeader>...</TableHeader>
+      <TableBody items={list.items}>
+        {(item) => <Row id={item.id}><Cell>{item.name}</Cell></Row>}
+      </TableBody>
+    </Table>
+  );
+}
+```
+
+## API
+
+### Table
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="Table content, typically TableHeader and TableBody."
+  />
+  <DocApiTableRow
+    name="sortDescriptor"
+    type="SortDescriptor"
+    default="—"
+    description="Current sort state with column and direction."
+  />
+  <DocApiTableRow
+    name="onSortChange"
+    type="(descriptor: SortDescriptor) => void"
+    default="—"
+    description="Callback when sort changes."
+  />
+  <DocApiTableRow
+    name="selectionMode"
+    type="'single' | 'multiple'"
+    default="—"
+    description="Selection mode. 'multiple' shows checkboxes."
+  />
+  <DocApiTableRow
+    name="selectedKeys"
+    type="Selection"
+    default="—"
+    description="Controlled selected row keys."
+  />
+  <DocApiTableRow
+    name="onSelectionChange"
+    type="(keys: Selection) => void"
+    default="—"
+    description="Callback when selection changes."
+  />
+  <DocApiTableRow
+    name="dragAndDropHooks"
+    type="DragAndDropHooks"
+    default="—"
+    description="Hooks for drag-and-drop behavior."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.table` class."
+  />
+</DocApiTable>
+
+### Column
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="Column header content."
+  />
+  <DocApiTableRow
+    name="isRowHeader"
+    type="boolean"
+    default="false"
+    description="Marks the column as the row header for accessibility."
+  />
+  <DocApiTableRow
+    name="allowsSorting"
+    type="boolean"
+    default="false"
+    description="Enables sorting on this column."
+  />
+  <DocApiTableRow
+    name="allowsResizing"
+    type="boolean"
+    default="false"
+    description="Enables column width resizing."
+  />
+  <DocApiTableRow
+    name="width"
+    type="number | string"
+    default="—"
+    description="Fixed column width."
+  />
+  <DocApiTableRow
+    name="minWidth"
+    type="number"
+    default="—"
+    description="Minimum column width."
+  />
+  <DocApiTableRow
+    name="maxWidth"
+    type="number"
+    default="—"
+    description="Maximum column width."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s)."
+  />
+</DocApiTable>
+
+### TableHeader
+
+<DocApiTable>
+  <DocApiTableRow
+    name="columns"
+    type="Iterable<T>"
+    default="—"
+    description="Column items for dynamic tables."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | (item: T) => ReactNode"
+    default="—"
+    description="Static Column elements or render function for dynamic columns."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s)."
+  />
+</DocApiTable>
+
+### TableBody
+
+<DocApiTable>
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T>"
+    default="—"
+    description="Row items for dynamic tables."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | (item: T) => ReactNode"
+    default="—"
+    description="Static Row elements or render function for dynamic rows."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s)."
+  />
+</DocApiTable>
+
+### Row
+
+<DocApiTable>
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="Unique identifier for the row."
+  />
+  <DocApiTableRow
+    name="columns"
+    type="Iterable<T>"
+    default="—"
+    description="Cell items for dynamic rows."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | (item: T) => ReactNode"
+    default="—"
+    description="Static Cell elements or render function for dynamic cells."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s)."
+  />
+</DocApiTable>
+
+### Cell
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="Cell content."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.cell` class."
+  />
+</DocApiTable>

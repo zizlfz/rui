@@ -1,0 +1,19 @@
+.checkbox-group {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-2);
+}
+
+.checkbox-items {
+	display: flex;
+	gap: var(--spacing-3);
+	flex-direction: column;
+}
+
+.checkbox-group[data-orientation="vertical"] .checkbox-items {
+	flex-direction: column;
+}
+
+.checkbox-group[data-orientation="horizontal"] .checkbox-items {
+	flex-direction: row;
+}

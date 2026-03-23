@@ -1,0 +1,239 @@
+# DatePicker
+
+A date picker combines a date field input with a calendar popover, allowing users to either type a date or select one from a calendar.
+
+## Installation
+
+```bash
+rui add datepicker
+```
+
+## Usage
+
+<DocDemo>
+  <DatePicker label="Birth date" />
+</DocDemo>
+
+```tsx
+import { DatePicker } from '@/components/ui/DatePicker';
+
+<DatePicker label="Birth date" />
+```
+
+## Value
+
+A `DatePicker` has no selection by default. An initial, uncontrolled value can be provided using the `defaultValue` prop. Alternatively, a controlled value can be provided using the `value` prop.
+
+Date values are provided using objects from the [@internationalized/date](https://react-spectrum.adobe.com/internationalized/date/) package.
+
+```tsx
+import { DatePicker } from '@/components/ui/DatePicker';
+import { parseDate, getLocalTimeZone, today } from '@internationalized/date';
+
+function ControlledDatePicker() {
+  const [value, setValue] = useState(today(getLocalTimeZone()));
+
+  return (
+    <DatePicker
+      label="Appointment date"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+
+## Label and Description
+
+Use the `label` prop to provide an accessible label. The `description` prop adds helper text below the field.
+
+<DocDemo>
+  <DatePicker label="Meeting date" description="Select a date for your meeting." />
+</DocDemo>
+
+```tsx
+<DatePicker label="Meeting date" description="Select a date for your meeting." />
+```
+
+## Min and Max Dates
+
+Use the `minValue` and `maxValue` props to constrain the selectable date range.
+
+```tsx
+import { today, getLocalTimeZone } from '@internationalized/date';
+
+<DatePicker
+  label="Appointment date"
+  minValue={today(getLocalTimeZone())}
+/>
+```
+
+## Validation
+
+Use the `isRequired` prop to require a value. The `errorMessage` prop provides a custom message displayed when validation fails.
+
+```tsx
+<DatePicker
+  label="Event date"
+  isRequired
+  errorMessage="A date is required."
+/>
+```
+
+## Disabled
+
+Use the `isDisabled` prop to disable the date picker. It cannot be interacted with and is excluded from the tab order.
+
+<DocDemo>
+  <DatePicker label="Date" isDisabled />
+</DocDemo>
+
+```tsx
+<DatePicker label="Date" isDisabled />
+```
+
+## Read Only
+
+Use the `isReadOnly` prop to allow viewing the selected date without allowing changes.
+
+```tsx
+<DatePicker label="Created" value={parseDate('2024-09-05')} isReadOnly />
+```
+
+## Unavailable Dates
+
+Use the `isDateUnavailable` callback to mark specific dates as unavailable in the calendar.
+
+```tsx
+import { isWeekend } from '@internationalized/date';
+
+<DatePicker
+  label="Meeting date"
+  isDateUnavailable={(date) => isWeekend(date, 'en-US')}
+/>
+```
+
+## Granularity
+
+The `granularity` prop allows specifying the smallest unit displayed in the date field. Use `"hour"`, `"minute"`, or `"second"` to include time segments alongside the date.
+
+```tsx
+<DatePicker label="Start time" granularity="minute" />
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Arrow Up` / `Arrow Down` | Increments / decrements the focused date segment. |
+| `Arrow Left` / `Arrow Right` | Moves focus to the previous / next date segment. |
+| `Enter` | Opens or closes the calendar popover. |
+| `Escape` | Closes the calendar popover if open. |
+| `Page Up` / `Page Down` | Increments / decrements by a larger unit (month or year). |
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="The label for the date picker field."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="Additional description text displayed below the field."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="An error message to display when the field is invalid."
+  />
+  <DocApiTableRow
+    name="value"
+    type="DateValue"
+    default="—"
+    description="The current date value (controlled)."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="DateValue"
+    default="—"
+    description="The initial date value (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(date: DateValue) => void"
+    default="—"
+    description="Handler that is called when the date value changes."
+  />
+  <DocApiTableRow
+    name="minValue"
+    type="DateValue"
+    default="—"
+    description="The minimum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="maxValue"
+    type="DateValue"
+    default="—"
+    description="The maximum allowed date that a user may select."
+  />
+  <DocApiTableRow
+    name="isDateUnavailable"
+    type="(date: DateValue) => boolean"
+    default="—"
+    description="Callback to determine if a date should be unavailable in the calendar."
+  />
+  <DocApiTableRow
+    name="granularity"
+    type="'day' | 'hour' | 'minute' | 'second'"
+    default="'day'"
+    description="The smallest unit displayed in the date field."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether the user must enter a value before submitting a form."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the date picker is disabled."
+  />
+  <DocApiTableRow
+    name="isReadOnly"
+    type="boolean"
+    default="false"
+    description="Whether the date picker value is immutable."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the date picker is in an invalid state."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the element should receive focus on render."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) applied to the outer field wrapper."
+  />
+  <DocApiTableRow
+    name="aria-label"
+    type="string"
+    default="—"
+    description="Defines a string value that labels the date picker for accessibility when no visible label is provided."
+  />
+</DocApiTable>

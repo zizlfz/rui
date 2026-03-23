@@ -1,0 +1,119 @@
+.datepicker {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+	position: relative;
+	color: var(--color-content);
+	max-width: 100%;
+}
+
+/* ── Group container ── */
+.datepicker-group {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	height: var(--input-height);
+}
+
+/* ── Date Input ── */
+.datepicker-input {
+	flex: 1;
+	min-width: 0;
+	padding-right: var(--spacing-10);
+	padding-inline-end: var(--spacing-10);
+	overflow-x: auto;
+	overflow-y: clip;
+	scrollbar-width: none;
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--input-font-size);
+	font-weight: var(--input-font-weight);
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-content);
+}
+
+.datepicker-input::-webkit-scrollbar {
+	display: none;
+}
+
+/* ── Date Segment styling (from react-aria) ── */
+.datepicker-input [data-segment] {
+	padding: 0;
+	outline: none;
+}
+
+.datepicker-input [data-segment][data-focus-visible] {
+	color: var(--color-ring);
+}
+
+.datepicker-input [data-type="literal"] {
+	color: var(--color-content-muted);
+}
+
+/* ── Toggle Button ── */
+.datepicker-button {
+	position: absolute;
+	right: var(--spacing-0\.5);
+	inset-inline-end: var(--spacing-0\.5);
+
+	/* Reset & Layout */
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	appearance: none;
+	margin: 0;
+	width: calc(var(--input-height) - var(--spacing-1));
+	height: calc(var(--input-height) - var(--spacing-1));
+
+	/* Visuals */
+	color: var(--color-content-muted);
+	cursor: pointer;
+
+	transition:
+		border-color var(--input-transition),
+		background-color var(--input-transition),
+		color var(--input-transition);
+
+	/* Prevent scaling on press */
+	&[data-pressed] {
+		transform: none;
+	}
+}
+
+/* Chevron icon */
+.datepicker-chevron {
+	width: var(--icon-sm);
+	height: var(--icon-sm);
+}
+
+/* ── Invalid state ── */
+.datepicker[data-invalid] .datepicker-input {
+	color: var(--color-surface-destructive);
+}
+
+.datepicker[data-invalid] .dateinput {
+	border-color: var(--color-surface-destructive);
+}
+
+/* ── Disabled state ── */
+.datepicker[data-disabled] .datepicker-button {
+	opacity: var(--opacity-disabled);
+	cursor: not-allowed;
+}
+
+/* ── Datepicker-specific popover ── */
+.datepicker-popover[data-trigger="DatePicker"] {
+	padding: var(--spacing-2);
+}
+
+/* ── Forced colors mode for accessibility ── */
+@media (forced-colors: active) {
+	.datepicker[data-invalid] .datepicker-button {
+		border-color: Mark;
+	}
+
+	.datepicker[data-disabled] .datepicker-button {
+		opacity: 1;
+	}
+}

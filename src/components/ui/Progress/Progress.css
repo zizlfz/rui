@@ -1,0 +1,22 @@
+/* ──────────────────────────────────────────────────────
+   Progress Animations
+   ────────────────────────────────────────────────────── */
+
+@keyframes progress-indeterminate {
+	0% {
+		left: -40%;
+		width: 40%;
+	}
+	60% {
+		left: 100%;
+		width: 40%;
+	}
+	100% {
+		left: 100%;
+		width: 0%;
+	}
+}
+
+.progress-indeterminate-animate {
+	animation: progress-indeterminate var(--duration-slower) ease-in-out infinite;
+}

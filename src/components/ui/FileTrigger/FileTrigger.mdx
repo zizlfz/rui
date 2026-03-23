@@ -1,0 +1,212 @@
+# FileTrigger
+
+A component that opens a file picker dialog when a trigger button is activated, allowing users to select files from their device.
+
+## Installation
+
+```bash
+rui add filetrigger
+```
+
+## Usage
+
+```tsx
+import { FileTrigger } from '@/components/ui/FileTrigger';
+import { Button } from '@/components/ui/Button';
+
+<FileTrigger onSelect={(files) => console.log(files)}>
+  <Button>Upload File</Button>
+</FileTrigger>
+```
+
+## File Selection
+
+Use the `onSelect` prop to handle file selection. The handler receives a `FileList` containing the selected files.
+
+<DocDemo>
+  <FileTrigger onSelect={(e) => console.log(e)}>
+    <Button variant="secondary">Select File</Button>
+  </FileTrigger>
+</DocDemo>
+
+```tsx
+import { FileTrigger } from '@/components/ui/FileTrigger';
+import { Button } from '@/components/ui/Button';
+
+<FileTrigger
+  onSelect={(e) => {
+    const files = e ? Array.from(e) : [];
+    console.log(files);
+  }}
+>
+  <Button>Select File</Button>
+</FileTrigger>
+```
+
+## Multiple Files
+
+Use the `allowsMultiple` prop to allow selecting multiple files at once.
+
+<DocDemo>
+  <FileTrigger allowsMultiple onSelect={(e) => console.log(e)}>
+    <Button variant="secondary">Select Multiple Files</Button>
+  </FileTrigger>
+</DocDemo>
+
+```tsx
+<FileTrigger allowsMultiple onSelect={(e) => console.log(e)}>
+  <Button>Select Multiple Files</Button>
+</FileTrigger>
+```
+
+## File Type Filtering
+
+Use the `acceptedFileTypes` prop to restrict which file types can be selected. Pass an array of MIME types.
+
+<DocDemo>
+  <FileTrigger acceptedFileTypes={["image/*"]} onSelect={(e) => console.log(e)}>
+    <Button variant="secondary">Select Images Only</Button>
+  </FileTrigger>
+</DocDemo>
+
+```tsx
+<FileTrigger acceptedFileTypes={["image/*"]} onSelect={(e) => console.log(e)}>
+  <Button>Select Images Only</Button>
+</FileTrigger>
+```
+
+### Common File Type Patterns
+
+- `image/*` - All image files
+- `video/*` - All video files
+- `audio/*` - All audio files
+- `.pdf` - PDF files
+- `.doc,.docx` - Word documents
+- `image/png,image/jpeg` - Specific image formats
+
+## Directory Selection
+
+Use the `acceptDirectory` prop to allow selecting an entire directory instead of individual files.
+
+```tsx
+<FileTrigger acceptDirectory onSelect={(e) => console.log(e)}>
+  <Button>Select Folder</Button>
+</FileTrigger>
+```
+
+## Media Capture
+
+Use the `defaultCamera` prop to open the camera directly for capturing photos or videos on mobile devices.
+
+```tsx
+<FileTrigger defaultCamera="environment" onSelect={(e) => console.log(e)}>
+  <Button>Take Photo</Button>
+</FileTrigger>
+```
+
+## Disabled State
+
+Use the `isDisabled` prop to disable the file trigger.
+
+<DocDemo>
+  <FileTrigger isDisabled onSelect={(e) => console.log(e)}>
+    <Button variant="secondary" isDisabled>Upload Disabled</Button>
+  </FileTrigger>
+</DocDemo>
+
+```tsx
+<FileTrigger isDisabled onSelect={(e) => console.log(e)}>
+  <Button>Upload Disabled</Button>
+</FileTrigger>
+```
+
+## Complete Example
+
+A complete example with file list display.
+
+```tsx
+import { useState } from 'react';
+import { FileTrigger } from '@/components/ui/FileTrigger';
+import { Button } from '@/components/ui/Button';
+
+function FileUploadDemo() {
+  const [files, setFiles] = useState<string[]>([]);
+
+  return (
+    <div className="flex flex-col gap-4">
+      <FileTrigger
+        allowsMultiple
+        acceptedFileTypes={["image/*"]}
+        onSelect={(e) => {
+          const selectedFiles = e ? Array.from(e) : [];
+          setFiles(selectedFiles.map((file) => file.name));
+        }}
+      >
+        <Button>Upload Images</Button>
+      </FileTrigger>
+      
+      {files.length > 0 && (
+        <div className="text-sm">
+          Selected: {files.join(", ")}
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Enter` | Activates the trigger button and opens the file picker. |
+| `Space` | Activates the trigger button and opens the file picker. |
+
+## API
+
+### FileTrigger
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactElement"
+    default="—"
+    description="The trigger element (typically a Button) that activates the file picker."
+  />
+  <DocApiTableRow
+    name="onSelect"
+    type="(files: FileList | null) => void"
+    default="—"
+    description="Handler called when files are selected. Receives a FileList or null if cancelled."
+  />
+  <DocApiTableRow
+    name="allowsMultiple"
+    type="boolean"
+    default="false"
+    description="Whether multiple files can be selected."
+  />
+  <DocApiTableRow
+    name="acceptedFileTypes"
+    type="string[]"
+    default="—"
+    description="Array of accepted MIME types or file extensions."
+  />
+  <DocApiTableRow
+    name="acceptDirectory"
+    type="boolean"
+    default="false"
+    description="Whether directory selection is allowed instead of files."
+  />
+  <DocApiTableRow
+    name="defaultCamera"
+    type="'user' | 'environment'"
+    default="—"
+    description="Opens the camera directly on mobile devices. 'user' for front camera, 'environment' for back camera."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the file trigger is disabled."
+  />
+</DocApiTable>

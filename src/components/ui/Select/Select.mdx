@@ -1,0 +1,286 @@
+# Select
+
+A select displays a collapsible list of options and allows a user to select one of them.
+
+## Installation
+
+```bash
+rui add select
+```
+
+## Usage
+
+<DocDemo>
+  <Select label="Animal">
+    <SelectItem id="aardvark">Aardvark</SelectItem>
+    <SelectItem id="cat">Cat</SelectItem>
+    <SelectItem id="dog">Dog</SelectItem>
+    <SelectItem id="kangaroo">Kangaroo</SelectItem>
+    <SelectItem id="panda">Panda</SelectItem>
+    <SelectItem id="snake">Snake</SelectItem>
+  </Select>
+</DocDemo>
+
+```tsx
+import { Select, SelectItem } from '@/components/ui/Select';
+
+<Select label="Animal">
+  <SelectItem id="aardvark">Aardvark</SelectItem>
+  <SelectItem id="cat">Cat</SelectItem>
+  <SelectItem id="dog">Dog</SelectItem>
+  <SelectItem id="kangaroo">Kangaroo</SelectItem>
+  <SelectItem id="panda">Panda</SelectItem>
+  <SelectItem id="snake">Snake</SelectItem>
+</Select>
+```
+
+## Value
+
+Use `value` and `onChange` for controlled selection. The value corresponds to the `id` prop of a `SelectItem`. An initial, uncontrolled value can be provided using `defaultValue`.
+
+```tsx
+import { Select, SelectItem } from '@/components/ui/Select';
+import { useState } from 'react';
+
+function Example() {
+  const [animal, setAnimal] = useState("bison");
+
+  return (
+    <Select label="Pick an animal" value={animal} onChange={setAnimal}>
+      <SelectItem id="koala">Koala</SelectItem>
+      <SelectItem id="kangaroo">Kangaroo</SelectItem>
+      <SelectItem id="platypus" isDisabled>Platypus</SelectItem>
+      <SelectItem id="eagle">Bald Eagle</SelectItem>
+      <SelectItem id="bison">Bison</SelectItem>
+      <SelectItem id="skunk">Skunk</SelectItem>
+    </Select>
+  );
+}
+```
+
+## Description
+
+Use the `description` prop to provide helper text below the select.
+
+<DocDemo>
+  <Select label="Category" description="Choose your preferred category.">
+    <SelectItem id="news">News</SelectItem>
+    <SelectItem id="travel">Travel</SelectItem>
+    <SelectItem id="tech">Technology</SelectItem>
+  </Select>
+</DocDemo>
+
+```tsx
+<Select label="Category" description="Choose your preferred category.">
+  <SelectItem id="news">News</SelectItem>
+  <SelectItem id="travel">Travel</SelectItem>
+  <SelectItem id="tech">Technology</SelectItem>
+</Select>
+```
+
+## Disabled
+
+Use the `isDisabled` prop on the `Select` to disable the entire component, or on individual `SelectItem` elements to disable specific options.
+
+<DocDemo>
+  <Select label="Animal" isDisabled>
+    <SelectItem id="cat">Cat</SelectItem>
+    <SelectItem id="dog">Dog</SelectItem>
+  </Select>
+</DocDemo>
+
+```tsx
+<Select label="Animal" isDisabled>
+  <SelectItem id="cat">Cat</SelectItem>
+  <SelectItem id="dog">Dog</SelectItem>
+</Select>
+
+<Select label="Animal">
+  <SelectItem id="cat">Cat</SelectItem>
+  <SelectItem id="dog" isDisabled>Dog (unavailable)</SelectItem>
+</Select>
+```
+
+## Validation
+
+Use `isRequired` to require selection before form submission. Provide `errorMessage` to display a custom error message.
+
+```tsx
+<Select label="Animal" isRequired errorMessage="Please select an animal.">
+  <SelectItem id="aardvark">Aardvark</SelectItem>
+  <SelectItem id="cat">Cat</SelectItem>
+  <SelectItem id="dog">Dog</SelectItem>
+</Select>
+```
+
+## Forms
+
+Use the `name` prop to include the selected item's `id` in form submissions.
+
+```tsx
+import { Select, SelectItem } from '@/components/ui/Select';
+import { Button } from '@/components/ui/Button';
+
+<form>
+  <Select label="Animal" name="animal" isRequired description="Please select an animal.">
+    <SelectItem id="aardvark">Aardvark</SelectItem>
+    <SelectItem id="cat">Cat</SelectItem>
+    <SelectItem id="dog">Dog</SelectItem>
+    <SelectItem id="kangaroo">Kangaroo</SelectItem>
+    <SelectItem id="panda">Panda</SelectItem>
+    <SelectItem id="snake">Snake</SelectItem>
+  </Select>
+  <Button type="submit">Submit</Button>
+</form>
+```
+
+## Dynamic Items
+
+Items can be provided via the `items` prop for dynamic rendering with a render function.
+
+```tsx
+<Select label="Fruit" items={fruits}>
+  {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+</Select>
+```
+
+## Keyboard Interactions
+
+| Key | Description |
+| --- | --- |
+| `Enter` / `Space` | Opens or closes the select menu. |
+| `Arrow Up` / `Arrow Down` | Moves focus to the previous / next option. |
+| `Home` / `End` | Moves focus to the first / last option. |
+| `Escape` | Closes the select menu. |
+
+## API
+
+### Select
+
+<DocApiTable>
+  <DocApiTableRow
+    name="label"
+    type="string"
+    default="—"
+    description="Label text rendered above the select."
+  />
+  <DocApiTableRow
+    name="description"
+    type="string"
+    default="—"
+    description="Helper text rendered below the select."
+  />
+  <DocApiTableRow
+    name="errorMessage"
+    type="string | ((validation: ValidationResult) => string)"
+    default="—"
+    description="Error message displayed when validation fails."
+  />
+  <DocApiTableRow
+    name="items"
+    type="Iterable<T>"
+    default="—"
+    description="The items to display in the listbox. When provided, children should be a render function."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode | ((item: T) => ReactNode)"
+    default="—"
+    description="SelectItem elements or a render function for dynamic items."
+  />
+  <DocApiTableRow
+    name="value"
+    type="Key | null"
+    default="—"
+    description="The currently selected key (controlled). Corresponds to the id of a SelectItem."
+  />
+  <DocApiTableRow
+    name="defaultValue"
+    type="Key | null"
+    default="—"
+    description="The initial selected key (uncontrolled)."
+  />
+  <DocApiTableRow
+    name="onChange"
+    type="(key: Key | null) => void"
+    default="—"
+    description="Handler called when the selection changes."
+  />
+  <DocApiTableRow
+    name="name"
+    type="string"
+    default="—"
+    description="The name of the input for HTML form submission."
+  />
+  <DocApiTableRow
+    name="isRequired"
+    type="boolean"
+    default="false"
+    description="Whether user selection is required before form submission."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the select is disabled."
+  />
+  <DocApiTableRow
+    name="isInvalid"
+    type="boolean"
+    default="false"
+    description="Whether the select value is invalid."
+  />
+  <DocApiTableRow
+    name="autoFocus"
+    type="boolean"
+    default="false"
+    description="Whether the select should receive focus on render."
+  />
+  <DocApiTableRow
+    name="disabledKeys"
+    type="Iterable<Key>"
+    default="—"
+    description="Item keys that are disabled and cannot be selected."
+  />
+  <DocApiTableRow
+    name="placeholder"
+    type="string"
+    default="'Select an item' (localized)"
+    description="Placeholder text shown when no item is selected."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.select` class via the `cn` utility."
+  />
+</DocApiTable>
+
+### SelectItem
+
+<DocApiTable>
+  <DocApiTableRow
+    name="id"
+    type="Key"
+    default="—"
+    description="The unique key for the item. Used as the select value."
+  />
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content to display for this item."
+  />
+  <DocApiTableRow
+    name="isDisabled"
+    type="boolean"
+    default="false"
+    description="Whether the item is disabled."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.listbox-item` class via the `cn` utility."
+  />
+</DocApiTable>

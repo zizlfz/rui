@@ -1,0 +1,199 @@
+# Card
+
+A card is a container that groups related content and actions. It supports composable sub-components for images, headers, body content, and footers.
+
+## Installation
+
+```bash
+rui add card
+```
+
+## Usage
+
+```tsx
+import { Card, CardBody } from '@/components/ui/Card';
+
+<Card>
+  <CardBody>Card content goes here.</CardBody>
+</Card>
+```
+
+## Sub-components
+
+`Card` is composed of four sub-components: `CardImage`, `CardHeader`, `CardBody`, and `CardFooter`. Sections are automatically separated by borders.
+
+<DocDemo>
+  <Card>
+    <CardHeader>Card Title</CardHeader>
+    <CardBody>This is the card body with some content.</CardBody>
+    <CardFooter>Footer actions</CardFooter>
+  </Card>
+</DocDemo>
+
+```tsx
+<Card>
+  <CardHeader>Card Title</CardHeader>
+  <CardBody>This is the card body with some content.</CardBody>
+  <CardFooter>Footer actions</CardFooter>
+</Card>
+```
+
+## With Image
+
+Use `CardImage` to display an image at the top of the card. The image bleeds into the adjacent section without a separator. You can customize the `aspectRatio` and `position`.
+
+<DocDemo>
+  <Card>
+    <CardImage src="https://picsum.photos/600/340" alt="Sample" />
+    <CardHeader>Card with Image</CardHeader>
+    <CardBody>A card featuring a full-width image at the top.</CardBody>
+  </Card>
+</DocDemo>
+
+```tsx
+<Card>
+  <CardImage src="/photo.jpg" alt="Description" />
+  <CardHeader>Card with Image</CardHeader>
+  <CardBody>A card featuring a full-width image at the top.</CardBody>
+</Card>
+```
+
+### Custom Aspect Ratio
+
+Pass an `aspectRatio` string to control the image dimensions. Defaults to `"16/9"`.
+
+```tsx
+<CardImage src="/photo.jpg" alt="Square" aspectRatio="1/1" />
+<CardImage src="/photo.jpg" alt="Wide" aspectRatio="21/9" />
+```
+
+### Object Position
+
+Use `position` to control how the image is cropped within the container. Defaults to `"center"`.
+
+```tsx
+<CardImage src="/photo.jpg" alt="Top-aligned" position="top" />
+```
+
+## Polymorphic Element
+
+Use the `as` prop to render the card as a different HTML element, such as an `article` or `section`.
+
+<DocCode>
+```tsx
+<Card as="article">
+  <CardBody>Rendered as an article element.</CardBody>
+</Card>
+```
+</DocCode>
+
+## API
+
+### Card
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the card. Typically composed with CardImage, CardHeader, CardBody, and CardFooter."
+  />
+  <DocApiTableRow
+    name="as"
+    type="React.ElementType"
+    default="'div'"
+    description="The element type to render the card as."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.card` class."
+  />
+</DocApiTable>
+
+### CardImage
+
+<DocApiTable>
+  <DocApiTableRow
+    name="src"
+    type="string"
+    default="—"
+    description="The image source URL."
+  />
+  <DocApiTableRow
+    name="alt"
+    type="string"
+    default="—"
+    description="Alternative text for the image."
+  />
+  <DocApiTableRow
+    name="aspectRatio"
+    type="string"
+    default="'16/9'"
+    description="CSS aspect-ratio value for the image container."
+  />
+  <DocApiTableRow
+    name="position"
+    type="string"
+    default="'center'"
+    description="CSS object-position value for the image."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.card-image` class."
+  />
+</DocApiTable>
+
+### CardHeader
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the card header."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.card-header` class."
+  />
+</DocApiTable>
+
+### CardBody
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the card body."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.card-body` class."
+  />
+</DocApiTable>
+
+### CardFooter
+
+<DocApiTable>
+  <DocApiTableRow
+    name="children"
+    type="ReactNode"
+    default="—"
+    description="The content of the card footer."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.card-footer` class."
+  />
+</DocApiTable>

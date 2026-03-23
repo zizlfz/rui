@@ -1,0 +1,171 @@
+# Pagination
+
+Pagination allows users to navigate through large sets of data by splitting content across multiple pages.
+
+## Installation
+
+```bash
+rui add pagination
+```
+
+## Usage
+
+<DocDemo state={{ currentPage: 1 }}>
+    {(_, state, setters) => <Pagination
+        totalItems={100}
+        pageSize={10}
+        currentPage={state.currentPage}
+        onPageChange={page => setters.setCurrentPage(page)}
+        siblingCount={0}
+    />}
+</DocDemo>
+
+```tsx
+import { Pagination } from '@/components/ui/Pagination';
+import { useState } from 'react';
+
+function Example() {
+  const [page, setPage] = useState(1);
+
+  return (
+    <Pagination
+      totalItems={100}
+      pageSize={10}
+      currentPage={page}
+      onPageChange={setPage}
+    />
+  );
+}
+```
+
+## Page Size Selector
+
+Pass `onPageSizeChange` to enable a "Rows per page" dropdown. Use `pageSizeOptions` to customize the available sizes (defaults to `[10, 25, 50, 100]`).
+
+```tsx
+import { Pagination } from '@/components/ui/Pagination';
+import { useState } from 'react';
+
+function Example() {
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(25);
+
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setPage(1);
+  };
+
+  return (
+    <Pagination
+      totalItems={500}
+      pageSize={pageSize}
+      currentPage={page}
+      onPageChange={setPage}
+      onPageSizeChange={handlePageSizeChange}
+      pageSizeOptions={[10, 25, 50, 100]}
+    />
+  );
+}
+```
+
+## Sibling Count
+
+The `siblingCount` prop controls how many page buttons appear on each side of the current page before collapsing into an ellipsis. The default is `1`.
+
+```tsx
+<Pagination
+  totalItems={1000}
+  pageSize={10}
+  currentPage={50}
+  onPageChange={setPage}
+  siblingCount={3}
+/>
+```
+
+## Custom Button Content
+
+Use `prevContent` and `nextContent` to customize the Previous and Next button content, such as icons.
+
+```tsx
+<Pagination
+  totalItems={100}
+  pageSize={10}
+  currentPage={page}
+  onPageChange={setPage}
+  prevContent={<ArrowLeftIcon />}
+  nextContent={<ArrowRightIcon />}
+/>
+```
+
+## Ellipsis
+
+When there are too many pages to display, ellipsis buttons appear between page ranges. Each ellipsis button includes a tooltip labeled "Jump to page".
+
+## Empty State
+
+When `totalItems` is `0`, the component renders nothing.
+
+## Accessibility
+
+The component renders as a `<nav>` element with `aria-label="Pagination"`. Page buttons use `aria-label` to identify each page, and the current page is marked with `aria-current="page"`. Previous/Next buttons are disabled and excluded from interaction when at the boundaries.
+
+## API
+
+<DocApiTable>
+  <DocApiTableRow
+    name="totalItems"
+    type="number"
+    description="Total number of items across all pages."
+  />
+  <DocApiTableRow
+    name="pageSize"
+    type="number"
+    description="Number of items shown per page."
+  />
+  <DocApiTableRow
+    name="currentPage"
+    type="number"
+    description="The currently active page (1-indexed)."
+  />
+  <DocApiTableRow
+    name="onPageChange"
+    type="(page: number) => void"
+    description="Called when the user navigates to a new page."
+  />
+  <DocApiTableRow
+    name="onPageSizeChange"
+    type="(size: number) => void"
+    default="—"
+    description="Called when the user changes the page size. Passing this prop enables the per-page select dropdown."
+  />
+  <DocApiTableRow
+    name="pageSizeOptions"
+    type="number[]"
+    default="[10, 25, 50, 100]"
+    description="Available options in the page size selector."
+  />
+  <DocApiTableRow
+    name="siblingCount"
+    type="number"
+    default="1"
+    description="Number of page buttons shown on each side of the current page before ellipsis."
+  />
+  <DocApiTableRow
+    name="className"
+    type="string"
+    default="—"
+    description="Additional CSS class name(s) merged with the base `.pagination` class via the `cn` utility."
+  />
+  <DocApiTableRow
+    name="prevContent"
+    type="ReactNode"
+    default="'Previous'"
+    description="Custom content for the Previous button, e.g. an icon."
+  />
+  <DocApiTableRow
+    name="nextContent"
+    type="ReactNode"
+    default="'Next'"
+    description="Custom content for the Next button, e.g. an icon."
+  />
+</DocApiTable>
