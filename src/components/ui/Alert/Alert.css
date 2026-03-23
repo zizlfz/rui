@@ -1,0 +1,116 @@
+.alert {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--spacing-3);
+	padding: var(--spacing-4);
+	border-radius: var(--radius-lg);
+	border: 1px solid transparent;
+	background: var(--color-elevated);
+}
+
+.alert-icon {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2px;
+}
+
+.alert-content {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.alert-title {
+	font-weight: var(--font-weight-semibold);
+	font-size: var(--text-sm);
+	margin-bottom: var(--spacing-1);
+}
+
+.alert-description {
+	font-size: var(--text-sm);
+	line-height: 1.5;
+}
+
+.alert-close {
+	flex: 0 0 auto;
+	padding: 0;
+	height: var(--spacing-6);
+	width: var(--spacing-6);
+	margin-top: calc(var(--spacing-1) * -1);
+	margin-inline-start: var(--spacing-2);
+}
+
+/* ── Info Variant ── */
+.alert[data-variant="info"] {
+	background: var(--color-info-subtle);
+	border-color: var(--color-info-muted);
+}
+
+.alert[data-variant="info"] .alert-icon {
+	color: var(--color-info);
+}
+
+.alert[data-variant="info"] .alert-title {
+	color: var(--color-foreground);
+}
+
+.alert[data-variant="info"] .alert-description {
+	color: var(--color-muted-foreground);
+}
+
+/* ── Success Variant ── */
+.alert[data-variant="success"] {
+	background: var(--color-success-subtle);
+	border-color: var(--color-success-muted);
+}
+
+.alert[data-variant="success"] .alert-icon {
+	color: var(--color-success);
+}
+
+.alert[data-variant="success"] .alert-title {
+	color: var(--color-foreground);
+}
+
+.alert[data-variant="success"] .alert-description {
+	color: var(--color-muted-foreground);
+}
+
+/* ── Warning Variant ── */
+.alert[data-variant="warning"] {
+	background: var(--color-warning-subtle);
+	border-color: var(--color-warning-muted);
+}
+
+.alert[data-variant="warning"] .alert-icon {
+	color: var(--color-warning);
+}
+
+.alert[data-variant="warning"] .alert-title {
+	color: var(--color-foreground);
+}
+
+.alert[data-variant="warning"] .alert-description {
+	color: var(--color-muted-foreground);
+}
+
+/* ── Error Variant ── */
+.alert[data-variant="error"] {
+	background: var(--color-destructive-subtle);
+	border-color: var(--color-destructive-muted);
+}
+
+.alert[data-variant="error"] .alert-icon {
+	color: var(--color-destructive);
+}
+
+.alert[data-variant="error"] .alert-title {
+	color: var(--color-foreground);
+}
+
+.alert[data-variant="error"] .alert-description {
+	color: var(--color-muted-foreground);
+}

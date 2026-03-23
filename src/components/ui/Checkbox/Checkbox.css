@@ -1,0 +1,148 @@
+.react-aria-Checkbox,
+.checkbox {
+    --checkmark-color: var(--color-primary-foreground);
+
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-sm);
+    color: var(--color-foreground);
+    forced-color-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.react-aria-Checkbox[data-disabled],
+.checkbox[data-disabled] {
+    color: var(--color-muted-foreground);
+    --checkmark-color: var(--color-muted-foreground);
+}
+
+.checkbox-box {
+    width: calc(var(--spacing-1) * 4.5);
+    height: calc(var(--spacing-1) * 4.5);
+    box-sizing: border-box;
+    border-radius: var(--radius-sm);
+    transition: all 200ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+}
+
+/* Focus ring */
+.react-aria-Checkbox[data-focus-visible] .checkbox-box,
+.checkbox[data-focus-visible] .checkbox-box {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+}
+
+/* Selected state */
+.react-aria-Checkbox[data-selected] .checkbox-box,
+.checkbox[data-selected] .checkbox-box,
+.react-aria-Checkbox[data-indeterminate] .checkbox-box,
+.checkbox[data-indeterminate] .checkbox-box {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+/* Invalid state */
+.react-aria-Checkbox[data-invalid] .checkbox-box,
+.checkbox[data-invalid] .checkbox-box {
+    border-color: var(--color-destructive);
+}
+
+.react-aria-Checkbox[data-invalid][data-selected] .checkbox-box,
+.checkbox[data-invalid][data-selected] .checkbox-box,
+.react-aria-Checkbox[data-invalid][data-indeterminate] .checkbox-box,
+.checkbox[data-invalid][data-indeterminate] .checkbox-box {
+    background: var(--color-destructive);
+    border-color: var(--color-destructive);
+}
+
+/* Disabled state */
+.react-aria-Checkbox[data-disabled] .checkbox-box,
+.checkbox[data-disabled] .checkbox-box {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Pressed state */
+.react-aria-Checkbox[data-pressed] .checkbox-box,
+.checkbox[data-pressed] .checkbox-box {
+    transform: scale(0.95);
+}
+
+.checkbox-icon {
+    width: calc(100% - var(--spacing-2));
+    height: calc(100% - var(--spacing-2));
+    fill: none;
+    stroke: var(--checkmark-color);
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+
+/* Indeterminate state - fill the icon instead of stroke */
+.react-aria-Checkbox[data-indeterminate] .checkbox-icon,
+.checkbox[data-indeterminate] .checkbox-icon {
+    stroke: none;
+    fill: var(--checkmark-color);
+}
+
+/* Animation for the checkmark */
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 66;
+    }
+    100% {
+        stroke-dashoffset: 44;
+    }
+}
+
+.react-aria-Checkbox[data-selected] .checkbox-icon,
+.checkbox[data-selected] .checkbox-icon {
+    animation: checkmark 200ms ease-out;
+    stroke-dasharray: 22px;
+    stroke-dashoffset: 44;
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+    .checkbox-box {
+        border-color: ButtonBorder;
+    }
+
+    .react-aria-Checkbox[data-selected] .checkbox-box,
+    .checkbox[data-selected] .checkbox-box,
+    .react-aria-Checkbox[data-indeterminate] .checkbox-box,
+    .checkbox[data-indeterminate] .checkbox-box {
+        background: Highlight;
+        border-color: Highlight;
+    }
+
+    .react-aria-Checkbox[data-invalid] .checkbox-box,
+    .checkbox[data-invalid] .checkbox-box {
+        border-color: Mark;
+    }
+
+    .react-aria-Checkbox[data-invalid][data-selected] .checkbox-box,
+    .checkbox[data-invalid][data-selected] .checkbox-box,
+    .react-aria-Checkbox[data-invalid][data-indeterminate] .checkbox-box,
+    .checkbox[data-invalid][data-indeterminate] .checkbox-box {
+        background: Mark;
+        border-color: Mark;
+    }
+
+    .checkbox-icon {
+        stroke: HighlightText;
+    }
+
+    .react-aria-Checkbox[data-indeterminate] .checkbox-icon,
+    .checkbox[data-indeterminate] .checkbox-icon {
+        fill: HighlightText;
+    }
+}

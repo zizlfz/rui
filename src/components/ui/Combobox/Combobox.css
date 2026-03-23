@@ -1,0 +1,52 @@
+.combobox-field {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.combobox-field .input {
+    flex: 1;
+    min-width: 0;
+    padding: 0 calc(var(--height-field) + var(--spacing-1)) 0 var(--spacing-3);
+}
+
+.combobox-field-button {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(var(--height-field) - var(--spacing-1));
+    height: calc(var(--height-field) - var(--spacing-1));
+    padding: 0;
+    z-index: 1;
+    background: var(--color-elevated);
+    border: 1px solid var(--color-border-strong);
+}
+
+.combobox-field-button:hover:not(:disabled):not([data-disabled]) {
+    border-color: var(--color-border-strong);
+}
+
+.combobox-field-button:focus {
+    border-color: var(--color-ring);
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.06) inset,
+        0 0 0 2px color-mix(in oklch, var(--color-ring) 20%, transparent);
+}
+
+.combobox-field-button svg {
+    width: var(--text-base);
+    height: var(--text-base);
+}
+
+.combobox-popover {
+    width: var(--trigger-width);
+    padding: 0;
+}
+
+.react-aria-ComboBoxValue {
+    margin-top: var(--spacing-1);
+    font-size: var(--text-sm);
+    color: var(--color-foreground);
+}

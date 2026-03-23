@@ -1,0 +1,79 @@
+.dateinput {
+    /* Reset & Layout */
+    display: inline-flex;
+    align-items: center;
+    appearance: none;
+    margin: 0;
+
+    /* Typography */
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking-wide);
+    color: var(--color-foreground);
+
+    /* Sizing & Spacing */
+    height: var(--height-field);
+    padding: 0 var(--spacing-3);
+    width: 100%;
+
+    /* Visuals */
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-elevated);
+
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+    /* Placeholder */
+    &::placeholder {
+        color: var(--color-muted-foreground);
+        font-weight: var(--font-weight-normal);
+    }
+
+    /* Hover */
+    &:hover:not(:disabled):not([data-disabled]):not([data-invalid]) {
+        border-color: var(--color-border-strong);
+    }
+
+    /* Focus */
+    &:focus,
+    &[data-focused] {
+        border-color: var(--color-ring);
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.06) inset,
+            0 0 0 2px color-mix(in oklch, var(--color-ring) 20%, transparent);
+    }
+
+    /* Disabled */
+    &:disabled,
+    &[data-disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    /* Invalid / Error */
+    &[data-invalid],
+    &:user-invalid {
+        border-color: var(--color-destructive);
+    }
+}
+
+/* Date Segment styling */
+.dateinput [data-segment] {
+    padding: 0;
+    outline: none;
+}
+
+.dateinput [data-segment]:focus {
+    color: var(--color-ring);
+}
+
+.dateinput [data-type="literal"] {
+    padding: 0 2px;
+    color: var(--color-muted-foreground);
+}

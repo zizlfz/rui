@@ -1,0 +1,112 @@
+.toast-region {
+    position: fixed;
+    bottom: var(--spacing-4);
+    right: var(--spacing-4);
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--spacing-2);
+    outline: none;
+    z-index: 50;
+}
+
+.toast-region[data-focus-visible] {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+}
+
+.toast {
+    width: 320px;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-4);
+    background: var(--color-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    outline: none;
+    forced-color-adjust: none;
+}
+
+.toast[data-focus-visible] {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.toast-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-sm);
+    color: var(--color-elevated-foreground);
+}
+
+.toast-description {
+    font-size: var(--text-xs);
+    color: var(--color-muted-foreground);
+    margin-top: var(--spacing-1);
+}
+
+.toast-close {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    appearance: none;
+    border-radius: var(--radius-sm);
+    height: var(--spacing-8);
+    width: var(--spacing-8);
+    color: var(--color-muted-foreground);
+    padding: 0;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+
+.toast-close[data-hovered] {
+    background: var(--color-muted);
+}
+
+.toast-close[data-focus-visible] {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+}
+
+.toast-close[data-pressed] {
+    background: var(--color-secondary-active);
+}
+
+.toast-region {
+    view-transition-class: toast;
+}
+
+::view-transition-new(.toast):only-child {
+    animation: toast-slide-in 300ms ease-out;
+}
+
+::view-transition-old(.toast):only-child {
+    animation: toast-slide-out 300ms ease-in;
+    animation-fill-mode: forwards;
+}
+
+@keyframes toast-slide-out {
+    to {
+        translate: 100% 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes toast-slide-in {
+    from {
+        translate: 100% 0;
+        opacity: 0;
+    }
+}
