@@ -1,0 +1,67 @@
+/* Tooltip component styles */
+.tooltip {
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    background: var(--color-popover);
+    color: var(--color-popover-foreground);
+    forced-color-adjust: none;
+    outline: none;
+    padding: var(--spacing-2) var(--spacing-3);
+    max-width: 200px;
+    transform: translate3d(0, 0, 0);
+    transition:
+        transform 200ms,
+        opacity 200ms;
+    font: var(--text-sm) system-ui;
+    border: 1px solid var(--color-border);
+    z-index: 50;
+
+    &[data-entering],
+    &[data-exiting] {
+        transform: var(--origin);
+        opacity: 0;
+    }
+
+    &[data-placement="top"] {
+        margin-bottom: 10px;
+        --origin: translateY(4px);
+    }
+
+    &[data-placement="bottom"] {
+        margin-top: 10px;
+        --origin: translateY(-4px);
+
+        & .tooltip-arrow svg {
+            transform: rotate(180deg);
+        }
+    }
+
+    &[data-placement="right"] {
+        margin-left: 10px;
+        --origin: translateX(-4px);
+
+        & .tooltip-arrow svg {
+            transform: rotate(90deg);
+        }
+    }
+
+    &[data-placement="left"] {
+        margin-right: 10px;
+        --origin: translateX(4px);
+
+        & .tooltip-arrow svg {
+            transform: rotate(-90deg);
+        }
+    }
+
+    .tooltip-arrow {
+        display: block;
+        fill: var(--color-popover);
+        stroke: var(--color-border);
+        stroke-width: 0.5px;
+
+        svg {
+            display: block;
+        }
+    }
+}

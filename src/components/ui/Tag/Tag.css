@@ -1,0 +1,186 @@
+.tag-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+    color: var(--color-foreground);
+    font-size: var(--text-sm);
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+}
+
+.react-aria-Tag,
+.tag {
+    --tag-bg: var(--color-elevated);
+    --tag-border: var(--color-border);
+    --tag-text: var(--color-foreground);
+    --tag-remove-hover: var(--color-muted);
+    --tag-pressed: var(--color-muted-foreground);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    border-radius: 9999px;
+    border: 1px solid var(--tag-border);
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    font-size: var(--text-sm);
+    padding: 0 var(--spacing-3);
+    height: calc(var(--spacing-1) * 6);
+    cursor: default;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease;
+    white-space: nowrap;
+    max-width: fit-content;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    forced-color-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover state */
+.react-aria-Tag:hover:not([data-disabled]),
+.tag:hover:not([data-disabled]) {
+    border-color: var(--color-border-strong);
+}
+
+/* Focus visible state */
+.react-aria-Tag[data-focus-visible],
+.tag[data-focus-visible] {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+}
+
+/* Pressed state */
+.react-aria-Tag[data-pressed],
+.tag[data-pressed] {
+    background-color: var(--tag-pressed);
+    transform: scale(0.96);
+}
+
+/* Selected state */
+.react-aria-Tag[data-selected],
+.tag[data-selected] {
+    --tag-bg: var(--color-primary);
+    --tag-border: var(--color-primary);
+    --tag-text: var(--color-primary-foreground);
+    --tag-remove-hover: var(--color-primary-foreground);
+}
+
+/* Disabled state */
+.react-aria-Tag[data-disabled],
+.tag[data-disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    --tag-text: var(--color-muted-foreground);
+}
+
+/* Has remove button - adjust padding */
+.react-aria-Tag:has(.tag-remove-button),
+.tag:has(.tag-remove-button) {
+    padding: 0 var(--spacing-1) 0 var(--spacing-2);
+}
+
+/* Link style */
+.react-aria-Tag[data-href],
+.tag[data-href] {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Remove button */
+.tag-remove-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--tag-text);
+    border-radius: 100%;
+    aspect-ratio: 1 / 1;
+    height: calc(100% - 6px);
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.15s ease;
+}
+
+/* Remove button hover */
+.tag-remove-button[data-hovered] {
+    background-color: var(--tag-remove-hover);
+}
+
+/* Remove button pressed */
+.tag-remove-button[data-pressed] {
+    transform: scale(0.9);
+}
+
+/* Remove button focus visible */
+.tag-remove-button[data-focus-visible] {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -1px;
+}
+
+/* Remove button icon */
+.tag-remove-icon {
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+}
+
+/* Selected state - remove button styling */
+.react-aria-Tag[data-selected] .tag-remove-button,
+.tag[data-selected] .tag-remove-button {
+    color: inherit;
+}
+
+.react-aria-Tag[data-selected] .tag-remove-button[data-hovered],
+.tag[data-selected] .tag-remove-button[data-hovered] {
+    background-color: color-mix(in oklch, currentColor 15%, transparent);
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+    .react-aria-Tag,
+    .tag {
+        forced-color-adjust: none;
+        border-color: ButtonBorder;
+        color: ButtonText;
+        background-color: ButtonFace;
+    }
+
+    .react-aria-Tag[data-selected],
+    .tag[data-selected] {
+        background-color: Highlight;
+        border-color: Highlight;
+        color: HighlightText;
+    }
+
+    .react-aria-Tag[data-disabled],
+    .tag[data-disabled] {
+        opacity: 1;
+        color: GrayText;
+        border-color: GrayText;
+    }
+
+    .tag-remove-button {
+        background-color: ButtonFace;
+        color: ButtonText;
+    }
+
+    .tag-remove-button[data-focus-visible] {
+        outline-color: Highlight;
+    }
+
+    .tag-remove-button[data-hovered] {
+        background-color: Highlight;
+        color: HighlightText;
+    }
+}

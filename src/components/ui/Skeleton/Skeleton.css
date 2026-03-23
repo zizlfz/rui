@@ -1,0 +1,30 @@
+/* ──────────────────────────────────────────────────────
+   Skeleton Animation
+   ────────────────────────────────────────────────────── */
+
+@keyframes skeleton-wave {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton-animate {
+    background: linear-gradient(
+        90deg,
+        var(--color-muted) 25%,
+        var(--color-secondary-hover) 50%,
+        var(--color-muted) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-wave 1.6s ease-in-out infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .skeleton-animate {
+        animation: none;
+    }
+}

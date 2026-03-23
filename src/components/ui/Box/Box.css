@@ -1,0 +1,6 @@
+.box {
+    background: var(--color-elevated);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-4);
+    border-radius: var(--radius-md);
+}

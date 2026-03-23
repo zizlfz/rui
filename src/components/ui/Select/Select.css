@@ -1,0 +1,142 @@
+.select {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-1);
+	position: relative;
+	color: var(--color-foreground);
+}
+
+.select-button {
+	/* Reset & Layout */
+	display: inline-flex;
+	align-items: center;
+	justify-content: space-between;
+	appearance: none;
+	margin: 0;
+
+	/* Typography */
+	font-family: var(--font-sans);
+	font-size: var(--text-sm);
+	font-weight: var(--font-weight-medium);
+	letter-spacing: var(--tracking-wide);
+	color: var(--color-foreground);
+
+	/* Sizing & Spacing — shared field rhythm with .input */
+	height: var(--height-field);
+	padding: 0 var(--spacing-3);
+	width: 100%;
+	min-width: 0;
+
+	/* Visuals — matching .input */
+	border-radius: var(--radius-xs);
+	border: 1px solid var(--color-border-strong);
+	background-color: var(--color-elevated);
+	background-image: none;
+	text-align: start;
+	outline: none;
+
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		background 0.15s ease;
+
+	/* Input-like cursor behavior */
+	cursor: default;
+	user-select: text;
+	-webkit-tap-highlight-color: highlight;
+}
+
+/* Pressed state - don't scale */
+.select-button[data-pressed] {
+	transform: none;
+}
+
+/* Placeholder state */
+.select-value[data-placeholder] {
+	color: var(--color-muted-foreground);
+	font-weight: var(--font-weight-normal);
+}
+
+/* Chevron icon */
+.select-chevron {
+	margin-inline-start: var(--spacing-2);
+	width: var(--text-base);
+	height: var(--text-base);
+	flex-shrink: 0;
+	color: var(--color-muted-foreground);
+}
+
+/* Hide description in select value */
+.select-value [slot="description"] {
+	display: none;
+}
+
+/* Hover */
+.select-button:hover:not([data-disabled]) {
+	border-color: var(--color-border-strong);
+	background-color: var(--color-elevated);
+	background-image: none;
+}
+
+/* Focus visible */
+.select-button:focus,
+.select-button[data-focused] {
+	border-color: var(--color-ring);
+	background-color: var(--color-elevated);
+	background-image: none;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.06) inset,
+		0 0 0 2px color-mix(in oklch, var(--color-ring) 20%, transparent);
+}
+
+/* Invalid / Error state */
+.select[data-invalid] .select-button {
+	border-color: var(--color-destructive);
+	background-color: var(--color-elevated);
+	background-image: none;
+	box-shadow:
+		0 1px 2px rgba(0, 0, 0, 0.06) inset,
+		0 0 0 2px color-mix(in oklch, var(--color-destructive) 15%, transparent);
+}
+
+/* Disabled state */
+.select-button[data-disabled],
+.select[data-disabled] .select-button {
+	opacity: 0.4;
+	cursor: not-allowed;
+	background-color: var(--color-elevated);
+	background-image: none;
+}
+
+.select[data-disabled] .select-chevron {
+	color: var(--color-muted-foreground);
+}
+
+/* Select-specific popover styling */
+.select-popover[data-trigger="Select"] {
+	width: var(--trigger-width);
+	padding: 0;
+}
+
+/* Forced colors mode for accessibility */
+@media (forced-colors: active) {
+	.select-value[data-placeholder] {
+		color: GrayText;
+	}
+
+	.select-chevron {
+		color: GrayText;
+	}
+
+	.select[data-invalid] .select-button {
+		border-color: Mark;
+	}
+
+	.select[data-disabled] .select-button {
+		opacity: 1;
+	}
+
+	.select[data-disabled] .select-chevron {
+		color: GrayText;
+	}
+}

@@ -1,0 +1,192 @@
+/* ── Calendar ── */
+.calendar {
+    width: calc(var(--spacing-9) * 7);
+    max-width: 100%;
+    container-type: inline-size;
+    color: var(--color-foreground);
+    font: var(--text-base) system-ui;
+}
+
+/* ── Header ── */
+.calendar-header {
+    display: flex;
+    align-items: center;
+    margin: 0 var(--spacing-1) var(--spacing-4) var(--spacing-1);
+}
+
+.calendar-heading {
+    flex: 1;
+    margin: 0;
+    text-align: center;
+    font-size: var(--text-lg);
+}
+
+/* ── Navigation buttons ── */
+.calendar-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    width: calc(var(--height-field) - var(--spacing-2));
+    height: calc(var(--height-field) - var(--spacing-2));
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-elevated);
+    color: var(--color-muted-foreground);
+    cursor: pointer;
+}
+
+.calendar-nav-button[data-pressed] {
+    transform: none;
+}
+
+.calendar-nav-button:hover:not([data-disabled]) {
+    border-color: var(--color-border-strong);
+    background-color: var(--color-muted);
+    color: var(--color-foreground);
+}
+
+.calendar-nav-button:focus,
+.calendar-nav-button[data-focused] {
+    border-color: var(--color-ring);
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.06) inset,
+        0 0 0 2px color-mix(in oklch, var(--color-ring) 20%, transparent);
+}
+
+.calendar-nav-icon {
+    width: var(--text-base);
+    height: var(--text-base);
+}
+
+/* ── Grid (Table) ── */
+.calendar-grid {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.calendar-grid thead {
+    display: table-header-group;
+}
+
+.calendar-grid tbody {
+    display: table-row-group;
+}
+
+.calendar-grid tr {
+    display: table-row;
+}
+
+.calendar-grid tbody td {
+    display: table-cell;
+    padding: calc(var(--spacing-1) / 2);
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* ── Header cells (day names) ── */
+.calendar-header-cell {
+    display: table-cell;
+    font-size: var(--text-sm);
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wider);
+    color: var(--color-muted-foreground);
+    text-align: center;
+    padding: calc(var(--spacing-1) / 2);
+}
+
+/* ── Day cells ── */
+.calendar-cell {
+    --gap: var(--spacing-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1;
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    text-align: center;
+    border-radius: 9999px;
+    cursor: default;
+    forced-color-adjust: none;
+    transition: scale 200ms;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-resolution: 200dpi) {
+    @container (width < 300px) {
+        .calendar-cell {
+            --gap: 0px;
+        }
+    }
+}
+
+/* Hover state for available dates */
+.calendar-cell:hover:not([data-disabled]):not([data-unavailable]) {
+    background-color: var(--color-muted);
+}
+
+/* Focus state */
+.calendar-cell:focus,
+.calendar-cell[data-focused] {
+    box-shadow:
+        0 0 0 2px var(--color-background),
+        0 0 0 4px var(--color-ring);
+}
+
+/* Selected state */
+.calendar-cell[data-selected] {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Disabled dates */
+.calendar-cell[data-disabled] {
+    color: var(--color-muted-foreground);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Unavailable dates */
+.calendar-cell[data-unavailable] {
+    text-decoration: line-through;
+    color: var(--color-destructive);
+}
+
+/* Today */
+.calendar-cell[data-today] {
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Outside month */
+.calendar-cell[data-outside-month] {
+    display: none;
+}
+
+/* Pressed state */
+.calendar-cell[data-pressed] {
+    scale: 0.9;
+}
+
+/* Invalid state */
+.calendar-cell[data-invalid] {
+    --button-color: var(--color-destructive);
+}
+
+/* ── Forced colors mode ── */
+@media (forced-colors: active) {
+    .calendar-cell[data-selected] {
+        background-color: Highlight;
+        color: HighlightText;
+    }
+
+    .calendar-cell[data-unavailable] {
+        text-decoration: line-through;
+        color: GrayText;
+    }
+}
