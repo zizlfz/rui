@@ -9,6 +9,8 @@ import remarkGfm from "remark-gfm";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 const config = defineConfig({
   plugins: [
     devtools(),
@@ -29,6 +31,11 @@ const config = defineConfig({
     }),
     tanstackStart(),
     viteReact(),
+    cloudflare({
+      viteEnvironment: {
+        name: "ssr"
+      }
+    })
   ],
   test: {
     environment: "jsdom",
